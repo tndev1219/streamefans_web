@@ -1,0 +1,79 @@
+{
+  "name": "streamefans",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src"
+  },
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "@reduxjs/toolkit": "^1.5.0",
+    "@rmwc/dialog": "^6.1.4",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "autoprefixer": "^9.8.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "react-redux": "^7.2.2",
+    "redux": "^4.0.5",
+    "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.15.0",
+    "deploy-aws-s3-cloudfront": "^3.2.4",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-semistandard": "^15.0.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "eslint-plugin-standard": "^5.0.0",
+    "import-sort-style-module": "^6.0.0",
+    "postcss-modules": "^3.2.2",
+    "prettier": "^2.1.2",
+    "prettier-plugin-import-sort": "^0.0.6",
+    "redux-devtools": "^3.7.0",
+    "sass": "^1.30.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
