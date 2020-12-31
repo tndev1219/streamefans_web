@@ -22,7 +22,9 @@ module.exports = {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
     'semi': [2, 'always'],
-    'comma-dangle': [2, 'always-multiline']
+    'comma-dangle': [2, 'always-multiline'],
+    'react/display-name': 'off',
+    "no-global-assign": ["error", {"exceptions": ["Object"]}]
   },
   settings: {
     react: {

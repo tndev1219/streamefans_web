@@ -1,0 +1,59 @@
+/*------------------------------------------------------------
+  5.1.2 footer
+-----------------------------------------------------------*/
+// Footer one style
+.iron-footer-v1{
+  .iron-footer-top{
+    background-color: $black;
+    padding-top:3.75rem;
+  }
+  .footer-hr{
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  *{
+    color:$base;
+  }
+  .footer-widget-title{
+      h6{
+        font-weight: $font-weight-base;
+        text-transform: uppercase;
+      }
+  }
+  .iron-footer-menu-list{
+    padding: 0;
+      .list-item{
+          padding: 0 0 0.3125rem 0;
+          margin-bottom: 0.625rem;
+          span{
+            color:#fff;
+            text-transform: capitalize;
+            font-size:0.875rem;
+            padding-left: 1.0rem;
+          }
+      }
+  }
+  .iron-footer-bottom{
+    padding: 1rem 0;
+    background-color: $black;
+    .vertical-center{
+      display: flex;
+      align-items: center;
+    }
+    .vertical-center-center{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  button{
+    span{
+      text-transform: none
+    }
+  }
+  .iron-footer-bottom{
+    span{
+      font-size: 0.875rem;
+    }
+  }
+}

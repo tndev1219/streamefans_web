@@ -1,0 +1,7 @@
+@import "headers/headerwidgets";
+@import "headers/headerOne";
+@import 'headers/fixedHeader.scss';
+@import "sidebar";
+.frontend{
+    @import "footers/footerOne";
+}

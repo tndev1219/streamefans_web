@@ -1,0 +1,15 @@
+@import "variables";
+        
+@import "core/core";
+
+@import "mixins/mixins";
+
+@import "utilities/utilities";    
+
+@import "custom/custom";
+    
+@import "responsive";
+
+@import "~slick-carousel/slick/slick.scss";
+
+@import "~slick-carousel/slick/slick-theme.scss";

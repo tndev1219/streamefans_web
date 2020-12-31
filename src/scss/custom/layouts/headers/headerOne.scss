@@ -1,0 +1,20 @@
+/*------------------------------------------------------------
+  5.1.1 headers
+-----------------------------------------------------------*/
+
+//header one styling
+.iron-header-v1 {
+  .iron-header-top {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .iron-header-bottom {
+    min-height: 64px;
+  }
+  .iron-header-menu {
+    li {
+      a {
+        color: $base;
+      }
+    }
+  }
+}

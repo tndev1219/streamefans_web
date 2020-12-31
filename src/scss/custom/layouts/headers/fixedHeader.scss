@@ -1,0 +1,30 @@
+//------- fixed header ---------
+.header-fixed .iron-fixed-header {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+.iron-fixed-header {
+  z-index: 99;
+  transition: 0.3s ease-in-out 0s;
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
+  .iron-header-menu {
+    li {
+      a {
+        line-height: 5rem;
+        &:after {
+          bottom: 0;
+          background: none;
+        }
+        &:hover {
+          text-decoration: none;
+        }
+      }
+      .sub-menu {
+        top: 100%;
+      }
+    }
+  }
+}
