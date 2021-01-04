@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from "react-router-dom";
 import { Container, Button, Grid, Divider, TextField } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -18,12 +18,16 @@ import Slide3Img from '../../assets/login_carousel/slide-3.jpg';
 import Slide4Img from '../../assets/login_carousel/slide-4.jpg';
 import Slide5Img from '../../assets/login_carousel/slide-5.jpg';
 
+import { useGlobalAction } from '../../store/slices/global.slice';
+
 const SignIn = (props) => {
+    const history = useHistory();
     const [fields, setFiedls] = useState({});
     const [errors, setErros] = useState({});
-    const [showSnackBar, setShowSnackBar] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isLoginPage, setIsLoginPage] = useState(true);
+
+    const setShowSnackBar = useGlobalAction('setShowSnackBar');
 
     const settings = {
         dots: false,
@@ -54,7 +58,6 @@ const SignIn = (props) => {
     const handleValidation = () => {
         const errors = {};
         let formIsValid = true;
-        console.log(fields);
 
         // Email
         if (!fields.email) {
@@ -83,12 +86,8 @@ const SignIn = (props) => {
     };
 
     const handleSubmit = () => {
-        props.history.push('/');
+        history.push('/');
         // const loginData = fields;
-    };
-
-    const hideSnackBar = () => {
-        setShowSnackBar(false);
     };
 
     return (
@@ -262,11 +261,7 @@ const SignIn = (props) => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <SnackBar
-                    showSnackBar={showSnackBar}
-                    hideSnackBar={hideSnackBar}
-                    message={'Please input the correct value...'}
-                />
+                <SnackBar message={'Please input the correct value...'} />
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)}>
                 <DialogTitle>RESTORE ACCESS</DialogTitle>
@@ -304,10 +299,6 @@ const SignIn = (props) => {
             </Dialog>
         </Fragment>
     );
-};
-
-SignIn.propTypes = {
-    history: PropTypes.object,
 };
 
 export default React.memo(SignIn);

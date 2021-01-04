@@ -1,8 +1,8 @@
-export function clearToken() {
+export const clearToken = () => {
     localStorage.removeItem('streamefans_token');
 }
 
-export function getToken() {
+export const getToken = () => {
     try {
         const token = localStorage.getItem('streamefans_token');
         return token;

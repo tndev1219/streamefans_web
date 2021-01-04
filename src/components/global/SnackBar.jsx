@@ -12,6 +12,9 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useGlobalAction } from '../../store/slices/global.slice';
+import { useASelector } from '../../utilities/recipies.util';
+
 const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
@@ -45,7 +48,7 @@ const useStyles1 = makeStyles(theme => ({
   },
 }));
 
-function MySnackbarContentWrapper(props) {
+const MySnackbarContentWrapper = (props) => {
   const classes = useStyles1();
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
@@ -68,7 +71,7 @@ function MySnackbarContentWrapper(props) {
       {...other}
     />
   );
-}
+};
 
 MySnackbarContentWrapper.propTypes = {
   className: PropTypes.string,
@@ -77,16 +80,19 @@ MySnackbarContentWrapper.propTypes = {
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-function CustomizedSnackbars(props) {
-  const { showSnackBar, hideSnackBar, message } = props;
+const CustomizedSnackbars = (props) => {
+  const { message } = props;
 
-  function handleClose(event, reason) {
+  const showSnackBar = useASelector((state) => state.global.showSnackBar, []);
+  const setShowSnackBar = useGlobalAction('setShowSnackBar');
+
+  const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    hideSnackBar();
-  }
+    setShowSnackBar(false);
+  };
 
   return (
     <div>
@@ -107,11 +113,9 @@ function CustomizedSnackbars(props) {
       </Snackbar>
     </div>
   );
-}
+};
 
 CustomizedSnackbars.propTypes = {
-  showSnackBar: PropTypes.bool,
-  hideSnackBar: PropTypes.func,
   message: PropTypes.string,
 };
 

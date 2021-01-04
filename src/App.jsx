@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import {
   AsyncHomePageComponent,
   AsyncSignInPageComponent,
@@ -12,7 +11,8 @@ import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import './lib/Css.js';
 
-function App(props) {
+const App = () => {
+  const location = useLocation();
   const getUrl = (pathname) => {
     const pathArray = pathname.split('/');
     const loginUrl = ['/login'];
@@ -22,7 +22,7 @@ function App(props) {
 
   return (
     <Fragment>
-      {!getUrl(props.location.pathname) && <Header />}
+      {!getUrl(location.pathname) && <Header />}
       <Switch>
         <Route exact path="/" component={AsyncHomePageComponent} />
         <Route exact path="/login" component={AsyncSignInPageComponent} />
@@ -30,13 +30,9 @@ function App(props) {
         <Route exact path="/posts" component={AsyncPostsPageComponent} />
         <Route exact path="/chats" component={AsyncChatsPageComponent} />
       </Switch>
-      {getUrl(props.location.pathname) && <Footer />}
+      {getUrl(location.pathname) && <Footer />}
     </Fragment>
   );
-}
-
-App.propTypes = {
-  location: PropTypes.object.isRequired,
 };
 
 export default App;

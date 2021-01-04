@@ -94,7 +94,7 @@ const HomePage = (props) => {
                         </Grid>
                     </Grid>
                 </AppBar>
-                <Grid container direction="row" justify="space-between" spacing={5} className="mt-0">
+                <Grid container direction="row" justify="space-between" spacing={5} className="mt-0 mb-0">
                     <Grid item xs={12} sm={12} md={8} lg={8} xl={8} className="mt-60">
                         <Grid container direction="column" justify="center">
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginBottom: 20 }}>

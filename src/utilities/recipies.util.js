@@ -15,11 +15,11 @@ export const useASelector = (selector, props) => useSelector(useCallback(selecto
  * const useAction = makeHook(authActions)
  * const action = useAction('confirmSignUp')
  */
-export function makeActionHook(actions) {
+export const makeActionHook = (actions) => {
   return (action, isNull = false) => {
     const dispatch = useDispatch();
     const act = actions[action];
     const callback = isNull ? () => dispatch(act()) : (payload) => dispatch(act(payload));
     return useCallback(callback, []);
   };
-}
+};

@@ -4,6 +4,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
   loading: false,
+  showSnackBar: false,
 };
 
 const globalSlice = createSlice({
@@ -12,6 +13,9 @@ const globalSlice = createSlice({
   reducers: {
     setLoading: (state, { payload }) => {
       state.loading = payload;
+    },
+    setShowSnackBar: (state, { payload }) => {
+      state.showSnackBar = payload;
     },
   },
 });

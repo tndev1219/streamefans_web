@@ -3,40 +3,21 @@
  * Code Splitting Component / Server Side Rendering
  */
 import React from 'react';
-import Loadable from 'react-loadable';
-
-// app loader
-import ContentLoader from '../components/global/Loader';
 
 // Home
-const AsyncHomePageComponent = Loadable({
-  loader: () => import('../routes/home'),
-  loading: () => < ContentLoader />,
-});
+const AsyncHomePageComponent = React.lazy(() => import('../routes/home'));
 
 // Notifications
-const AsyncNotificationsPageComponent = Loadable({
-  loader: () => import('../routes/notifications'),
-  loading: () => < ContentLoader />,
-});
+const AsyncNotificationsPageComponent = React.lazy(() => import('../routes/notifications'));
 
 // Posts
-const AsyncPostsPageComponent = Loadable({
-  loader: () => import('../routes/posts'),
-  loading: () => < ContentLoader />,
-});
+const AsyncPostsPageComponent = React.lazy(() => import('../routes/posts'));
 
 // SignIn
-const AsyncSignInPageComponent = Loadable({
-  loader: () => import('../routes/signin'),
-  loading: () => < ContentLoader />,
-});
+const AsyncSignInPageComponent = React.lazy(() => import('../routes/signin'));
 
 // Chat
-const AsyncChatsPageComponent = Loadable({
-	loader: () => import('../routes/chats'),
-	loading: () => < ContentLoader />,
-});
+const AsyncChatsPageComponent = React.lazy(() => import('../routes/chats'));
 
 // //Reset Password
 // const AsyncResetPasswordPageComponent = Loadable({

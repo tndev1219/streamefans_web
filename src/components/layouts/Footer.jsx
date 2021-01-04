@@ -8,7 +8,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Container, Divider } from '@material-ui/core';
 
-export default function Footer(props) {
+export default Footer = (props) => {
     return (
         <footer style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Container maxWidth="lg" style={{ position: 'fixed', bottom: 0 }}>

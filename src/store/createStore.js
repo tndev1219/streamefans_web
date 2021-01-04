@@ -4,7 +4,7 @@ import { routerMiddleware } from 'react-router-redux';
 import { history } from '../utilities/history.util';
 import rootSaga from '../saga/sagas';
 
-function createStoreWithMiddleware(rootReducer) {
+const createStoreWithMiddleware = (rootReducer) => {
   const sagaMiddleware = createSagaMiddleware();
   const routersMiddleware = routerMiddleware(history);
 

@@ -23,7 +23,7 @@ const NotificationsPage = (props) => {
                         <Grid item style={{ marginBottom: -15 }}>
                             <Grid container direction="row" justify="space-between">
                                 <Grid item style={{ display: 'flex', alignItems: 'center' }}>
-                                    <IconButton onClick={() => history.back()} style={{ color: 'black' }}>
+                                    <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
                                     <span style={{ fontWeight: 'bold' }}>NOTIFICATIONS</span>
