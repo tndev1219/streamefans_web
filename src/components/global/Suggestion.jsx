@@ -26,7 +26,7 @@ const Suggestion = (props) => {
             </div>
             <img src={AvatarImg} alt='avatar' style={{ position: 'relative', width: 90, height: 90, borderRadius: 100, border: '2px solid #fff', top: -45, left: 15 }} />
             <div style={{ position: 'relative', top: -145, left: 10, height: 25, width: 40, backgroundColor: '#000', opacity: 0.5, borderRadius: 7, justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                <span style={{ color: 'white', fontSize: 12, fontWeight: 'bold' }}>Free</span>
+                <span style={{ color: 'white', fontSize: 12, fontWeight: 500 }}>Free</span>
             </div>
         </div>
     );

@@ -48,7 +48,7 @@ const ProfilePage = (props) => {
                                         <ArrowBackRoundedIcon style={{ color: 'white' }} />
                                     </IconButton>
                                     <Box style={{ display: 'grid' }}>
-                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 'bold' }}>makiyoshikawa</span>
+                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>makiyoshikawa</span>
                                         <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>0 No posts</span>
                                     </Box>
                                 </Box>
@@ -100,13 +100,13 @@ const ProfilePage = (props) => {
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'center' }}>
                             <Box style={{ width: '95%' }}>
-                                <p style={{ marginTop: 20, fontWeight: 'bold', fontSize: 19 }}>makiyoshikawa</p>
-                                <p style={{ marginTop: -10, fontSize: 14, color: '#999' }}>@makiyoshikawa・Active</p>
+                                <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>makiyoshikawa</p>
+                                <p style={{ marginTop: -10, fontSize: 14, color: '#aaa' }}>@makiyoshikawa・Active</p>
                                 <p style={{ marginTop: 30, fontSize: 18 }}>I cannot change yesterday, but I can change today.</p>
                             </Box>
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
-                            <span style={{ fontWeight: 'bold', fontSize: 16 }}>NO POSTS YET</span>
+                            <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>
                             <Box>
                                 <IconButton disabled>
                                     <SearchRoundedIcon />

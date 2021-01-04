@@ -19,7 +19,7 @@ const ChatsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 'bold' }}>MESSAGES</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>MESSAGES</span>
                                 </Grid>
                                 <Grid item>
                                     <IconButton>
@@ -31,7 +31,7 @@ const ChatsPage = (props) => {
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between">
-                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8a96a3' }}>
                         No messages yet!
                     </Grid>
                 </Grid>

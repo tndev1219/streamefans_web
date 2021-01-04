@@ -13,7 +13,7 @@ const Footer = (props) => {
         <footer style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Container maxWidth="lg" style={{ position: 'fixed', bottom: 0 }}>
                 <Divider />
-                <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" className="mt-10 mb-10" style={{ fontSize: 13, color: '#8a96a3', fontWeight: 'bold' }}>
+                <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" className="mt-10 mb-10" style={{ fontSize: 13, color: '#8a96a3', fontWeight: 500 }}>
                     <Grid item>
                         <span>@2020 StreaMeFans</span>
                         <span> ・ </span>

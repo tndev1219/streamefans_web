@@ -38,8 +38,8 @@ const HomePage = (props) => {
                 style={{
                     width: 4,
                     height: 4,
-                    backgroundColor: sliderIndex === i ? '#888' : 'white',
-                    border: "1px #888 solid ",
+                    backgroundColor: sliderIndex === i ? '#8a96a3' : 'white',
+                    border: "1px #8a96a3 solid ",
                     borderRadius: 50,
                 }}
             >
@@ -82,9 +82,9 @@ const HomePage = (props) => {
                                 onChange={(e, index) => setTabIndex(index)}
                                 aria-label="simple tabs example"
                             >
-                                <Tab label="HOME" style={{ fontWeight: 'bold' }} />
-                                <Tab label="PURCHASED" style={{fontWeight: 'bold'}} />
-                                <Tab label="FRIENDS" style={{ fontWeight: 'bold' }} />
+                                <Tab label="HOME" style={{ fontWeight: 500 }} />
+                                <Tab label="PURCHASED" style={{ fontWeight: 500 }} />
+                                <Tab label="FRIENDS" style={{ fontWeight: 500 }} />
                             </Tabs>
                         </Grid>
                         <Grid item>
@@ -111,14 +111,14 @@ const HomePage = (props) => {
                                             <Avatar alt="my-avatar" src={AvatarImg} variant="circular" style={{ width: 50, height: 50 }} />
                                         </Badge>
                                         <div style={{ marginLeft: 20, height: 10 }}>
-                                            <p style={{ marginTop: 10, fontWeight: 'bold', fontSize: 15 }}>Chef Boy MD</p>
-                                            <p style={{ marginTop: -13, fontSize: 13, color: '#888' }}>@chefbodymd</p>
+                                            <p style={{ marginTop: 10, fontWeight: 'bold', fontSize: 16 }}>Chef Boy MD</p>
+                                            <p style={{ marginTop: -13, fontSize: 13, color: '#8a96a3' }}>@chefbodymd</p>
                                         </div>
                                     </Grid>
                                     <Grid item>
-                                        <span style={{ color: '#888', fontSize: 15 }}>Yesterday</span>
+                                        <span style={{ color: '#8a96a3', fontSize: 15 }}>Yesterday</span>
                                         <IconButton>
-                                            <MoreHorizRoundedIcon />
+                                            <MoreHorizRoundedIcon style={{ color: '#8a96a3' }} />
                                         </IconButton>
                                     </Grid>
                                 </Grid>
@@ -133,21 +133,21 @@ const HomePage = (props) => {
                                 <Grid container direction="row" justify="space-between" alignItems="center">
                                     <Grid item>
                                         <IconButton onClick={() => setLike(!like)}>
-                                            {like ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
+                                            {like ? <FavoriteRoundedIcon style={{ color: '#8a96a3' }} /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                                         </IconButton>
                                         <IconButton>
-                                            <AssistantOutlinedIcon />
+                                            <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />
                                         </IconButton>
                                         <Button
                                             startIcon={<AttachMoneyRoundedIcon />}
-                                            style={{ fontWeight: 'bold', borderRadius: 100, color: '#666' }}
+                                            style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
                                         >
                                             SEND TIP
                                         </Button>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setBookMarked(!bookmarked)}>
-                                            {bookmarked ? <BookmarkRoundedIcon /> : <BookmarkBorderRoundedIcon />}
+                                            {bookmarked ? <BookmarkRoundedIcon style={{ color: '#8a96a3' }} /> : <BookmarkBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                                         </IconButton>
                                     </Grid>
                                 </Grid>
@@ -175,13 +175,13 @@ const HomePage = (props) => {
                                         </Badge>
                                         <div style={{ marginLeft: 20, height: 10 }}>
                                             <p style={{ marginTop: 10, fontWeight: 'bold', fontSize: 15 }}>Chef Boy MD</p>
-                                            <p style={{ marginTop: -13, fontSize: 13, color: '#888' }}>@chefbodymd</p>
+                                            <p style={{ marginTop: -13, fontSize: 13, color: '#8a96a3' }}>@chefbodymd</p>
                                         </div>
                                     </Grid>
                                     <Grid item>
-                                        <span style={{ color: '#888', fontSize: 15 }}>Yesterday</span>
+                                        <span style={{ color: '#8a96a3', fontSize: 15 }}>Yesterday</span>
                                         <IconButton>
-                                            <MoreHorizRoundedIcon />
+                                            <MoreHorizRoundedIcon style={{ color: '#8a96a3' }} />
                                         </IconButton>
                                     </Grid>
                                 </Grid>
@@ -196,21 +196,21 @@ const HomePage = (props) => {
                                 <Grid container direction="row" justify="space-between" alignItems="center">
                                     <Grid item>
                                         <IconButton onClick={() => setLike(!like)}>
-                                            {like ? <FavoriteRoundedIcon /> : <FavoriteBorderRoundedIcon />}
+                                            {like ? <FavoriteRoundedIcon style={{ color: '#8a96a3' }} /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                                         </IconButton>
                                         <IconButton>
-                                            <AssistantOutlinedIcon />
+                                            <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />
                                         </IconButton>
                                         <Button
                                             startIcon={<AttachMoneyRoundedIcon />}
-                                            style={{ fontWeight: 'bold', borderRadius: 100, color: '#666' }}
+                                            style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
                                         >
                                             SEND TIP
                                         </Button>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setBookMarked(!bookmarked)}>
-                                            {bookmarked ? <BookmarkRoundedIcon /> : <BookmarkBorderRoundedIcon />}
+                                            {bookmarked ? <BookmarkRoundedIcon style={{ color: '#8a96a3' }} /> : <BookmarkBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                                         </IconButton>
                                     </Grid>
                                 </Grid>
@@ -225,7 +225,7 @@ const HomePage = (props) => {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} discription="suggestion header">
                                 <Grid container direction="row" justify="space-between" alignItems="center">
                                     <Grid item>
-                                        <span style={{ color: '#aaa', fontWeight: 'bold', fontSize: 15 }}>SUGGESTIONS</span>
+                                        <span style={{ color: '#8a96a3', fontWeight: 500, fontSize: 18 }}>SUGGESTIONS</span>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setFreeSugg(!freeSugg)}>

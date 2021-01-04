@@ -120,7 +120,7 @@
     border-radius: 5px;
     .iron-col{
         &:first-child,&:nth-child(2){
-            border-right:2px solid #eee;
+            border-right:2px solid #8a96a3;
         }
     }
     
@@ -1302,7 +1302,7 @@
         }
         .post-action{
             padding: 1rem;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #8a96a3;
            button,a{
                padding:0;
                min-width:auto;

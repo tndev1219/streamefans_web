@@ -64,7 +64,7 @@ const NotificationsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 'bold' }}>NEW POST</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>NEW POST</span>
                                 </Grid>
                                 <Grid item>
                                     <Button style={{ borderRadius: 100, width: 80, fontWeight: 'bold', backgroundColor: '#00aff0', color: 'white' }}>

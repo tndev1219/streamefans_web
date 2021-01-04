@@ -11,6 +11,33 @@ import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 // component
 
+const tabList = [
+    {
+        label: 'ALL',
+        icon: <LibraryAddCheckOutlinedIcon style={{ marginRight: 10 }} />,
+    },
+    {
+        label: 'INTERACTIONS',
+        icon: <AssistantOutlinedIcon style={{ marginRight: 10 }} />,
+    },
+    {
+        label: 'LIKED',
+        icon: <FavoriteBorderRoundedIcon style={{ marginRight: 10 }} />,
+    },
+    {
+        label: 'SUBSCRIBED',
+        icon: <LockOpenRoundedIcon style={{ marginRight: 10 }} />,
+    },
+    {
+        label: 'TIPPED',
+        icon: <AttachMoneyRoundedIcon style={{ marginRight: 10 }} />,
+    },
+    {
+        label: 'PROMOTIONS',
+        icon: <ReportProblemOutlinedIcon style={{ marginRight: 10 }} />,
+    },
+];
+
 const NotificationsPage = (props) => {
     const history = useHistory();
     const [tabIndex, setTabIndex] = useState(0);
@@ -26,7 +53,7 @@ const NotificationsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 'bold' }}>NOTIFICATIONS</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>NOTIFICATIONS</span>
                                 </Grid>
                                 <Grid item>
                                     <IconButton onClick={() => history.push('/settings')} style={{ color: 'black' }}>
@@ -45,12 +72,9 @@ const NotificationsPage = (props) => {
                                         onChange={(e, index) => setTabIndex(index)}
                                         aria-label="simple tabs example"
                                     >
-                                        <Tab label={<div style={{ display: 'flex' }}><LibraryAddCheckOutlinedIcon style={{ marginRight: 10 }} />ALL</div>} style={{ fontWeight: 'bold' }} />
-                                        <Tab label={<div style={{ display: 'flex' }}><AssistantOutlinedIcon style={{ marginRight: 10 }} />INTERACTIONS</div>} style={{ fontWeight: 'bold' }} />
-                                        <Tab label={<div style={{ display: 'flex' }}><FavoriteBorderRoundedIcon style={{ marginRight: 10 }} />LIKED</div>} style={{ fontWeight: 'bold' }} />
-                                        <Tab label={<div style={{ display: 'flex' }}><LockOpenRoundedIcon style={{ marginRight: 10 }} />SUBSCRIBED</div>} style={{ fontWeight: 'bold' }} />
-                                        <Tab label={<div style={{ display: 'flex' }}><AttachMoneyRoundedIcon style={{ marginRight: 10 }} />TIPPED</div>} style={{ fontWeight: 'bold' }} />
-                                        <Tab label={<div style={{ display: 'flex' }}><ReportProblemOutlinedIcon style={{ marginRight: 10 }} />PROMOTIONS</div>} style={{ fontWeight: 'bold' }} />
+                                        {tabList.map((item, key) => (
+                                            <Tab key={key} label={<div style={{ display: 'flex' }}>{item.icon}{item.label}</div>} style={{ fontWeight: 500 }} />
+                                        ))}
                                     </Tabs>
                                 </Grid>
                             </Grid>
@@ -59,10 +83,10 @@ const NotificationsPage = (props) => {
                 </AppBar>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20">
-                        <p style={{ fontWeight: 'bold', color: '#888', fontSize: 15 }}>ALL</p>
+                        <p style={{ fontWeight: 500, color: '#8a96a3', fontSize: 19 }}>{tabList[tabIndex].label}</p>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <p style={{ textAlign: 'center', color: '#888', fontSize: 14 }}>No notificaitons currently!</p>
+                        <p style={{ textAlign: 'center', color: '#8a96a3', fontSize: 14 }}>No notificaitons currently!</p>
                     </Grid>
                 </Grid>
             </Container>

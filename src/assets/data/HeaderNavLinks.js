@@ -10,22 +10,22 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 export default [
     {
         "path": "/",
-        "icon": <HomeOutlinedIcon />
+        "icon": <HomeOutlinedIcon style={{fontSize: 32}} />
     },
     {
         "path": "/notifications",
-        "icon": <NotificationsNoneOutlinedIcon />
+        "icon": <NotificationsNoneOutlinedIcon style={{fontSize: 32}} />
     },
     {
         "path": "/posts",
-        "icon": <AddBoxOutlinedIcon />
+        "icon": <AddBoxOutlinedIcon style={{fontSize: 32}} />
     },
     {
         "path": "/chats",
-        "icon": <ChatOutlinedIcon />
+        "icon": <ChatOutlinedIcon style={{fontSize: 32}} />
     },
     {
         "path": null,
-        "icon": <AccountCircleOutlinedIcon />
+        "icon": <AccountCircleOutlinedIcon style={{fontSize: 32}} />
     }
 ]
