@@ -18,6 +18,6 @@ const createStoreWithMiddleware = (rootReducer) => {
   return {
     store,
   };
-}
+};
 
 export { createStoreWithMiddleware };

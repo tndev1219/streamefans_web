@@ -19,6 +19,9 @@ const AsyncSignInPageComponent = React.lazy(() => import('../routes/signin'));
 // Chat
 const AsyncChatsPageComponent = React.lazy(() => import('../routes/chats'));
 
+// Profile
+const AsyncProfilePageComponent = React.lazy(() => import('../routes/profile'));
+
 // //Reset Password
 // const AsyncResetPasswordPageComponent = Loadable({
 // 	loader: () => import('../routes/reset-password'),
@@ -158,6 +161,7 @@ export {
   AsyncPostsPageComponent,
   AsyncSignInPageComponent,
   AsyncChatsPageComponent,
+  AsyncProfilePageComponent,
   // AsyncResetPasswordPageComponent,
   // AsyncContactUsPageComponent,
   // AsyncCheckoutPageComponent,

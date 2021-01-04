@@ -6,6 +6,7 @@ import {
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
   AsyncChatsPageComponent,
+  AsyncProfilePageComponent,
 } from './utilities/AsyncRoutes';
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
         <Route exact path="/posts" component={AsyncPostsPageComponent} />
         <Route exact path="/chats" component={AsyncChatsPageComponent} />
+        <Route exact path="/profile" component={AsyncProfilePageComponent} />
       </Switch>
       {getUrl(location.pathname) && <Footer />}
     </Fragment>

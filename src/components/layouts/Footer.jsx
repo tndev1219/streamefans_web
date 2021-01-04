@@ -8,7 +8,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Container, Divider } from '@material-ui/core';
 
-export default Footer = (props) => {
+const Footer = (props) => {
     return (
         <footer style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Container maxWidth="lg" style={{ position: 'fixed', bottom: 0 }}>
@@ -46,3 +46,5 @@ export default Footer = (props) => {
         </footer>
     )
 }
+
+export default React.memo(Footer);

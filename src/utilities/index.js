@@ -1,6 +1,6 @@
 export const clearToken = () => {
     localStorage.removeItem('streamefans_token');
-}
+};
 
 export const getToken = () => {
     try {
@@ -10,4 +10,4 @@ export const getToken = () => {
         clearToken();
         return null;
     }
-}
+};
