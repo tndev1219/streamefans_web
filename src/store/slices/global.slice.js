@@ -5,6 +5,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 const INITIAL_STATE = {
   loading: false,
   showSnackBar: false,
+  loggedIn: false,
 };
 
 const globalSlice = createSlice({
@@ -16,6 +17,9 @@ const globalSlice = createSlice({
     },
     setShowSnackBar: (state, { payload }) => {
       state.showSnackBar = payload;
+    },
+    setLoggedIn: (state, {payload}) => {
+      state.loggedIn = payload;
     },
   },
 });

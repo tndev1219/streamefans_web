@@ -9,7 +9,7 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 /* eslint-disable */
 export default [
     {
-        "path": "/",
+        "path": "/home",
         "icon": <HomeOutlinedIcon style={{fontSize: 32}} />
     },
     {

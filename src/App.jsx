@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
 import {
+  AsyncSplashPageComponent,
   AsyncHomePageComponent,
   AsyncSignInPageComponent,
   AsyncNotificationsPageComponent,
@@ -36,6 +37,7 @@ import {
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import './lib/Css.js';
+import './App.css';
 
 const App = () => {
   const location = useLocation();
@@ -48,10 +50,11 @@ const App = () => {
 
   return (
     <Fragment>
-      {!getUrl(location.pathname) && <Header />}
+      {!getUrl(location.pathname) && location.pathname !== '/' && <Header />}
       <Switch>
         <Redirect exact from="/settings" to="/settings/profile"></Redirect>
-        <Route exact path="/" component={AsyncHomePageComponent} />
+        <Route exact path="/" component={AsyncSplashPageComponent} />
+        <Route exact path="/home" component={AsyncHomePageComponent} />
         <Route exact path="/login" component={AsyncSignInPageComponent} />
         <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
         <Route exact path="/posts" component={AsyncPostsPageComponent} />

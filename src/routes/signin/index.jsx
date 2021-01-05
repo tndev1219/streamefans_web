@@ -86,7 +86,7 @@ const SignIn = (props) => {
     };
 
     const handleSubmit = () => {
-        history.push('/');
+        history.push('/home');
         // const loginData = fields;
     };
 

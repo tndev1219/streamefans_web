@@ -4,6 +4,9 @@
  */
 import React from 'react';
 
+// Splash
+const AsyncSplashPageComponent = React.lazy(() => import('../routes/splash'));
+
 // Home
 const AsyncHomePageComponent = React.lazy(() => import('../routes/home'));
 
@@ -98,6 +101,7 @@ const AsyncSettingsNotificationsSitePageComponent = React.lazy(() => import('../
 const AsyncSettingsNotificationsToastPageComponent = React.lazy(() => import('../routes/settings/notifications/toast'));
 
 export {
+  AsyncSplashPageComponent,
   AsyncHomePageComponent,
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
