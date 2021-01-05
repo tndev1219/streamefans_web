@@ -61,7 +61,6 @@ const BookmarksPage = (props) => {
         setSelectedTab(index);
     };
 
-
     const handleFilter = (event) => {
         setAnchorEl(event.currentTarget);
     };

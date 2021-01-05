@@ -30,7 +30,7 @@ const FixedHeader = (props) => {
             <Grid item xs={1} sm={1} md={1} lg={1} xl={1}></Grid>
             {headerNavLinks.map((nav, key) => (
                 <Grid item xs={2} sm={2} md={2} lg={2} xl={2} key={key} style={{ justifyContent: 'center', display: 'flex' }}>
-                    <IconButton color={index === key ? "primary" : "#8a96a3"} onClick={() => handleClick(key, nav.path)} style={{width: 48, height: 48}}>
+                    <IconButton onClick={() => handleClick(key, nav.path)} style={{width: 48, height: 48, color: index === key ? "#00aff0" : "#8a96a3"}}>
                         {nav.icon}
                     </IconButton>
                 </Grid>

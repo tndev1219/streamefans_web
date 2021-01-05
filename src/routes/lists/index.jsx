@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, IconButton, AppBar, Box, Menu, MenuItem, RadioGroup, FormControlLabel, Radio, Divider } from '@material-ui/core';
+import { Container, Grid, IconButton, AppBar, Box, Menu, MenuItem, RadioGroup, FormControlLabel, Radio, Divider, Dialog, DialogTitle, TextField, Button, DialogContent, DialogActions } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
@@ -55,6 +55,7 @@ const ListsPage = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [timeFilterValue, setTimeFilterValue] = useState('Name');
     const [charactorFilterValue, setCharactorFilterValue] = useState('a');
+    const [showModal, setShowModal] = useState(false);
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -92,7 +93,7 @@ const ListsPage = (props) => {
                             <span style={{ fontWeight: 500, fontSize: 19 }}>LISTS</span>
                         </Box>
                         <Box>
-                            <IconButton>
+                            <IconButton onClick={() => setShowModal(true)}>
                                 <AddRoundedIcon />
                             </IconButton>
                         </Box>
@@ -167,6 +168,37 @@ const ListsPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
+            <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="sm" fullWidth>
+                <DialogTitle>CREATE NEW LIST</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        variant="outlined"
+                        margin="dense"
+                        id="name"
+                        label="Enter list name"
+                        type="string"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => setShowModal(false)}
+                        color="primary"
+                        style={{ borderRadius: 50, fontWeight: 'bold' }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => setShowModal(false)}
+                        disabled={true}
+                        color="primary"
+                        style={{ borderRadius: 50, fontWeight: 'bold' }}
+                    >
+                        Save
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Fragment >
     );
 };

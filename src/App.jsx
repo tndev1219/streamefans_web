@@ -9,6 +9,8 @@ import {
   AsyncProfilePageComponent,
   AsyncBookmarksPageComponent,
   AsyncListsPageComponent,
+  AsyncPaymentsPageComponent,
+  AsyncAddCardPageComponent,
 } from './utilities/AsyncRoutes';
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
@@ -35,6 +37,8 @@ const App = () => {
         <Route exact path="/profile" component={AsyncProfilePageComponent} />
         <Route exact path="/bookmarks" component={AsyncBookmarksPageComponent} />
         <Route exact path="/lists" component={AsyncListsPageComponent} />
+        <Route exact path="/payments" component={AsyncPaymentsPageComponent} />
+        <Route exact path="/payments/add_card" component={AsyncAddCardPageComponent} />
       </Switch>
       {getUrl(location.pathname) && <Footer />}
     </Fragment>

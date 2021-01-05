@@ -28,6 +28,12 @@ const AsyncBookmarksPageComponent = React.lazy(() => import('../routes/bookmarks
 // Lists
 const AsyncListsPageComponent = React.lazy(() => import('../routes/lists'));
 
+// Payments
+const AsyncPaymentsPageComponent = React.lazy(() => import('../routes/payments'));
+
+// Add Card
+const AsyncAddCardPageComponent = React.lazy(() => import('../routes/payments/addcard'));
+
 export {
   AsyncHomePageComponent,
   AsyncNotificationsPageComponent,
@@ -37,27 +43,6 @@ export {
   AsyncProfilePageComponent,
   AsyncBookmarksPageComponent,
   AsyncListsPageComponent,
-  // AsyncContactUsPageComponent,
-  // AsyncCheckoutPageComponent,
-  // AsyncShopNowPageComponent,
-  // AsyncProductDetailPageComponent,
-  // AsyncCartPageComponent,
-  // AsyncUserAccountComponent,
-  // AsyncUserOrderHistoryComponent,
-  // AsyncUserProfileComponent,
-  // AsyncUserAddressComponent,
-  // AsyncUserCardsComponent,
-  // AsyncUserEditComponent,
-  // AsyncPageNotFoundComponent,
-  // AsyncFarmerOrderListComponent,
-  // AsyncFarmerReportsComponent,
-  // AsyncProductsGridComponent,
-  // AsyncProductAddComponent,
-  // AsyncProductEditComponent,
-  // AsyncProductDetailComponent,
-  // AsyncFarmerProfileDetailComponent,
-  // AsyncDriverReportsComponent,
-  // AsyncDriverInvoiceListComponent,
-  // AsyncDeliveryListComponent,
-  // AsyncDriverProfileDetailComponent
+  AsyncPaymentsPageComponent,
+  AsyncAddCardPageComponent,
 };

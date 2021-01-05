@@ -58,7 +58,7 @@ const SidebarMenu = (props) => {
                                 />
                             </ListItem>
                             {settingsNavLinks.map((NavLink, index) => (
-                                <ListItem button key={index} onClick={() => {props.setOpen(false); history.push(NavLink.path);}}>
+                                <ListItem button key={index} onClick={() => { props.setOpen(false); history.push(NavLink.path); }}>
                                     <ListItemIcon>
                                         {NavLink.icon}
                                     </ListItemIcon>
@@ -67,7 +67,7 @@ const SidebarMenu = (props) => {
                             ))}
                             <ListItem divider></ListItem>
                             {paymentNavLinks.map((NavLink, index) => (
-                                <ListItem button key={index} onClick={() => props.setOpen(false)}>
+                                <ListItem button key={index} onClick={() => { props.setOpen(false); history.push(NavLink.path); }}>
                                     <ListItemIcon>
                                         {NavLink.icon}
                                     </ListItemIcon>

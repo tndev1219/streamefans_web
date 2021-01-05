@@ -10,7 +10,7 @@ import SnackBar from '../../components/global/SnackBar';
 
 import { useGlobalAction } from '../../store/slices/global.slice';
 
-const NotificationsPage = (props) => {
+const PostsPage = (props) => {
     const fileInput = useRef();
     const history = useHistory();
     const [imageList, setImageList] = useState([]);
@@ -122,4 +122,4 @@ const NotificationsPage = (props) => {
     );
 };
 
-export default React.memo(NotificationsPage);
+export default React.memo(PostsPage);
