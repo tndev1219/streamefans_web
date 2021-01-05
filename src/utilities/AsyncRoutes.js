@@ -34,6 +34,12 @@ const AsyncPaymentsPageComponent = React.lazy(() => import('../routes/payments')
 // Add Card
 const AsyncAddCardPageComponent = React.lazy(() => import('../routes/payments/addcard'));
 
+// Banking
+const AsyncBankingPageComponent = React.lazy(() => import('../routes/banking'));
+
+// Billing Support
+const AsyncBillingSupportPageComponent = React.lazy(() => import('../routes/banking/support'));
+
 export {
   AsyncHomePageComponent,
   AsyncNotificationsPageComponent,
@@ -45,4 +51,6 @@ export {
   AsyncListsPageComponent,
   AsyncPaymentsPageComponent,
   AsyncAddCardPageComponent,
+  AsyncBankingPageComponent,
+  AsyncBillingSupportPageComponent,
 };

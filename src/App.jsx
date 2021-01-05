@@ -11,6 +11,8 @@ import {
   AsyncListsPageComponent,
   AsyncPaymentsPageComponent,
   AsyncAddCardPageComponent,
+  AsyncBankingPageComponent,
+  AsyncBillingSupportPageComponent,
 } from './utilities/AsyncRoutes';
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
@@ -39,6 +41,8 @@ const App = () => {
         <Route exact path="/lists" component={AsyncListsPageComponent} />
         <Route exact path="/payments" component={AsyncPaymentsPageComponent} />
         <Route exact path="/payments/add_card" component={AsyncAddCardPageComponent} />
+        <Route exact path="/banking" component={AsyncBankingPageComponent} />
+        <Route exact path="/banking/support" component={AsyncBillingSupportPageComponent} />
       </Switch>
       {getUrl(location.pathname) && <Footer />}
     </Fragment>

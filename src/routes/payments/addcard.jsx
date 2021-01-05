@@ -234,7 +234,7 @@ const AddCardPage = (props) => {
                             label="Tick here to confirm that you are at least 18 years old and the age of majority in your place of residence"
                             className="mt-20"
                         />
-                        <Box style={{display: 'flex', justifyContent: 'flex-end'}}>
+                        <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
                             <Button
                                 variant="contained"
                                 color="primary"

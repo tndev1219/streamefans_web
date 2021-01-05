@@ -13,7 +13,6 @@ const Suggestion = (props) => {
                 height: 120,
                 borderRadius: 10,
                 border: '2px solid #fff',
-                // marginBottom: 15,
             }}
         >
             <div style={{ position: 'relative', top: 60, bottom: 0, height: 60, width: '100%', backgroundColor: '#000', opacity: 0.5, borderRadius: '0px 0px 10px 10px', display: 'block' }}>
