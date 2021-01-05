@@ -121,6 +121,7 @@ const ProfilePage = (props) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
+                                onClick={() => history.push('/posts')}
                                 style={{ borderRadius: 100, fontWeight: 'bold', border: 0 }}
                             >
                                 CREATE NEW POST
