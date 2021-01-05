@@ -40,6 +40,63 @@ const AsyncBankingPageComponent = React.lazy(() => import('../routes/banking'));
 // Billing Support
 const AsyncBillingSupportPageComponent = React.lazy(() => import('../routes/banking/support'));
 
+// Settings Profile
+const AsyncSettingsProfilePageComponent = React.lazy(() => import('../routes/settings/profile'));
+
+// Settings Account
+const AsyncSettingsAccountPageComponent = React.lazy(() => import('../routes/settings/account'));
+
+// Settings Security
+const AsyncSettingsSecurityPageComponent = React.lazy(() => import('../routes/settings/security'));
+
+// Settings Fans
+const AsyncSettingsFansPageComponent = React.lazy(() => import('../routes/settings/fans'));
+
+// Settings Notifications
+const AsyncSettingsNotificationsPageComponent = React.lazy(() => import('../routes/settings/notifications'));
+
+// Settings Display
+const AsyncSettingsDisplayPageComponent = React.lazy(() => import('../routes/settings/display'));
+
+// Settings Changelog
+const AsyncSettingsChangeLogPageComponent = React.lazy(() => import('../routes/settings/changelog'));
+
+// Settings Subscription
+const AsyncSettingsSubscriptionPageComponent = React.lazy(() => import('../routes/settings/subscription'));
+
+// Settings Account Username
+const AsyncSettingsAccountUsernamePageComponent = React.lazy(() => import('../routes/settings/account/username'));
+
+// Settings Account Email
+const AsyncSettingsAccountEmailPageComponent = React.lazy(() => import('../routes/settings/account/email'));
+
+// Settings Account Phone
+const AsyncSettingsAccountPhonePageComponent = React.lazy(() => import('../routes/settings/account/phone'));
+
+// Settings Account Twitter
+const AsyncSettingsAccountTwitterPageComponent = React.lazy(() => import('../routes/settings/account/twitter'));
+
+// Settings Account Google
+const AsyncSettingsAccountGooglePageComponent = React.lazy(() => import('../routes/settings/account/google'));
+
+// Settings Account Password
+const AsyncSettingsAccountPasswordPageComponent = React.lazy(() => import('../routes/settings/account/password'));
+
+// Settings Account Delete
+const AsyncSettingsAccountDeletePageComponent = React.lazy(() => import('../routes/settings/account/delete'));
+
+// Settings Notifications Push
+const AsyncSettingsNotificationsPushPageComponent = React.lazy(() => import('../routes/settings/notifications/push'));
+
+// Settings Notifications Email
+const AsyncSettingsNotificationsEmailPageComponent = React.lazy(() => import('../routes/settings/notifications/email'));
+
+// Settings Notifications Site
+const AsyncSettingsNotificationsSitePageComponent = React.lazy(() => import('../routes/settings/notifications/site'));
+
+// Settings Notifications toast
+const AsyncSettingsNotificationsToastPageComponent = React.lazy(() => import('../routes/settings/notifications/toast'));
+
 export {
   AsyncHomePageComponent,
   AsyncNotificationsPageComponent,
@@ -53,4 +110,23 @@ export {
   AsyncAddCardPageComponent,
   AsyncBankingPageComponent,
   AsyncBillingSupportPageComponent,
+  AsyncSettingsProfilePageComponent,
+  AsyncSettingsAccountPageComponent,
+  AsyncSettingsSecurityPageComponent,
+  AsyncSettingsFansPageComponent,
+  AsyncSettingsNotificationsPageComponent,
+  AsyncSettingsDisplayPageComponent,
+  AsyncSettingsChangeLogPageComponent,
+  AsyncSettingsSubscriptionPageComponent,
+  AsyncSettingsAccountUsernamePageComponent,
+  AsyncSettingsAccountEmailPageComponent,
+  AsyncSettingsAccountPhonePageComponent,
+  AsyncSettingsAccountTwitterPageComponent,
+  AsyncSettingsAccountGooglePageComponent,
+  AsyncSettingsAccountPasswordPageComponent,
+  AsyncSettingsAccountDeletePageComponent,
+  AsyncSettingsNotificationsPushPageComponent,
+  AsyncSettingsNotificationsEmailPageComponent,
+  AsyncSettingsNotificationsSitePageComponent,
+  AsyncSettingsNotificationsToastPageComponent,
 };

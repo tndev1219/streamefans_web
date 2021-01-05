@@ -89,6 +89,7 @@ const ProfilePage = (props) => {
                                         color="primary"
                                         startIcon={<SettingsOutlinedIcon />}
                                         style={{ borderRadius: 100, fontWeight: 'bold', height: 50, marginRight: 10 }}
+                                        onClick={() => history.push('/settings')}
                                     >
                                         Edit Profile
                                     </Button>

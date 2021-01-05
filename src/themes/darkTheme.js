@@ -4,47 +4,43 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 
-import AppConfig from 'Constants/AppConfig';
-
-const { darkBgColor } = AppConfig.darkThemeColors;
-
 const theme = createMuiTheme({
    palette: {
       type: 'dark',
       types: {
          dark: {
             background: {
-               paper: darkBgColor,
-               default: darkBgColor,
-               appBar: darkBgColor,
-               contentFrame: darkBgColor,
-               chip: darkBgColor,
-               avatar: darkBgColor,
-               tabs: darkBgColor
-            }
-         }
+               paper: '#333',
+               default: '#333',
+               appBar: '#333',
+               contentFrame: '#333',
+               chip: '#333',
+               avatar: '#333',
+               tabs: '#333',
+            },
+         },
       },
       primary: {
          light: grey[400],
          main: grey[700],
          dark: grey[900],
-         contrastText: '#fff'
+         contrastText: '#fff',
       },
       secondary: {
          light: grey[700],
          main: grey[700],
          dark: grey[700],
-         contrastText: '#fff'
+         contrastText: '#fff',
       },
       background: {
-         paper: darkBgColor,
-         default: darkBgColor,
-         appBar: darkBgColor,
-         contentFrame: darkBgColor,
-         chip: darkBgColor,
-         avatar: darkBgColor,
-         tabs: darkBgColor
-      }
+         paper: '#333',
+         default: '#333',
+         appBar: '#333',
+         contentFrame: '#333',
+         chip: '#333',
+         avatar: '#333',
+         tabs: '#333',
+      },
    },
    status: {
       danger: 'orange',
@@ -52,9 +48,9 @@ const theme = createMuiTheme({
    typography: {
       button: {
          fontWeight: 400,
-         textAlign: 'capitalize'
-      }
-   }
+         textAlign: 'capitalize',
+      },
+   },
 });
 
 export default theme;
