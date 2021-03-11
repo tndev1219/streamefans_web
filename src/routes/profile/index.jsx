@@ -129,9 +129,7 @@ const ProfilePage = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
-                <SnackBar
-                    message={'Media has already added. Please choose another.'}
-                />
+                <SnackBar />
             </Container>
         </Fragment >
     );

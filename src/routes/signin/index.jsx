@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Button, Grid, Divider, TextField } from '@material-ui/core';
+import { Container, Button, Grid, Divider, TextField, CircularProgress } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -18,7 +18,9 @@ import Slide3Img from '../../assets/login_carousel/slide-3.jpg';
 import Slide4Img from '../../assets/login_carousel/slide-4.jpg';
 import Slide5Img from '../../assets/login_carousel/slide-5.jpg';
 
+import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
+import { useAuthAction } from '../../store/slices/auth.slice';
 
 const SignIn = (props) => {
     const history = useHistory();
@@ -27,7 +29,11 @@ const SignIn = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [isLoginPage, setIsLoginPage] = useState(true);
 
+    const loading = useASelector((state) => state.global.loading, []);
+
     const setShowSnackBar = useGlobalAction('setShowSnackBar');
+    const setLoading = useGlobalAction('setLoading');
+    const signupRequest = useAuthAction('signupRequest');
 
     const settings = {
         dots: false,
@@ -47,10 +53,11 @@ const SignIn = (props) => {
 
     const handleClick = () => {
         if (handleValidation()) {
+            setLoading(true);
             handleSubmit();
             return true;
         } else {
-            setShowSnackBar(true);
+            setShowSnackBar({ showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Please input the correct value...' });
             return false;
         }
     };
@@ -81,13 +88,31 @@ const SignIn = (props) => {
             errors.password = true;
         }
 
+        if (!isLoginPage) {
+            if (!fields.display_name) {
+                formIsValid = false;
+                errors.display_name = true;
+            }
+        }
+
         setErros(errors);
         return formIsValid;
     };
 
     const handleSubmit = () => {
-        history.push('/home');
-        // const loginData = fields;
+        const data = fields;
+
+        const meta = {
+            redirect: history.push,
+            path: '/home',
+        };
+
+        if (!isLoginPage) {
+            data.username = 'default';
+            signupRequest({ data, meta });
+        } else {
+            // Login API
+        }
     };
 
     return (
@@ -160,6 +185,7 @@ const SignIn = (props) => {
                                     label="E-mail"
                                     variant="outlined"
                                     name="email"
+                                    type="email"
                                     required={true}
                                     error={errors.email}
                                     helperText={errors.email ? "The email field is required" : ""}
@@ -173,6 +199,7 @@ const SignIn = (props) => {
                                     label="Password"
                                     variant="outlined"
                                     name="password"
+                                    type="password"
                                     required={true}
                                     error={errors.password}
                                     helperText={errors.password ? "The password field is required" : ""}
@@ -181,19 +208,21 @@ const SignIn = (props) => {
                                     size="small"
                                 />
                             </Grid>
-                            {!isLoginPage && <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
-                                <TextField
-                                    label="Name"
-                                    variant="outlined"
-                                    name="name"
-                                    required={true}
-                                    error={errors.name}
-                                    helperText={errors.name ? "The name field is required" : ""}
-                                    onChange={(e) => handleChange(e)}
-                                    style={{ width: '100%' }}
-                                    size="small"
-                                />
-                            </Grid>}
+                            {!isLoginPage &&
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
+                                    <TextField
+                                        label="Name"
+                                        variant="outlined"
+                                        name="display_name"
+                                        required={true}
+                                        error={errors.display_name}
+                                        helperText={errors.display_name ? "The name field is required" : ""}
+                                        onChange={(e) => handleChange(e)}
+                                        style={{ width: '100%' }}
+                                        size="small"
+                                    />
+                                </Grid>
+                            }
                             {
                                 isLoginPage ?
                                     <>
@@ -234,12 +263,13 @@ const SignIn = (props) => {
                                             <Button
                                                 className="btn-active"
                                                 onClick={handleClick}
-                                                disabled={false}
+                                                disabled={loading}
                                                 style={{ width: '100%', borderRadius: 50, fontWeight: 'bold', marginTop: -5, padding: 10 }}
+                                                endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                             >
                                                 Sign Up
                                             </Button>
-                                            {/* {props.wait && <CircularProgress size={24} style={{ position: "absolute", marginTop: "8px", marginLeft: "-90px" }} />} */}
+
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'center' }}>
                                             <p style={{ fontSize: 14, marginTop: 10 }}>By signing up you agree to our</p>
@@ -261,7 +291,7 @@ const SignIn = (props) => {
                         </Grid>
                     </Grid>
                 </Grid>
-                <SnackBar message={'Please input the correct value...'} />
+                <SnackBar />
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)}>
                 <DialogTitle>RESTORE ACCESS</DialogTitle>
@@ -273,7 +303,6 @@ const SignIn = (props) => {
                         autoFocus
                         variant="outlined"
                         margin="dense"
-                        id="name"
                         label="E-mail"
                         type="email"
                         fullWidth

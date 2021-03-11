@@ -3,17 +3,20 @@ import { createSlice } from '@reduxjs/toolkit';
 import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
-    token: null,
+    profile: null,
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: INITIAL_STATE,
     reducers: {
-        checkAuthorization: () => {
-        },
+        checkAuthorization: () => { },
         checkAuthorizationSuccess: (state, action) => {
-            state.token = action.payload.token;
+            state.profile = action.payload;
+        },
+        signupRequest: () => { },
+        authSuccess: (state, action) => {
+            state.profile = action.payload;
         },
     },
 });

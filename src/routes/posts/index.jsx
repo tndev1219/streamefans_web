@@ -29,7 +29,7 @@ const PostsPage = (props) => {
             const alreadyUploadedFileList = imageList.filter((image) => image.filename === file.name);
 
             if (alreadyUploadedFileList.length !== 0) {
-                setShowSnackBar(true);
+                setShowSnackBar({ showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
             } else {
                 const newImageList = imageList.filter(image => image);
                 newImageList.push({
@@ -37,7 +37,7 @@ const PostsPage = (props) => {
                     type: 'image',
                     filename: file.name,
                 });
-                
+
                 setImageList(newImageList);
             }
         };
@@ -114,9 +114,7 @@ const PostsPage = (props) => {
                         <Divider />
                     </Grid>
                 </Grid>
-                <SnackBar
-                    message={'Media has already added. Please choose another.'}
-                />
+                <SnackBar />
             </Container>
         </Fragment >
     );

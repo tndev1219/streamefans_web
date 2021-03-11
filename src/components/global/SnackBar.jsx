@@ -81,9 +81,10 @@ MySnackbarContentWrapper.propTypes = {
 };
 
 const CustomizedSnackbars = (props) => {
-  const { message } = props;
 
   const showSnackBar = useASelector((state) => state.global.showSnackBar, []);
+  const snackBarVariant = useASelector((state) => state.global.snackBarVariant, []);
+  const snackBarMessage = useASelector((state) => state.global.snackBarMessage, []);
   const setShowSnackBar = useGlobalAction('setShowSnackBar');
 
   const handleClose = (event, reason) => {
@@ -91,7 +92,7 @@ const CustomizedSnackbars = (props) => {
       return;
     }
 
-    setShowSnackBar(false);
+    setShowSnackBar({ showSnackBar: false, snackBarVariant: 'warning', snackBarMessage: '' });
   };
 
   return (
@@ -107,8 +108,8 @@ const CustomizedSnackbars = (props) => {
       >
         <MySnackbarContentWrapper
           onClose={handleClose}
-          variant="warning"
-          message={message}
+          variant={snackBarVariant}
+          message={snackBarMessage}
         />
       </Snackbar>
     </div>
