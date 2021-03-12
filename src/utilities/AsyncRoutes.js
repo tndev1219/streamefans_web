@@ -19,6 +19,9 @@ const AsyncPostsPageComponent = React.lazy(() => import('../routes/posts'));
 // SignIn
 const AsyncSignInPageComponent = React.lazy(() => import('../routes/signin'));
 
+// Email Confirmation
+const AsyncEmailConfirmationPageComponent = React.lazy(() => import('../routes/signin/emailConfirm'));
+
 // Chat
 const AsyncChatsPageComponent = React.lazy(() => import('../routes/chats'));
 
@@ -106,6 +109,7 @@ export {
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
   AsyncSignInPageComponent,
+  AsyncEmailConfirmationPageComponent,
   AsyncChatsPageComponent,
   AsyncProfilePageComponent,
   AsyncBookmarksPageComponent,

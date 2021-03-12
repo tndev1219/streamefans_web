@@ -4,6 +4,7 @@ import {
   AsyncSplashPageComponent,
   AsyncHomePageComponent,
   AsyncSignInPageComponent,
+  AsyncEmailConfirmationPageComponent,
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
   AsyncChatsPageComponent,
@@ -56,6 +57,7 @@ const App = () => {
         <Route exact path="/" component={AsyncSplashPageComponent} />
         <Route exact path="/home" component={AsyncHomePageComponent} />
         <Route exact path="/login" component={AsyncSignInPageComponent} />
+        <Route exact path="/registration/confirm/:email_verify_key" component={AsyncEmailConfirmationPageComponent} />
         <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
         <Route exact path="/posts" component={AsyncPostsPageComponent} />
         <Route exact path="/chats" component={AsyncChatsPageComponent} />

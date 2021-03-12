@@ -62,10 +62,54 @@ export function* authSuccess() {
     });
 }
 
+export function* emailVerify() {
+    yield takeEvery("auth/emailVerify", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'auth/email-verify/', action.payload.data, false);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: action.payload.meta,
+                });
+            } else {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
+                yield call(action.payload.meta.redirect, action.payload.meta.path);
+            }
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                });
+            } else {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield call(action.payload.meta.redirect, action.payload.meta.path);
+        }
+    });
+}
+
+export function* sendVerifyEmail() {
+    yield takeEvery("auth/sendVerifyEmail", function* (action) {
+        try {
+            yield call(apis.POST, `auth/send-verify-email/${action.payload.data.user_id}/`, {}, false);
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(checkAuthorization),
         fork(signupRequest),
         fork(authSuccess),
+        fork(emailVerify),
+        fork(sendVerifyEmail),
     ]);
 }

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Switch, Divider, Box, Dialog, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { Container, Grid, AppBar, IconButton, Button, Switch, Divider, Box } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
@@ -22,7 +22,6 @@ const PaymentsPage = (props) => {
     const [hoveredTab, setHoveredTab] = useState(null);
     const [selectedTab, setSelectedTab] = useState(0);
     const [check, setChecked] = useState(false);
-    const [showModal, setShowModal] = useState(false);
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -54,12 +53,6 @@ const PaymentsPage = (props) => {
                                     <span style={{ fontWeight: 500, fontSize: 19 }}>PAYMENTS</span>
                                 </Grid>
                                 <Grid item>
-                                    <Button
-                                        onClick={() => setShowModal(true)}
-                                        style={{ borderRadius: 100, width: 80, backgroundColor: '#00aff0', color: 'white', marginRight: 10 }}
-                                    >
-                                        Verify
-                                    </Button>
                                     <Button
                                         onClick={() => history.push('/payments/add_card')}
                                         style={{ borderRadius: 100, width: 100, backgroundColor: '#00aff0', color: 'white' }}
@@ -133,29 +126,6 @@ const PaymentsPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <Dialog open={showModal} onClose={() => setShowModal(false)}>
-                <DialogContent>
-                    <DialogContentText>
-                        You will now be redirected to a certified document verification service Ondato.com to complete your Identity Verification
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        Confirm
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Fragment >
     );
 };

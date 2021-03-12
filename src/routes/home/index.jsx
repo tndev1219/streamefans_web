@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import { Container, Grid, Avatar, AppBar, Tabs, Tab, IconButton, Button, Divider } from '@material-ui/core';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
@@ -16,6 +17,8 @@ import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
 import Slider from "react-slick";
 import AvatarImg from '../../assets/avatar/Barrera.jpg';
 import PostImg from '../../assets/images/original.jpg';
+
+import { useASelector } from '../../utilities/recipies.util';
 
 // component
 import Badge from '../../components/global/Badge';
@@ -53,11 +56,14 @@ const HomePage = (props) => {
         beforeChange: (current, next) => setSliderIndex(next),
     };
 
+    const history = useHistory();
     const [tabIndex, setTabIndex] = useState(0);
     const [freeSugg, setFreeSugg] = useState(true);
     const [sliderIndex, setSliderIndex] = useState(0);
     const [like, setLike] = useState(false);
     const [bookmarked, setBookMarked] = useState(false);
+
+    const profile = useASelector((state) => state.auth.profile, []);
 
     let slider = useRef();
 
@@ -83,8 +89,12 @@ const HomePage = (props) => {
                                 aria-label="simple tabs example"
                             >
                                 <Tab label="HOME" style={{ fontWeight: 500 }} />
-                                <Tab label="PURCHASED" style={{ fontWeight: 500 }} />
-                                <Tab label="FRIENDS" style={{ fontWeight: 500 }} />
+                                {profile.is_active &&
+                                    <>
+                                        <Tab label="PURCHASED" style={{ fontWeight: 500 }} />
+                                        <Tab label="FRIENDS" style={{ fontWeight: 500 }} />
+                                    </>
+                                }
                             </Tabs>
                         </Grid>
                         <Grid item>
@@ -95,8 +105,23 @@ const HomePage = (props) => {
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between" spacing={5} className="mt-0 mb-0">
-                    <Grid item xs={12} sm={12} md={8} lg={8} xl={8} className="mt-60">
-                        <Grid container direction="column" justify="center">
+                    <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
+                        {!profile.is_active &&
+                            <Grid container direction="row" justify="space-between" alignItems="center" style={{ backgroundColor: 'rgba(231,108,108,.12)', color: '#e76c6c', height: 60, paddingRight: 15, paddingLeft: 15, borderRadius: 10 }}>
+                                <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+                                    Please verify your email address
+                                    </Grid>
+                                <Grid item xs={6} sm={6} md={6} lg={6} xl={6} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button
+                                        onClick={() => history.push('/settings/account/email')}
+                                        style={{ borderRadius: 100, width: 160, backgroundColor: '#00aff0', color: 'white' }}
+                                    >
+                                        Go to settings
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        }
+                        <Grid container direction="column" justify="center" className="mt-20">
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginBottom: 20 }}>
                                 <Grid container direction="row" alignItems="center" justify="space-between">
                                     <Grid item style={{ display: 'flex' }}>
@@ -143,7 +168,7 @@ const HomePage = (props) => {
                                             style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
                                         >
                                             SEND TIP
-                                        </Button>
+                                                </Button>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setBookMarked(!bookmarked)}>
@@ -206,7 +231,7 @@ const HomePage = (props) => {
                                             style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
                                         >
                                             SEND TIP
-                                        </Button>
+                                                </Button>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setBookMarked(!bookmarked)}>

@@ -18,6 +18,8 @@ const authSlice = createSlice({
         authSuccess: (state, action) => {
             state.profile = action.payload;
         },
+        emailVerify: () => { },
+        sendVerifyEmail: () => { },
     },
 });
 

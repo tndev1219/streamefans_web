@@ -1,17 +1,25 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Box, Dialog, DialogContent, DialogContentText, DialogActions, TextField, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Container, Grid, AppBar, IconButton, Button, Box, TextField, FormControlLabel, Checkbox, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import { countries } from '../../assets/data/Countries';
+
+import { useASelector } from '../../utilities/recipies.util';
+import { useAuthAction } from '../../store/slices/auth.slice';
+
 // component
 
 const AddCardPage = (props) => {
     const history = useHistory();
     const [check, setChecked] = useState(false);
-    const [showModal, setShowModal] = useState(false);
     const [fields, setFiedls] = useState({});
     const [errors, setErros] = useState({});
+    const [showModal, setShowModal] = useState(false);
+
+    const profile = useASelector((state) => state.auth.profile, []);
+
+    const sendVerifyEmail = useAuthAction('sendVerifyEmail');
 
     const handleChange = (e) => {
         fields[e.target.name] = e.target.value;
@@ -64,6 +72,11 @@ const AddCardPage = (props) => {
             : isoCode;
     };
 
+    const sendEmail = () => {
+        sendVerifyEmail({ data: { user_id: profile.id } });
+        setShowModal(true);
+    };
+
     return (
         <Fragment>
             <Container maxWidth="lg">
@@ -77,176 +90,204 @@ const AddCardPage = (props) => {
                                     </IconButton>
                                     <span style={{ fontWeight: 500, fontSize: 19 }}>ADD CARD</span>
                                 </Grid>
-                                <Grid item>
-                                    <Button
-                                        onClick={() => setShowModal(true)}
-                                        style={{ borderRadius: 100, width: 80, backgroundColor: '#00aff0', color: 'white' }}
-                                    >
-                                        Verify
-                                    </Button>
-                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between" spacing={5} className="mt-0">
-                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold' }}>BILLING DETAILS</p>
-                        <p style={{ fontSize: 15 }}>We are fully compliant with Payment Card Industry Data Security Standards.</p>
-                        <TextField
-                            label="Street"
-                            variant="outlined"
-                            name="street"
-                            required={true}
-                            error={errors.street}
-                            helperText={errors.street ? "The street field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                        />
-                        <TextField
-                            label="City"
-                            variant="outlined"
-                            name="city"
-                            required={true}
-                            error={errors.city}
-                            helperText={errors.city ? "The city field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                            className="mt-20"
-                        />
-                        <TextField
-                            label="State / Province"
-                            variant="outlined"
-                            name="state"
-                            required={true}
-                            error={errors.state}
-                            helperText={errors.state ? "The state field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                            className="mt-20"
-                        />
-                        <TextField
-                            label="ZIP / Postal Code"
-                            variant="outlined"
-                            name="zip"
-                            required={true}
-                            error={errors.zip}
-                            helperText={errors.zip ? "The zip field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                            className="mt-20"
-                        />
-                        <Autocomplete
-                            id="country-select-demo"
-                            className="mt-20"
-                            style={{ width: '100%' }}
-                            options={countries}
-                            autoHighlight
-                            getOptionLabel={(option) => option.label}
-                            renderOption={(option) => (
-                                <React.Fragment>
-                                    <span>{countryToFlag(option.code)}&nbsp;&nbsp;</span>
-                                    {option.label}
-                                </React.Fragment>
-                            )}
-                            renderInput={(params) => (
+                    {profile.is_active ?
+                        <>
+                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold' }}>BILLING DETAILS</p>
+                                <p style={{ fontSize: 15 }}>We are fully compliant with Payment Card Industry Data Security Standards.</p>
                                 <TextField
-                                    {...params}
-                                    label="Country"
+                                    label="Street"
                                     variant="outlined"
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password', // disable autocomplete and autofill
-                                    }}
+                                    name="street"
+                                    required={true}
+                                    error={errors.street}
+                                    helperText={errors.street ? "The street field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
                                 />
-                            )}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-                        <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold' }}>CARD DETAILS</p>
-                        <TextField
-                            label="E-mail"
-                            variant="outlined"
-                            name="email"
-                            required={true}
-                            error={errors.email}
-                            helperText={errors.email ? "The email field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%', marginTop: 35 }}
-                        />
-                        <TextField
-                            label="Name on the card"
-                            variant="outlined"
-                            name="name"
-                            required={true}
-                            error={errors.name}
-                            helperText={errors.name ? "The name field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                            className="mt-20"
-                        />
-                        <TextField
-                            label="Card Number"
-                            variant="outlined"
-                            name="number"
-                            required={true}
-                            error={errors.number}
-                            helperText={errors.number ? "The number field is required" : ""}
-                            onChange={(e) => handleChange(e)}
-                            style={{ width: '100%' }}
-                            className="mt-20"
-                        />
-                        <p style={{ fontSize: 13, color: '#8a96a3', fontWeight: 'bold', marginTop: 20, marginBottom: 10 }}>EXPIRATION</p>
-                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <TextField
-                                label="MM"
-                                variant="outlined"
-                                name="month"
-                                required={true}
-                                error={errors.month}
-                                helperText={errors.month ? "The month field is required" : ""}
-                                onChange={(e) => handleChange(e)}
-                                style={{ width: '30%' }}
-                            />
-                            <TextField
-                                label="YYYY"
-                                variant="outlined"
-                                name="year"
-                                required={true}
-                                error={errors.year}
-                                helperText={errors.year ? "The year field is required" : ""}
-                                onChange={(e) => handleChange(e)}
-                                style={{ width: '30%' }}
-                            />
-                            <TextField
-                                label="CVC"
-                                variant="outlined"
-                                name="cvc"
-                                required={true}
-                                error={errors.cvc}
-                                helperText={errors.cvc ? "The cvc field is required" : ""}
-                                onChange={(e) => handleChange(e)}
-                                style={{ width: '30%' }}
-                            />
-                        </Box>
-                        <FormControlLabel
-                            control={<Checkbox checked={check} color="primary" onChange={() => setChecked(!check)} name="checkedA" required />}
-                            label="Tick here to confirm that you are at least 18 years old and the age of majority in your place of residence"
-                            className="mt-20"
-                        />
-                        <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                disabled
-                                onClick={handleClick}
-                                style={{ borderRadius: 100, fontWeight: 'bold', marginTop: 20, width: 100, color: 'white', marginRight: 10 }}
-                            >
-                                SUBMIT
+                                <TextField
+                                    label="City"
+                                    variant="outlined"
+                                    name="city"
+                                    required={true}
+                                    error={errors.city}
+                                    helperText={errors.city ? "The city field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
+                                    className="mt-20"
+                                />
+                                <TextField
+                                    label="State / Province"
+                                    variant="outlined"
+                                    name="state"
+                                    required={true}
+                                    error={errors.state}
+                                    helperText={errors.state ? "The state field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
+                                    className="mt-20"
+                                />
+                                <TextField
+                                    label="ZIP / Postal Code"
+                                    variant="outlined"
+                                    name="zip"
+                                    required={true}
+                                    error={errors.zip}
+                                    helperText={errors.zip ? "The zip field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
+                                    className="mt-20"
+                                />
+                                <Autocomplete
+                                    id="country-select-demo"
+                                    className="mt-20"
+                                    style={{ width: '100%' }}
+                                    options={countries}
+                                    autoHighlight
+                                    getOptionLabel={(option) => option.label}
+                                    renderOption={(option) => (
+                                        <React.Fragment>
+                                            <span>{countryToFlag(option.code)}&nbsp;&nbsp;</span>
+                                            {option.label}
+                                        </React.Fragment>
+                                    )}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Country"
+                                            variant="outlined"
+                                            inputProps={{
+                                                ...params.inputProps,
+                                                autoComplete: 'new-password', // disable autocomplete and autofill
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+                                <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold' }}>CARD DETAILS</p>
+                                <TextField
+                                    label="E-mail"
+                                    variant="outlined"
+                                    name="email"
+                                    required={true}
+                                    error={errors.email}
+                                    helperText={errors.email ? "The email field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%', marginTop: 35 }}
+                                />
+                                <TextField
+                                    label="Name on the card"
+                                    variant="outlined"
+                                    name="name"
+                                    required={true}
+                                    error={errors.name}
+                                    helperText={errors.name ? "The name field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
+                                    className="mt-20"
+                                />
+                                <TextField
+                                    label="Card Number"
+                                    variant="outlined"
+                                    name="number"
+                                    required={true}
+                                    error={errors.number}
+                                    helperText={errors.number ? "The number field is required" : ""}
+                                    onChange={(e) => handleChange(e)}
+                                    style={{ width: '100%' }}
+                                    className="mt-20"
+                                />
+                                <p style={{ fontSize: 13, color: '#8a96a3', fontWeight: 'bold', marginTop: 20, marginBottom: 10 }}>EXPIRATION</p>
+                                <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <TextField
+                                        label="MM"
+                                        variant="outlined"
+                                        name="month"
+                                        required={true}
+                                        error={errors.month}
+                                        helperText={errors.month ? "The month field is required" : ""}
+                                        onChange={(e) => handleChange(e)}
+                                        style={{ width: '30%' }}
+                                    />
+                                    <TextField
+                                        label="YYYY"
+                                        variant="outlined"
+                                        name="year"
+                                        required={true}
+                                        error={errors.year}
+                                        helperText={errors.year ? "The year field is required" : ""}
+                                        onChange={(e) => handleChange(e)}
+                                        style={{ width: '30%' }}
+                                    />
+                                    <TextField
+                                        label="CVC"
+                                        variant="outlined"
+                                        name="cvc"
+                                        required={true}
+                                        error={errors.cvc}
+                                        helperText={errors.cvc ? "The cvc field is required" : ""}
+                                        onChange={(e) => handleChange(e)}
+                                        style={{ width: '30%' }}
+                                    />
+                                </Box>
+                                <FormControlLabel
+                                    control={<Checkbox checked={check} color="primary" onChange={() => setChecked(!check)} name="checkedA" required />}
+                                    label="Tick here to confirm that you are at least 18 years old and the age of majority in your place of residence"
+                                    className="mt-20"
+                                />
+                                <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        disabled
+                                        onClick={handleClick}
+                                        style={{ borderRadius: 100, fontWeight: 'bold', marginTop: 20, width: 100, color: 'white', marginRight: 10 }}
+                                    >
+                                        SUBMIT
                             </Button>
-                        </Box>
-                    </Grid>
+                                </Box>
+                            </Grid>
+                        </>
+                        :
+                        <>
+                            <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10, width: '100%' }}>
+                                <Box style={{ width: '95%' }}>
+                                    <TextField
+                                        label="Current email"
+                                        variant="outlined"
+                                        name="email"
+                                        defaultValue={profile.email}
+                                        fullWidth
+                                        disabled
+                                        error={!profile.is_active}
+                                        className="mt-20"
+                                    />
+                                    <p style={{ fontSize: 12, color: '#ff6060', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>
+                                        E-mail {profile.email} is not verified
+                                    </p>
+                                </Box>
+                            </Box>
+                            <Divider style={{ width: '95%', marginLeft: '2.5%' }} />
+
+                            <Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: 60, width: '100%' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    style={{ borderRadius: 100, fontWeight: 'bold', width: 200, color: 'white', marginRight: '2.5%' }}
+                                    onClick={sendEmail}
+                                >
+                                    SEND CONFIRMATION
+                                </Button>
+                            </Box>
+                        </>
+                    }
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Box style={{ backgroundColor: 'rgba(138,150,163,.12)', color: '#8a96a3', height: 30, padding: 10, display: 'flex', alignItems: 'center', borderRadius: 5 }}>
                             OnlyFans will make a one-time charge of $0.10 when adding your payment card. The charges on your credit card statement will appear as &quot;OnlyFans&quot;.
@@ -266,9 +307,12 @@ const AddCardPage = (props) => {
                 </Grid>
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)}>
+                <DialogTitle>
+                    {"Message"}
+                </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        You will now be redirected to a certified document verification service Ondato.com to complete your Identity Verification
+                        Please check your inbox for the confirmation email
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -277,14 +321,7 @@ const AddCardPage = (props) => {
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        Confirm
+                        close
                     </Button>
                 </DialogActions>
             </Dialog>
