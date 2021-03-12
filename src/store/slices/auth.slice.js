@@ -20,6 +20,9 @@ const authSlice = createSlice({
         },
         emailVerify: () => { },
         sendVerifyEmail: () => { },
+        logout: (state, action) => {
+            state.profile = null;
+        },
     },
 });
 

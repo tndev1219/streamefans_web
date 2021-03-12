@@ -89,12 +89,8 @@ const HomePage = (props) => {
                                 aria-label="simple tabs example"
                             >
                                 <Tab label="HOME" style={{ fontWeight: 500 }} />
-                                {profile.is_active &&
-                                    <>
-                                        <Tab label="PURCHASED" style={{ fontWeight: 500 }} />
-                                        <Tab label="FRIENDS" style={{ fontWeight: 500 }} />
-                                    </>
-                                }
+                                {profile.is_active && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
+                                {profile.is_active && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
                             </Tabs>
                         </Grid>
                         <Grid item>

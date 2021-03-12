@@ -1,5 +1,5 @@
 import { all, takeEvery, call, fork, put } from 'redux-saga/effects';
-import { getProfile, setProfile } from '../../utilities';
+import { getProfile, setProfile, clearProfile } from '../../utilities';
 import { apis } from '../../api';
 
 export function* checkAuthorization() {
@@ -104,6 +104,15 @@ export function* sendVerifyEmail() {
     });
 }
 
+export function* logout() {
+    yield takeEvery("auth/logout", function* (action) {
+        try {
+            clearProfile();
+            yield call(action.payload.meta.redirect, action.payload.meta.path);
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(checkAuthorization),
@@ -111,5 +120,6 @@ export default function* rootSaga() {
         fork(authSuccess),
         fork(emailVerify),
         fork(sendVerifyEmail),
+        fork(logout),
     ]);
 }

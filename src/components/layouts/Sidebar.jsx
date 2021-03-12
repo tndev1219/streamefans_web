@@ -84,7 +84,7 @@ const SidebarMenu = (props) => {
                                 </ListItem>
                             ))}
                             <ListItem divider></ListItem>
-                            <ListItem button onClick={() => { props.setOpen(false); history.push('/login'); }}>
+                            <ListItem button onClick={() => { props.setOpen(false); history.push('/logout'); }}>
                                 <ListItemIcon>
                                     <ExitToAppOutlinedIcon />
                                 </ListItemIcon>
