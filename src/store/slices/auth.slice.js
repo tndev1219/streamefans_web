@@ -15,6 +15,7 @@ const authSlice = createSlice({
             state.profile = action.payload;
         },
         signupRequest: () => { },
+        loginRequest: () => { },
         authSuccess: (state, action) => {
             state.profile = action.payload;
         },

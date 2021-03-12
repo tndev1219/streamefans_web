@@ -55,6 +55,46 @@ export function* signupRequest() {
     });
 }
 
+export function* loginRequest() {
+    yield takeEvery("auth/loginRequest", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'auth/login/', action.payload.data, false);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: action.payload.meta,
+                });
+            } else {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                });
+            } else {
+                yield put({
+                    type: "global/setShowSnackBar",
+                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
 export function* authSuccess() {
     yield takeEvery("auth/authSuccess", function* (action) {
         setProfile(action.payload);
@@ -117,6 +157,7 @@ export default function* rootSaga() {
     yield all([
         fork(checkAuthorization),
         fork(signupRequest),
+        fork(loginRequest),
         fork(authSuccess),
         fork(emailVerify),
         fork(sendVerifyEmail),

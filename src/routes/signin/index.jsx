@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Button, Grid, Divider, TextField, CircularProgress } from '@material-ui/core';
+import { Container, Button, Grid, Divider, TextField, CircularProgress, InputAdornment, IconButton } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,6 +8,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slider from "react-slick";
 import TwitterIcon from '@material-ui/icons/Twitter';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import SnackBar from '../../components/global/SnackBar';
 import PhonesImg from '../../assets/images/phones.png';
 import LogoImg from '../../assets/images/Logo.png';
@@ -28,12 +30,14 @@ const SignIn = (props) => {
     const [errors, setErros] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [isLoginPage, setIsLoginPage] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     const loading = useASelector((state) => state.global.loading, []);
 
     const setShowSnackBar = useGlobalAction('setShowSnackBar');
     const setLoading = useGlobalAction('setLoading');
     const signupRequest = useAuthAction('signupRequest');
+    const loginRequest = useAuthAction('loginRequest');
 
     const settings = {
         dots: false,
@@ -111,7 +115,8 @@ const SignIn = (props) => {
             data.username = 'default';
             signupRequest({ data, meta });
         } else {
-            // Login API
+            data.username = data.email;
+            loginRequest({ data, meta });
         }
     };
 
@@ -199,13 +204,24 @@ const SignIn = (props) => {
                                     label="Password"
                                     variant="outlined"
                                     name="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     required={true}
                                     error={errors.password}
                                     helperText={errors.password ? "The password field is required" : ""}
                                     onChange={(e) => handleChange(e)}
                                     style={{ width: '100%' }}
                                     size="small"
+                                    InputProps={{
+                                        endAdornment:
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={() => setShowPassword(!showPassword)}
+                                                >
+                                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>,
+                                    }}
                                 />
                             </Grid>
                             {!isLoginPage &&
