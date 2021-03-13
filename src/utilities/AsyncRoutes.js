@@ -22,6 +22,9 @@ const AsyncSignInPageComponent = React.lazy(() => import('../routes/signin'));
 // Email Confirmation
 const AsyncEmailConfirmationPageComponent = React.lazy(() => import('../routes/signin/emailConfirm'));
 
+// Restore Access
+const AsyncRestoreAccessPageComponent = React.lazy(() => import('../routes/signin/restoreAccess'));
+
 // Log Out
 const AsyncLogoutPageComponent = React.lazy(() => import('../routes/logout'));
 
@@ -113,6 +116,7 @@ export {
   AsyncPostsPageComponent,
   AsyncSignInPageComponent,
   AsyncEmailConfirmationPageComponent,
+  AsyncRestoreAccessPageComponent,
   AsyncLogoutPageComponent,
   AsyncChatsPageComponent,
   AsyncProfilePageComponent,

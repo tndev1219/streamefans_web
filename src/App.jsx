@@ -5,6 +5,7 @@ import {
   AsyncHomePageComponent,
   AsyncSignInPageComponent,
   AsyncEmailConfirmationPageComponent,
+  AsyncRestoreAccessPageComponent,
   AsyncLogoutPageComponent,
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
@@ -62,7 +63,6 @@ const App = () => {
           <Redirect exact from="/settings" to="/settings/profile"></Redirect>
           <Route exact path="/" component={AsyncSplashPageComponent} />
           <Route exact path="/home" component={AsyncHomePageComponent} />
-          <Route exact path="/registration/confirm/:email_verify_key" component={AsyncEmailConfirmationPageComponent} />
           <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
           <Route exact path="/posts" component={AsyncPostsPageComponent} />
           <Route exact path="/chats" component={AsyncChatsPageComponent} />
@@ -93,11 +93,14 @@ const App = () => {
           <Route exact path="/settings/notifications/site" component={AsyncSettingsNotificationsSitePageComponent} />
           <Route exact path="/settings/notifications/toast" component={AsyncSettingsNotificationsToastPageComponent} />
           <Route exact path="/logout" component={AsyncLogoutPageComponent} />
+          <Route exact path="/registration/confirm/:email_verify_key" component={AsyncEmailConfirmationPageComponent} />
+          <Route exact path="/restore/access/:reset_password_key" component={AsyncRestoreAccessPageComponent} />
           <Redirect to="/home"></Redirect>
         </Switch>
         :
         <Switch>
           <Route exact path="/" component={AsyncSplashPageComponent} />
+          <Route exact path="/restore/access/:reset_password_key" component={AsyncRestoreAccessPageComponent} />
           <Route exact path="/login" component={AsyncSignInPageComponent} />
           <Redirect to="/login"></Redirect>
         </Switch>

@@ -31,6 +31,9 @@ const SignIn = (props) => {
     const [showModal, setShowModal] = useState(false);
     const [isLoginPage, setIsLoginPage] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
+    const [restoreAccessEmail, setRestoreAccessEmail] = useState('');
+    const [restoreAccessEmailValid, setRestoreAccessEmailValid] = useState(true);
+    const [restoreAccessEmailConfirm, setRestoreAccessEmailConfirm] = useState(false);
 
     const loading = useASelector((state) => state.global.loading, []);
 
@@ -38,6 +41,7 @@ const SignIn = (props) => {
     const setLoading = useGlobalAction('setLoading');
     const signupRequest = useAuthAction('signupRequest');
     const loginRequest = useAuthAction('loginRequest');
+    const restoreAccessRequest = useAuthAction('restoreAccessRequest');
 
     const settings = {
         dots: false,
@@ -50,14 +54,71 @@ const SignIn = (props) => {
         slidesToScroll: 1,
     };
 
+    // Email Validation Regex
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    // Password Validation Regex
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    const passwordLengthRegex = /^.{6,}$/;
+
     const handleChange = (e) => {
         fields[e.target.name] = e.target.value;
         setFiedls(fields);
     };
 
+    const handleValidation = () => {
+        const errors = {};
+        let formIsValid = true;
+
+        // Email
+        if (!fields.email || fields.email.length === 0) {
+            formIsValid = false;
+            errors.email = true;
+            errors.emailHelperText = "The email field is required";
+        } else {
+            if (!emailRegex.test(String(fields.email).toLowerCase())) {
+                formIsValid = false;
+                errors.email = true;
+                errors.emailHelperText = "E-mail is not valid";
+            }
+        }
+
+        if (!isLoginPage) {
+            // Password
+            if (!fields.password || fields.password.length === 0) {
+                formIsValid = false;
+                errors.password = true;
+                errors.passwordHelperText = "The password field is required";
+            } else if (!passwordLengthRegex.test(String(fields.password))) {
+                formIsValid = false;
+                errors.password = true;
+                errors.passwordHelperText = "The password field must be at least 6 characters";
+            } else if (!passwordRegex.test(String(fields.password))) {
+                formIsValid = false;
+                errors.password = true;
+                errors.passwordHelperText = "The password must contain at least 1 number, at least 1 lower case letter, and at least 1 upper case letter";
+            }
+
+            // Display Name
+            if (!fields.display_name || fields.display_name.length === 0) {
+                formIsValid = false;
+                errors.display_name = true;
+                errors.displayNameHelperText = "The name field is required";
+            }
+        } else {
+            // Password
+            if (!fields.password || fields.password.length === 0) {
+                formIsValid = false;
+                errors.password = true;
+                errors.passwordHelperText = "The password field is required";
+            }
+        }
+
+        setErros(errors);
+        return formIsValid;
+    };
+
     const handleClick = () => {
         if (handleValidation()) {
-            setLoading(true);
             handleSubmit();
             return true;
         } else {
@@ -66,50 +127,14 @@ const SignIn = (props) => {
         }
     };
 
-    const handleValidation = () => {
-        const errors = {};
-        let formIsValid = true;
-
-        // Email
-        if (!fields.email) {
-            formIsValid = false;
-            errors.email = true;
-        }
-
-        if (typeof fields.email !== "undefined") {
-            const lastAtPos = fields.email.lastIndexOf('@');
-            const lastDotPos = fields.email.lastIndexOf('.');
-
-            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && fields.email.indexOf('@@') === -1 && lastDotPos > 2 && (fields.email.length - lastDotPos) > 2)) {
-                formIsValid = false;
-                errors.email = true;
-            }
-        }
-
-        // Password
-        if (!fields.password) {
-            formIsValid = false;
-            errors.password = true;
-        }
-
-        if (!isLoginPage) {
-            if (!fields.display_name) {
-                formIsValid = false;
-                errors.display_name = true;
-            }
-        }
-
-        setErros(errors);
-        return formIsValid;
-    };
-
     const handleSubmit = () => {
         const data = fields;
-
         const meta = {
             redirect: history.push,
             path: '/home',
         };
+        
+        setLoading(true);
 
         if (!isLoginPage) {
             data.username = 'default';
@@ -118,6 +143,29 @@ const SignIn = (props) => {
             data.username = data.email;
             loginRequest({ data, meta });
         }
+    };
+
+    const restoreAccessEmailValidation = (email) => {
+        return emailRegex.test(String(email).toLowerCase());
+    };
+
+    const restoreAccessEmailChange = (e) => {
+        setRestoreAccessEmail(e.target.value);
+        if (restoreAccessEmailValidation(e.target.value)) {
+            setRestoreAccessEmailValid(false);
+        } else {
+            setRestoreAccessEmailValid(true);
+        }
+    };
+
+    const sendRestoreAccessEmail = () => {
+        const data = {
+            email: restoreAccessEmail,
+        };
+
+        restoreAccessRequest({ data });
+        setShowModal(false);
+        setRestoreAccessEmailConfirm(true);
     };
 
     return (
@@ -193,7 +241,7 @@ const SignIn = (props) => {
                                     type="email"
                                     required={true}
                                     error={errors.email}
-                                    helperText={errors.email ? "The email field is required" : ""}
+                                    helperText={errors.emailHelperText}
                                     onChange={(e) => handleChange(e)}
                                     style={{ width: '100%' }}
                                     size="small"
@@ -207,7 +255,7 @@ const SignIn = (props) => {
                                     type={showPassword ? "text" : "password"}
                                     required={true}
                                     error={errors.password}
-                                    helperText={errors.password ? "The password field is required" : ""}
+                                    helperText={errors.passwordHelperText}
                                     onChange={(e) => handleChange(e)}
                                     style={{ width: '100%' }}
                                     size="small"
@@ -232,7 +280,7 @@ const SignIn = (props) => {
                                         name="display_name"
                                         required={true}
                                         error={errors.display_name}
-                                        helperText={errors.display_name ? "The name field is required" : ""}
+                                        helperText={errors.displayNameHelperText}
                                         onChange={(e) => handleChange(e)}
                                         style={{ width: '100%' }}
                                         size="small"
@@ -254,12 +302,12 @@ const SignIn = (props) => {
                                             <Button
                                                 className="btn-active"
                                                 onClick={handleClick}
-                                                disabled={false}
+                                                disabled={loading}
                                                 style={{ width: '100%', borderRadius: 50, fontWeight: 'bold', marginTop: -5, padding: 10 }}
+                                                endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                             >
                                                 LogIn
                                             </Button>
-                                            {/* {props.wait && <CircularProgress size={24} style={{ position: "absolute", marginTop: "8px", marginLeft: "-90px" }} />} */}
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                             <p style={{ fontSize: 14, marginTop: 10 }}>Don`t have an account yet?</p>
@@ -285,7 +333,6 @@ const SignIn = (props) => {
                                             >
                                                 Sign Up
                                             </Button>
-
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'center' }}>
                                             <p style={{ fontSize: 14, marginTop: 10 }}>By signing up you agree to our</p>
@@ -317,11 +364,17 @@ const SignIn = (props) => {
                     </DialogContentText>
                     <TextField
                         autoFocus
+                        required={true}
                         variant="outlined"
                         margin="dense"
+                        name="email"
                         label="E-mail"
                         type="email"
                         fullWidth
+                        value={restoreAccessEmail}
+                        error={restoreAccessEmailValid}
+                        onChange={restoreAccessEmailChange}
+                        helperText={restoreAccessEmailValid ? "E-mail is not valid" : ""}
                     />
                 </DialogContent>
                 <DialogActions>
@@ -333,12 +386,31 @@ const SignIn = (props) => {
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => setShowModal(false)}
-                        disabled={true}
+                        onClick={sendRestoreAccessEmail}
+                        disabled={restoreAccessEmailValid}
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
                         Send
+                    </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog open={restoreAccessEmailConfirm} onClose={() => setRestoreAccessEmailConfirm(false)}>
+                <DialogTitle>
+                    {"Message"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Please check your e-mail for a temporary password reset link and make sure you set a new one right after you click it.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => setRestoreAccessEmailConfirm(false)}
+                        color="primary"
+                        style={{ borderRadius: 50, fontWeight: 'bold' }}
+                    >
+                        close
                     </Button>
                 </DialogActions>
             </Dialog>
