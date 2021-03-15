@@ -1,21 +1,82 @@
 import React, { Fragment, useState } from 'react';
-import { Container, Grid, Box, Divider, Button, TextField, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+import { Container, Grid, Box, Divider, Button, TextField, CircularProgress } from '@material-ui/core';
 
 import { useASelector } from '../../../utilities/recipies.util';
 import { useAuthAction } from '../../../store/slices/auth.slice';
+import { useGlobalAction } from '../../../store/slices/global.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
+import AlertDialog from '../../../components/global/AlertDialog';
 
 const EmailPage = (props) => {
-    const [showModal, setShowModal] = useState(false);
+    // Email Validation Regex
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    const history = useHistory();
+    const [updateEmail, setUpdateEmail] = useState('');
+    const [updateEmailValid, setUpdateEmailValid] = useState(false);
+    const [updateEmailCode, setUpdateEmailCode] = useState('');
+    const [updateEmailCodeValid, setUpdateEmailCodeValid] = useState(false);
 
     const profile = useASelector((state) => state.auth.profile, []);
-    const sendVerifyEmail = useAuthAction('sendVerifyEmail');
+    const loading = useASelector((state) => state.global.loading, []);
+    const emailUpdateStep = useASelector((state) => state.auth.emailUpdateStep, []);
 
-    const handleClick = () => {
+    const setLoading = useGlobalAction('setLoading');
+    const setAlertDialog = useGlobalAction('setAlertDialog');
+
+    const sendVerifyEmail = useAuthAction('sendVerifyEmail');
+    const setEmailUpdateStep = useAuthAction('setEmailUpdateStep');
+    const resetEmailRequest = useAuthAction('resetEmailRequest');
+    const resetEmail = useAuthAction('resetEmail');
+
+    const verifyBtnClick = () => {
         sendVerifyEmail({ data: { user_id: profile.id } });
-        setShowModal(true);
+        setAlertDialog({ alertDialogState: true, alertDialogMessage: 'Please check your inbox for the confirmation email' });
+    };
+
+    const updateEmailValidation = (email) => {
+        return emailRegex.test(String(email).toLowerCase());
+    };
+
+    const updateEmailChange = (e) => {
+        setUpdateEmail(e.target.value);
+
+        setUpdateEmailValid(updateEmailValidation(e.target.value));
+    };
+
+    const updateBtnClick = () => {
+        const data = {
+            email: updateEmail,
+        };
+
+        setLoading(true);
+        resetEmailRequest({ data });
+    };
+
+    const updateEmailCodeChange = (e) => {
+        setUpdateEmailCode(e.target.value);
+
+        if (e.target.value.length === 0) {
+            setUpdateEmailCodeValid(false);
+        } else {
+            setUpdateEmailCodeValid(true);
+        }
+    };
+
+    const saveBtnClick = () => {
+        const data = {
+            reset_email_key: updateEmailCode,
+        };
+        const meta = {
+            redirect: history.push,
+            path: '/settings/account',
+        };
+
+        setLoading(true);
+        resetEmail({ data, meta });
     };
 
     return (
@@ -31,71 +92,139 @@ const EmailPage = (props) => {
                         </Box>
                         <Divider />
 
-                        <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
-                            <Box style={{ width: '95%' }}>
-                                <TextField
-                                    label="Current email"
-                                    variant="outlined"
-                                    name="email"
-                                    defaultValue={profile.email}
-                                    fullWidth
-                                    disabled
-                                    error={!profile.is_active}
-                                    className="mt-20"
-                                />
-                                <p style={{ fontSize: 12, color: profile.is_active ? 'rgba(138,150,163,.75' : '#ff6060', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>
-                                    {profile.is_active ?
-                                        `E-mail ${profile.email} is verified`
-                                        :
-                                        `E-mail ${profile.email} is not verified`
-                                    }
-                                </p>
-                            </Box>
-                        </Box>
-                        <Divider />
+                        {emailUpdateStep === 0 &&
+                            <>
+                                <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
+                                    <Box style={{ width: '95%' }}>
+                                        <TextField
+                                            label="Current email"
+                                            variant="outlined"
+                                            name="email"
+                                            defaultValue={profile.email}
+                                            fullWidth
+                                            disabled
+                                            error={!profile.is_active}
+                                            className="mt-20"
+                                            helperText={profile.is_active ? `E-mail ${profile.email} is verified` : `E-mail ${profile.email} is not verified`}
+                                        />
+                                    </Box>
+                                </Box>
+                                <Divider />
 
-                        <Box style={{ display: 'flex', justifyContent: profile.is_active ? 'center' : 'flex-end', alignItems: 'center', height: 60 }}>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                style={{ borderRadius: 100, fontWeight: 'bold', width: profile.is_active ? '95%' : 220, marginRight: profile.is_active ? 0 : '2.5%' }}
-                                fullWidth={profile.is_active}
-                            >
-                                UPDATE EMAIL ADDRESS
-                            </Button>
-                            {!profile.is_active &&
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    style={{ borderRadius: 100, fontWeight: 'bold', width: 200, color: 'white', marginRight: '2.5%' }}
-                                    onClick={handleClick}
-                                >
-                                    SEND CONFIRMATION
-                                </Button>
-                            }
-                        </Box>
+                                <Box style={{ display: 'flex', justifyContent: profile.is_active ? 'center' : 'flex-end', alignItems: 'center', height: 60 }}>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: profile.is_active ? '95%' : 220, marginRight: profile.is_active ? 0 : '2.5%' }}
+                                        fullWidth={profile.is_active}
+                                        onClick={() => setEmailUpdateStep(1)}
+                                    >
+                                        UPDATE EMAIL ADDRESS
+                                    </Button>
+                                    {!profile.is_active &&
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            style={{ borderRadius: 100, fontWeight: 'bold', width: 200, color: 'white', marginRight: '2.5%' }}
+                                            onClick={verifyBtnClick}
+                                        >
+                                            SEND CONFIRMATION
+                                        </Button>
+                                    }
+                                </Box>
+                            </>
+                        }
+                        {emailUpdateStep === 1 &&
+                            <>
+                                <Grid container direction="column" justify="center" alignItems="flex-start" className="mt-20" style={{ marginLeft: '2.5%' }}>
+                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>Step 1/2</p>
+                                    <p>Please enter your new E-mail address.</p>
+                                </Grid>
+                                <Grid container direction="column" justify="center" alignItems="center">
+                                    <Box className="mb-15" style={{ width: '95%' }}>
+                                        <TextField
+                                            label="E-mail"
+                                            variant="outlined"
+                                            name="email"
+                                            fullWidth
+                                            error={!updateEmailValid}
+                                            helperText={!updateEmailValid ? "E-mail is not valid" : ""}
+                                            onChange={updateEmailChange}
+                                        />
+                                    </Box>
+                                </Grid>
+                                <Divider />
+
+                                <Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: 60 }}>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, marginRight: '2.5%' }}
+                                        onClick={() => setEmailUpdateStep(0)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, color: 'white', marginRight: '2.5%' }}
+                                        disabled={!updateEmailValid || loading}
+                                        onClick={updateBtnClick}
+                                        endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
+                                    >
+                                        Next
+                                    </Button>
+                                </Box>
+                            </>
+                        }
+                        {emailUpdateStep === 2 &&
+                            <>
+                                <Grid container direction="column" justify="center" alignItems="flex-start" className="mt-20" style={{ marginLeft: '2.5%' }}>
+                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>Step 2/2</p>
+                                    <p>We have sent a temporary verification code to your new E-mail address.</p>
+                                    <p>Please input the code into the below form.</p>
+                                </Grid>
+                                <Grid container direction="column" justify="center" alignItems="center">
+                                    <Box className="mb-15" style={{ width: '95%' }}>
+                                        <TextField
+                                            label="Code"
+                                            variant="outlined"
+                                            name="reset_email_key"
+                                            fullWidth
+                                            error={!updateEmailCodeValid}
+                                            helperText={!updateEmailCodeValid ? "This field is required." : ""}
+                                            onChange={updateEmailCodeChange}
+                                        />
+                                    </Box>
+                                </Grid>
+                                <Divider />
+
+                                <Box style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', height: 60 }}>
+                                    <Button
+                                        variant="outlined"
+                                        color="primary"
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, marginRight: '2.5%' }}
+                                        onClick={() => setEmailUpdateStep(0)}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, color: 'white', marginRight: '2.5%' }}
+                                        disabled={!updateEmailCodeValid || loading}
+                                        onClick={saveBtnClick}
+                                        endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
+                                    >
+                                        Save
+                                    </Button>
+                                </Box>
+                            </>
+                        }
                     </Grid>
                 </Grid>
             </Container>
-            <Dialog open={showModal} onClose={() => setShowModal(false)}>
-                <DialogTitle>
-                    {"Message"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please check your inbox for the confirmation email
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        close
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <AlertDialog />
         </Fragment >
     );
 };

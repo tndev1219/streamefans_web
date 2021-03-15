@@ -4,6 +4,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
     profile: null,
+    emailUpdateStep: 0,
 };
 
 const authSlice = createSlice({
@@ -24,6 +25,11 @@ const authSlice = createSlice({
         restoreAccessRequest: () => { },
         restoreAccess: () => { },
         resetPassword: () => { },
+        setEmailUpdateStep: (state, action) => {
+            state.emailUpdateStep = action.payload;
+        },
+        resetEmailRequest: () => { },
+        resetEmail: () => { },
         logout: (state, action) => {
             state.profile = null;
         },

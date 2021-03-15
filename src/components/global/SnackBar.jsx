@@ -82,17 +82,17 @@ MySnackbarContentWrapper.propTypes = {
 
 const CustomizedSnackbars = (props) => {
 
-  const showSnackBar = useASelector((state) => state.global.showSnackBar, []);
+  const snackBarState = useASelector((state) => state.global.snackBarState, []);
   const snackBarVariant = useASelector((state) => state.global.snackBarVariant, []);
   const snackBarMessage = useASelector((state) => state.global.snackBarMessage, []);
-  const setShowSnackBar = useGlobalAction('setShowSnackBar');
+  const setSnackBar = useGlobalAction('setSnackBar');
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setShowSnackBar({ showSnackBar: false, snackBarVariant: 'warning', snackBarMessage: '' });
+    setSnackBar({ snackBarState: false, snackBarVariant: 'warning', snackBarMessage: '' });
   };
 
   return (
@@ -102,7 +102,7 @@ const CustomizedSnackbars = (props) => {
           vertical: 'bottom',
           horizontal: 'left',
         }}
-        open={showSnackBar}
+        open={snackBarState}
         autoHideDuration={2500}
         onClose={handleClose}
       >

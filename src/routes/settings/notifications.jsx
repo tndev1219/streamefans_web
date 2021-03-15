@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, TextField, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { Container, Grid, Box, Divider, TextField, Button } from '@material-ui/core';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 
 import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';
+import AlertDialog from '../../components/global/AlertDialog';
 
 const preferencesTabLabels = [
     {
@@ -43,10 +45,10 @@ const otherTabLabels = [
 const NotificationsPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
-    const [showModal, setShowModal] = useState(false);
 
     const profile = useASelector((state) => state.auth.profile, []);
 
+    const setAlertDialog = useGlobalAction('setAlertDialog');
     const sendVerifyEmail = useAuthAction('sendVerifyEmail');
 
     const handleMouseEnter = (index) => {
@@ -59,7 +61,7 @@ const NotificationsPage = (props) => {
 
     const handleClick = () => {
         sendVerifyEmail({ data: { user_id: profile.id } });
-        setShowModal(true);
+        setAlertDialog({ alertDialogState: true, alertDialogMessage: 'Please check your inbox for the confirmation email' });
     };
 
     return (
@@ -155,25 +157,7 @@ const NotificationsPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <Dialog open={showModal} onClose={() => setShowModal(false)}>
-                <DialogTitle>
-                    {"Message"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please check your inbox for the confirmation email
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        close
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <AlertDialog />
         </Fragment >
     );
 };

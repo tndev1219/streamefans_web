@@ -11,6 +11,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import SnackBar from '../../components/global/SnackBar';
+import AlertDialog from '../../components/global/AlertDialog';
 import PhonesImg from '../../assets/images/phones.png';
 import LogoImg from '../../assets/images/Logo.png';
 import GoogleImg from '../../assets/images/google.jpg';
@@ -33,12 +34,12 @@ const SignIn = (props) => {
     const [showPassword, setShowPassword] = useState(false);
     const [restoreAccessEmail, setRestoreAccessEmail] = useState('');
     const [restoreAccessEmailValid, setRestoreAccessEmailValid] = useState(true);
-    const [restoreAccessEmailConfirm, setRestoreAccessEmailConfirm] = useState(false);
 
     const loading = useASelector((state) => state.global.loading, []);
 
-    const setShowSnackBar = useGlobalAction('setShowSnackBar');
+    const setSnackBar = useGlobalAction('setSnackBar');
     const setLoading = useGlobalAction('setLoading');
+    const setAlertDialog = useGlobalAction('setAlertDialog');
     const signupRequest = useAuthAction('signupRequest');
     const loginRequest = useAuthAction('loginRequest');
     const restoreAccessRequest = useAuthAction('restoreAccessRequest');
@@ -122,7 +123,7 @@ const SignIn = (props) => {
             handleSubmit();
             return true;
         } else {
-            setShowSnackBar({ showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Please input the correct value...' });
+            setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Please input the correct value...' });
             return false;
         }
     };
@@ -133,7 +134,7 @@ const SignIn = (props) => {
             redirect: history.push,
             path: '/home',
         };
-        
+
         setLoading(true);
 
         if (!isLoginPage) {
@@ -165,7 +166,7 @@ const SignIn = (props) => {
 
         restoreAccessRequest({ data });
         setShowModal(false);
-        setRestoreAccessEmailConfirm(true);
+        setAlertDialog({ alertDialogState: true, alertDialogMessage: 'Please check your e-mail for a temporary password reset link and make sure you set a new one right after you click it.' });
     };
 
     return (
@@ -395,25 +396,7 @@ const SignIn = (props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <Dialog open={restoreAccessEmailConfirm} onClose={() => setRestoreAccessEmailConfirm(false)}>
-                <DialogTitle>
-                    {"Message"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please check your e-mail for a temporary password reset link and make sure you set a new one right after you click it.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setRestoreAccessEmailConfirm(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        close
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <AlertDialog />
         </Fragment>
     );
 };

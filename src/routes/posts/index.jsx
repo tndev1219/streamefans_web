@@ -15,7 +15,7 @@ const PostsPage = (props) => {
     const history = useHistory();
     const [imageList, setImageList] = useState([]);
 
-    const setShowSnackBar = useGlobalAction('setShowSnackBar');
+    const setSnackBar = useGlobalAction('setSnackBar');
 
     const handleUploadChange = (e) => {
         const file = e.target.files[0];
@@ -29,7 +29,7 @@ const PostsPage = (props) => {
             const alreadyUploadedFileList = imageList.filter((image) => image.filename === file.name);
 
             if (alreadyUploadedFileList.length !== 0) {
-                setShowSnackBar({ showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
+                setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
             } else {
                 const newImageList = imageList.filter(image => image);
                 newImageList.push({

@@ -4,10 +4,12 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
   loading: false,
-  showSnackBar: false,
+  snackBarState: false,
   snackBarVariant: 'warning',
   snackBarMessage: '',
   loggedIn: false,
+  alertDialogState: false,
+  alertDialogMessage: '',
 };
 
 const globalSlice = createSlice({
@@ -17,13 +19,17 @@ const globalSlice = createSlice({
     setLoading: (state, { payload }) => {
       state.loading = payload;
     },
-    setShowSnackBar: (state, { payload }) => {
-      state.showSnackBar = payload.showSnackBar;
+    setSnackBar: (state, { payload }) => {
+      state.snackBarState = payload.snackBarState;
       state.snackBarVariant = payload.snackBarVariant;
       state.snackBarMessage = payload.snackBarMessage;
     },
     setLoggedIn: (state, { payload }) => {
       state.loggedIn = payload;
+    },
+    setAlertDialog: (state, { payload }) => {
+      state.alertDialogState = payload.alertDialogState;
+      state.alertDialogMessage = payload.alertDialogMessage;
     },
   },
 });

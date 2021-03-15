@@ -27,8 +27,8 @@ export function* signupRequest() {
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -38,13 +38,13 @@ export function* signupRequest() {
         } catch (err) {
             if (err.response.status === 400) {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -67,8 +67,8 @@ export function* loginRequest() {
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -78,13 +78,13 @@ export function* loginRequest() {
         } catch (err) {
             if (err.response.status === 400) {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -98,7 +98,9 @@ export function* loginRequest() {
 export function* authSuccess() {
     yield takeEvery("auth/authSuccess", function* (action) {
         setProfile(action.payload);
-        yield call(action.meta.redirect, action.meta.path);
+        if (action.meta) {
+            yield call(action.meta.redirect, action.meta.path);
+        }
     });
 }
 
@@ -122,21 +124,21 @@ export function* emailVerify() {
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
                 yield call(action.payload.meta.redirect, action.payload.meta.path);
             }
         } catch (err) {
             if (err.response.status === 400) {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield call(action.payload.meta.redirect, action.payload.meta.path);
@@ -173,21 +175,21 @@ export function* restoreAccess() {
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
                 yield call(action.payload.meta.redirect, action.payload.meta.path);
             }
         } catch (err) {
             if (err.response.status === 400) {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield call(action.payload.meta.redirect, action.payload.meta.path);
@@ -207,8 +209,8 @@ export function* resetPassword() {
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -218,13 +220,96 @@ export function* resetPassword() {
         } catch (err) {
             if (err.response.status === 400) {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
                 });
             } else {
                 yield put({
-                    type: "global/setShowSnackBar",
-                    payload: { showSnackBar: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
+export function* resetEmailRequest() {
+    yield takeEvery("auth/resetEmailRequest", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'auth/reset-email-request/', action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/setEmailUpdateStep",
+                    payload: 2,
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: "This email is already connected to any account." },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
+export function* resetEmail() {
+    yield takeEvery("auth/resetEmail", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'auth/reset-email/', action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: action.payload.meta,
+                });
+                yield put({
+                    type: "auth/setEmailUpdateStep",
+                    payload: 0,
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: Object.values(err.response.data.message)[0][0] },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
                 });
             }
             yield put({
@@ -247,5 +332,7 @@ export default function* rootSaga() {
         fork(restoreAccessRequest),
         fork(restoreAccess),
         fork(resetPassword),
+        fork(resetEmailRequest),
+        fork(resetEmail),
     ]);
 }

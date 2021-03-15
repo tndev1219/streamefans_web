@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Box, Tooltip, TextField, FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem, Divider, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core';
+import { Container, Grid, AppBar, IconButton, Button, Box, Tooltip, TextField, FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem, Divider } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
@@ -12,9 +12,11 @@ import {
 } from "@material-ui/pickers";
 
 import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
+import AlertDialog from '../../components/global/AlertDialog';
 
 const BankingPage = (props) => {
     const history = useHistory();
@@ -23,10 +25,10 @@ const BankingPage = (props) => {
     const [errors, setErros] = useState({});
     const [selectedDate, setSelectedDate] = useState(null);
     const [type, setType] = useState('');
-    const [showModal, setShowModal] = useState(false);
 
     const profile = useASelector((state) => state.auth.profile, []);
 
+    const setAlertDialog = useGlobalAction('setAlertDialog');
     const sendVerifyEmail = useAuthAction('sendVerifyEmail');
 
     const handleChange = (e) => {
@@ -82,7 +84,7 @@ const BankingPage = (props) => {
 
     const sendEmail = () => {
         sendVerifyEmail({ data: { user_id: profile.id } });
-        setShowModal(true);
+        setAlertDialog({ alertDialogState: true, alertDialogMessage: 'Please check your inbox for the confirmation email' });
     };
 
     return (
@@ -356,25 +358,7 @@ const BankingPage = (props) => {
                     }
                 </Grid>
             </Container>
-            <Dialog open={showModal} onClose={() => setShowModal(false)}>
-                <DialogTitle>
-                    {"Message"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Please check your inbox for the confirmation email
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setShowModal(false)}
-                        color="primary"
-                        style={{ borderRadius: 50, fontWeight: 'bold' }}
-                    >
-                        close
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <AlertDialog />
         </Fragment >
     );
 };
