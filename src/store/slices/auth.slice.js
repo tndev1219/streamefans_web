@@ -26,6 +26,7 @@ const authSlice = createSlice({
         },
         resetEmailRequest: () => { },
         resetEmail: () => { },
+        updateProfile: () => { },
         logout: (state, action) => {
             state.profile = null;
         },

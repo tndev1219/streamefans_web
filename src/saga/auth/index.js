@@ -304,6 +304,46 @@ export function* resetEmail() {
     });
 }
 
+export function* updateProfile() {
+    yield takeEvery("auth/updateProfile", function* (action) {
+        try {
+            const res = yield call(apis.PATCH, `auth/update-profile/${action.payload.data.id}/`, action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: null,
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: Object.values(err.response.data.message)[0][0] },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(signupRequest),
@@ -317,5 +357,6 @@ export default function* rootSaga() {
         fork(resetPassword),
         fork(resetEmailRequest),
         fork(resetEmail),
+        fork(updateProfile),
     ]);
 }

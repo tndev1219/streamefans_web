@@ -105,7 +105,7 @@ const PasswordPage = (props) => {
             <Container maxWidth="lg">
                 <Grid container direction="row">
                     <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee', minHeight: '100vh' }}>
-                        <SettingsNav index={2} />
+                        <SettingsNav index={1} />
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
