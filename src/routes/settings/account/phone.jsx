@@ -1,10 +1,46 @@
-import React, { Fragment } from 'react';
-import { Container, Grid, Box, Divider, Button, TextField } from '@material-ui/core';
+import React, { Fragment, useState } from 'react';
+import { Container, Grid, Box, Divider, Button, CircularProgress } from '@material-ui/core';
+import MuiPhoneNumber from 'material-ui-phone-number';
+import validator from 'validator';
+
+import { useASelector } from '../../../utilities/recipies.util';
+import { useGlobalAction } from '../../../store/slices/global.slice';
+import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
+import AlertDialog from '../../../components/global/AlertDialog';
 
 const PhonePage = (props) => {
+    const loading = useASelector((state) => state.global.loading, []);
+    const profile = useASelector((state) => state.auth.profile, []);
+
+    const [phonenumber, setPhoneNumber] = useState(profile.phone_number ? profile.phone_number : '');
+    const [error, setError] = useState(false);
+
+    const setLoading = useGlobalAction('setLoading');
+    const updateProfile = useAuthAction('updateProfile');
+
+    const cancelBtnClick = () => {
+        setPhoneNumber(profile.phone_number ? profile.phone_number : '');
+    };
+
+    const saveBtnClick = () => {
+        if (!validator.isMobilePhone(phonenumber)) {
+            setError(true);
+        } else {
+            setError(false);
+            setLoading(true);
+
+            const data = {
+                id: profile.id,
+                phone_number: phonenumber,
+            };
+
+            updateProfile({ data });
+        }
+    };
+
     return (
         <Fragment>
             <Container maxWidth="lg">
@@ -20,12 +56,18 @@ const PhonePage = (props) => {
 
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
-                                <TextField
+                                <MuiPhoneNumber
                                     label="Phone number"
                                     variant="outlined"
-                                    name="phone"
+                                    defaultCountry={'jp'}
+                                    name="phonenumber"
+                                    error={error}
+                                    value={phonenumber}
                                     fullWidth
                                     className="mt-20"
+                                    margin="normal"
+                                    helperText={error ? "Phone Number is not valid." : ""}
+                                    onChange={(value) => setPhoneNumber(value)}
                                 />
                             </Box>
                         </Box>
@@ -35,18 +77,18 @@ const PhonePage = (props) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                style={{ borderRadius: 100, fontWeight: 'bold' }}
-                                className="mr-10"
-                                disabled
+                                style={{ borderRadius: 100, fontWeight: 'bold', marginRight: '2.5%' }}
+                                onClick={cancelBtnClick}
                             >
                                 CANCEL
                             </Button>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                style={{ borderRadius: 100, fontWeight: 'bold', color: 'white' }}
-                                className="mr-10"
-                                disabled
+                                style={{ borderRadius: 100, fontWeight: 'bold', color: 'white', marginRight: '2.5%' }}
+                                disabled={loading}
+                                onClick={saveBtnClick}
+                                endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                             >
                                 SAVE
                             </Button>
@@ -54,6 +96,7 @@ const PhonePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
+            <AlertDialog />
         </Fragment >
     );
 };

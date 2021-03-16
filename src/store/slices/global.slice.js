@@ -15,6 +15,7 @@ const globalSlice = createSlice({
   name: 'global',
   initialState: INITIAL_STATE,
   reducers: {
+    reset: state => INITIAL_STATE,
     setLoading: (state, { payload }) => {
       state.loading = payload;
     },

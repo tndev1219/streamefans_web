@@ -11,6 +11,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: INITIAL_STATE,
     reducers: {
+        reset: state => INITIAL_STATE,
         signupRequest: () => { },
         loginRequest: () => { },
         authSuccess: (state, action) => {
@@ -24,9 +25,10 @@ const authSlice = createSlice({
         setEmailUpdateStep: (state, action) => {
             state.emailUpdateStep = action.payload;
         },
-        resetEmailRequest: () => { },
-        resetEmail: () => { },
+        updateEmailRequest: () => { },
+        updateEmail: () => { },
         updateProfile: () => { },
+        deleteAccount: () => { },
         logout: (state, action) => {
             state.profile = null;
         },

@@ -97,7 +97,7 @@ const AddCardPage = (props) => {
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between" spacing={5} className="mt-0">
-                    {profile.is_active ?
+                    {profile.email_verified ?
                         <>
                             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                                 <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold' }}>BILLING DETAILS</p>
@@ -268,7 +268,7 @@ const AddCardPage = (props) => {
                                         defaultValue={profile.email}
                                         fullWidth
                                         disabled
-                                        error={!profile.is_active}
+                                        error={!profile.email_verified}
                                         className="mt-20"
                                     />
                                     <p style={{ fontSize: 12, color: '#ff6060', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>

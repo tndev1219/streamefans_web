@@ -34,7 +34,7 @@ const PasswordPage = (props) => {
         let formIsValid = true;
 
         // Current Password
-        if (!profile.ready_reset_password && (!fields.current_password || fields.current_password.length === 0)) {
+        if (!profile.password_reset_state && (!fields.current_password || fields.current_password.length === 0)) {
             formIsValid = false;
             errors.current_password = true;
             errors.currentPasswordHelperText = "The current password field is required";
@@ -94,7 +94,7 @@ const PasswordPage = (props) => {
             path: '/settings/account',
         };
 
-        if (profile.ready_reset_password) {
+        if (profile.password_reset_state) {
             data.current_password = null;
         }
         resetPassword({ data, meta });
@@ -113,7 +113,7 @@ const PasswordPage = (props) => {
                         </Box>
                         <Divider />
 
-                        {!profile.ready_reset_password &&
+                        {!profile.password_reset_state &&
                             <>
                                 <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                                     <Box style={{ width: '95%' }}>

@@ -25,7 +25,15 @@ export function* signupRequest() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setSnackBar",
-                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        snackBarState: true,
+                        snackBarVariant: 'warning',
+                        snackBarMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -65,7 +73,15 @@ export function* loginRequest() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setSnackBar",
-                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        snackBarState: true,
+                        snackBarVariant: 'warning',
+                        snackBarMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -118,7 +134,15 @@ export function* emailVerify() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setSnackBar",
-                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        snackBarState: true,
+                        snackBarVariant: 'warning',
+                        snackBarMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -150,7 +174,7 @@ export function* restoreAccessRequest() {
 export function* restoreAccess() {
     yield takeEvery("auth/restoreAccess", function* (action) {
         try {
-            const res = yield call(apis.POST, `auth/restore-access/${action.payload.data.reset_password_key}/`, {}, false);
+            const res = yield call(apis.POST, `auth/restore-access/${action.payload.data.password_reset_key}/`, {}, false);
             if (res.status === 200) {
                 yield put({
                     type: "auth/authSuccess",
@@ -168,7 +192,15 @@ export function* restoreAccess() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setSnackBar",
-                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        snackBarState: true,
+                        snackBarVariant: 'warning',
+                        snackBarMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -205,7 +237,15 @@ export function* resetPassword() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setSnackBar",
-                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        snackBarState: true,
+                        snackBarVariant: 'warning',
+                        snackBarMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -221,10 +261,10 @@ export function* resetPassword() {
     });
 }
 
-export function* resetEmailRequest() {
-    yield takeEvery("auth/resetEmailRequest", function* (action) {
+export function* updateEmailRequest() {
+    yield takeEvery("auth/updateEmailRequest", function* (action) {
         try {
-            const res = yield call(apis.POST, 'auth/reset-email-request/', action.payload.data, true);
+            const res = yield call(apis.POST, 'auth/update-email-request/', action.payload.data, true);
             if (res.status === 200) {
                 yield put({
                     type: "auth/setEmailUpdateStep",
@@ -260,10 +300,10 @@ export function* resetEmailRequest() {
     });
 }
 
-export function* resetEmail() {
-    yield takeEvery("auth/resetEmail", function* (action) {
+export function* updateEmail() {
+    yield takeEvery("auth/updateEmail", function* (action) {
         try {
-            const res = yield call(apis.POST, 'auth/reset-email/', action.payload.data, true);
+            const res = yield call(apis.POST, 'auth/update-email/', action.payload.data, true);
             if (res.status === 200) {
                 yield put({
                     type: "auth/authSuccess",
@@ -288,7 +328,14 @@ export function* resetEmail() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setAlertDialog",
-                    payload: { alertDialogState: true, alertDialogMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        alertDialogState: true,
+                        alertDialogMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -328,7 +375,59 @@ export function* updateProfile() {
             if (err.response.status === 400) {
                 yield put({
                     type: "global/setAlertDialog",
-                    payload: { alertDialogState: true, alertDialogMessage: Object.values(err.response.data.message)[0][0] },
+                    payload: {
+                        alertDialogState: true,
+                        alertDialogMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
+export function* deleteAccount() {
+    yield takeEvery("auth/deleteAccount", function* (action) {
+        try {
+            const res = yield call(apis.POST, `auth/delete/${action.payload.data.id}/`, action.payload.data, true);
+            if (res.status === 200) {
+                yield put({ type: "global/reset" });
+                yield put({ type: "auth/reset" });
+                yield call(action.payload.meta.redirect, action.payload.meta.path);
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: {
+                        alertDialogState: true,
+                        alertDialogMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
                 });
             } else {
                 yield put({
@@ -355,8 +454,9 @@ export default function* rootSaga() {
         fork(restoreAccessRequest),
         fork(restoreAccess),
         fork(resetPassword),
-        fork(resetEmailRequest),
-        fork(resetEmail),
+        fork(updateEmailRequest),
+        fork(updateEmail),
         fork(updateProfile),
+        fork(deleteAccount),
     ]);
 }

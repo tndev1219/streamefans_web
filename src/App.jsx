@@ -94,13 +94,13 @@ const App = () => {
           <Route exact path="/settings/notifications/toast" component={AsyncSettingsNotificationsToastPageComponent} />
           <Route exact path="/logout" component={AsyncLogoutPageComponent} />
           <Route exact path="/registration/confirm/:email_verify_key" component={AsyncEmailConfirmationPageComponent} />
-          <Route exact path="/restore/access/:reset_password_key" component={AsyncRestoreAccessPageComponent} />
+          <Route exact path="/restore/access/:password_reset_key" component={AsyncRestoreAccessPageComponent} />
           <Redirect to="/home"></Redirect>
         </Switch>
         :
         <Switch>
           <Route exact path="/" component={AsyncSplashPageComponent} />
-          <Route exact path="/restore/access/:reset_password_key" component={AsyncRestoreAccessPageComponent} />
+          <Route exact path="/restore/access/:password_reset_key" component={AsyncRestoreAccessPageComponent} />
           <Route exact path="/login" component={AsyncSignInPageComponent} />
           <Redirect to="/login"></Redirect>
         </Switch>

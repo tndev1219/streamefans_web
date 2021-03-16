@@ -76,7 +76,7 @@ const NotificationsPage = (props) => {
                             <span style={{ fontWeight: 500, fontSize: 19 }}>NOTIFICATIONS</span>
                         </Box>
 
-                        {profile.is_active ?
+                        {profile.email_verified ?
                             <>
                                 <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 

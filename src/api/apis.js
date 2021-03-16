@@ -55,6 +55,25 @@ const PUT = (url, params, authRequired) => {
 
   return axios.put(`${appConfig.URL}api/${url}`, params, config);
 };
+
+const DELETE = (url, params, authRequired) => {
+  const state = store.getState();
+  let config = {};
+  if (authRequired) {
+    config = {
+      headers: {
+        Authorization: 'Token ' + state.auth.profile.token,
+      },
+    };
+  } else {
+    config = {
+      headers: {},
+    };
+  }
+
+  return axios.delete(`${appConfig.URL}api/${url}`, params, config);
+};
+
 const GET = (url, params, authRequired) => {
   const state = store.getState();
   let config = {};
@@ -84,6 +103,7 @@ const dictToURI = (dict) => {
 export default {
   POST,
   PATCH,
+  DELETE,
   GET,
   PUT,
 };

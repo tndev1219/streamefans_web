@@ -89,8 +89,8 @@ const HomePage = (props) => {
                                 aria-label="simple tabs example"
                             >
                                 <Tab label="HOME" style={{ fontWeight: 500 }} />
-                                {profile.is_active && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
-                                {profile.is_active && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
+                                {profile.email_verified && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
+                                {profile.email_verified && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
                             </Tabs>
                         </Grid>
                         <Grid item>
@@ -102,7 +102,7 @@ const HomePage = (props) => {
                 </AppBar>
                 <Grid container direction="row" justify="space-between" spacing={5} className="mt-0 mb-0">
                     <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>
-                        {!profile.is_active &&
+                        {!profile.email_verified &&
                             <Grid container direction="row" justify="space-between" alignItems="center" style={{ backgroundColor: 'rgba(231,108,108,.12)', color: '#e76c6c', height: 60, paddingRight: 15, paddingLeft: 15, borderRadius: 10 }}>
                                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                                     Please verify your email address

@@ -1,10 +1,36 @@
 import React, { Fragment } from 'react';
-import { Container, Grid, Box, Divider, Button, TextField } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+import { Container, Grid, Box, Divider, Button, CircularProgress } from '@material-ui/core';
+
+import { useASelector } from '../../../utilities/recipies.util';
+import { useGlobalAction } from '../../../store/slices/global.slice';
+import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
+import AlertDialog from '../../../components/global/AlertDialog';
 
 const DeletePage = (props) => {
+    const history = useHistory();
+    const loading = useASelector((state) => state.global.loading, []);
+    const profile = useASelector((state) => state.auth.profile, []);
+
+    const setLoading = useGlobalAction('setLoading');
+    const deleteAccount = useAuthAction('deleteAccount');
+
+    const handleClick = () => {
+        const data = {
+            id: profile.id,
+        };
+
+        const meta = {
+            redirect: history.push,
+            path: '/login',
+        };
+        setLoading(true);
+        deleteAccount({ data, meta });
+    };
+
     return (
         <Fragment>
             <Container maxWidth="lg">
@@ -20,14 +46,7 @@ const DeletePage = (props) => {
 
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
-                                <p style={{ color: 'red', marginTop: 20, marginBottom: 0 }}>This will permanently delete your account!</p>
-                                <TextField
-                                    label="Verification code"
-                                    variant="outlined"
-                                    name="cpassword"
-                                    fullWidth
-                                    className="mt-20"
-                                />
+                                <p className="mb-10" style={{ color: 'red', marginTop: 20, marginBottom: 0 }}>This will permanently delete your account!</p>
                             </Box>
                         </Box>
                         <Divider />
@@ -36,9 +55,10 @@ const DeletePage = (props) => {
                             <Button
                                 variant="outlined"
                                 color="primary"
-                                style={{ borderRadius: 100, fontWeight: 'bold' }}
-                                className="mr-20"
-                                disabled
+                                disabled={loading}
+                                endIcon={loading ? <CircularProgress size={20} color="primary" /> : <></>}
+                                style={{ borderRadius: 100, fontWeight: 'bold', marginRight: '2.5%' }}
+                                onClick={handleClick}
                             >
                                 DELETE ACCOUNT
                             </Button>
@@ -46,6 +66,7 @@ const DeletePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
+            <AlertDialog />
         </Fragment >
     );
 };

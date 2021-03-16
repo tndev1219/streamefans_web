@@ -13,7 +13,7 @@ const RestoreAccess = (props) => {
     };
 
     useEffect(() => {
-        restoreAccess({ data: { reset_password_key: params.reset_password_key }, meta });
+        restoreAccess({ data: { password_reset_key: params.password_reset_key }, meta });
     }, []);
 
     return (

@@ -15,7 +15,7 @@ const EmailPage = (props) => {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const history = useHistory();
-    const [updateEmail, setUpdateEmail] = useState('');
+    const [updatedEmail, setUpdatedEmail] = useState('');
     const [updateEmailValid, setUpdateEmailValid] = useState(false);
     const [updateEmailCode, setUpdateEmailCode] = useState('');
     const [updateEmailCodeValid, setUpdateEmailCodeValid] = useState(false);
@@ -29,8 +29,8 @@ const EmailPage = (props) => {
 
     const sendVerifyEmail = useAuthAction('sendVerifyEmail');
     const setEmailUpdateStep = useAuthAction('setEmailUpdateStep');
-    const resetEmailRequest = useAuthAction('resetEmailRequest');
-    const resetEmail = useAuthAction('resetEmail');
+    const updateEmailRequest = useAuthAction('updateEmailRequest');
+    const updateEmail = useAuthAction('updateEmail');
 
     const verifyBtnClick = () => {
         sendVerifyEmail({ data: { user_id: profile.id } });
@@ -42,18 +42,18 @@ const EmailPage = (props) => {
     };
 
     const updateEmailChange = (e) => {
-        setUpdateEmail(e.target.value);
+        setUpdatedEmail(e.target.value);
 
         setUpdateEmailValid(updateEmailValidation(e.target.value));
     };
 
     const updateBtnClick = () => {
         const data = {
-            email: updateEmail,
+            email: updatedEmail,
         };
 
         setLoading(true);
-        resetEmailRequest({ data });
+        updateEmailRequest({ data });
     };
 
     const updateEmailCodeChange = (e) => {
@@ -68,7 +68,7 @@ const EmailPage = (props) => {
 
     const saveBtnClick = () => {
         const data = {
-            reset_email_key: updateEmailCode,
+            email_update_key: updateEmailCode,
         };
         const meta = {
             redirect: history.push,
@@ -76,7 +76,7 @@ const EmailPage = (props) => {
         };
 
         setLoading(true);
-        resetEmail({ data, meta });
+        updateEmail({ data, meta });
     };
 
     return (
@@ -103,25 +103,25 @@ const EmailPage = (props) => {
                                             defaultValue={profile.email}
                                             fullWidth
                                             disabled
-                                            error={!profile.is_active}
+                                            error={!profile.email_verified}
                                             className="mt-20"
-                                            helperText={profile.is_active ? `E-mail ${profile.email} is verified` : `E-mail ${profile.email} is not verified`}
+                                            helperText={profile.email_verified ? `E-mail ${profile.email} is verified` : `E-mail ${profile.email} is not verified`}
                                         />
                                     </Box>
                                 </Box>
                                 <Divider />
 
-                                <Box style={{ display: 'flex', justifyContent: profile.is_active ? 'center' : 'flex-end', alignItems: 'center', height: 60 }}>
+                                <Box style={{ display: 'flex', justifyContent: profile.email_verified ? 'center' : 'flex-end', alignItems: 'center', height: 60 }}>
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        style={{ borderRadius: 100, fontWeight: 'bold', width: profile.is_active ? '95%' : 220, marginRight: profile.is_active ? 0 : '2.5%' }}
-                                        fullWidth={profile.is_active}
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: profile.email_verified ? '95%' : 220, marginRight: profile.email_verified ? 0 : '2.5%' }}
+                                        fullWidth={profile.email_verified}
                                         onClick={() => setEmailUpdateStep(1)}
                                     >
                                         UPDATE EMAIL ADDRESS
                                     </Button>
-                                    {!profile.is_active &&
+                                    {!profile.email_verified &&
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -189,7 +189,7 @@ const EmailPage = (props) => {
                                         <TextField
                                             label="Code"
                                             variant="outlined"
-                                            name="reset_email_key"
+                                            name="email_update_key"
                                             fullWidth
                                             error={!updateEmailCodeValid}
                                             helperText={!updateEmailCodeValid ? "This field is required." : ""}

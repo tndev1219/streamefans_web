@@ -112,7 +112,7 @@ const BankingPage = (props) => {
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between" className="mt-20">
-                    {profile.is_active ?
+                    {profile.email_verified ?
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold', marginBottom: 15 }}>PERSONAL INFORMATION</p>
                             <p style={{ fontSize: 15 }}>Fill in your legal name, address and attach your government issued picture ID..</p>
@@ -334,7 +334,7 @@ const BankingPage = (props) => {
                                         defaultValue={profile.email}
                                         fullWidth
                                         disabled
-                                        error={!profile.is_active}
+                                        error={!profile.email_verified}
                                         className="mt-20"
                                     />
                                     <p style={{ fontSize: 12, color: '#ff6060', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>

@@ -9,7 +9,7 @@ import { rootReducer } from '../store/RootReducer';
 import rootSaga from '../saga/sagas';
 
 const persistConfig = {
-  key: 'root',
+  key: 'streamefans_root_persistor',
   version: 1,
   storage,
   blacklist: ['global'],
