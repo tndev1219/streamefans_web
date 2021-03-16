@@ -1,13 +1,14 @@
 import axios from 'axios';
 import appConfig from '../constants/AppConfig';
-import { getProfile } from "../utilities";
+import { store } from "../index";
 
-const POST = (url, params, auth) => {
+const POST = (url, params, authRequired) => {
+  const state = store.getState();
   let config = {};
-  if (auth) {
+  if (authRequired) {
     config = {
       headers: {
-        Authorization: 'Token ' + getProfile().token,
+        Authorization: 'Token ' + state.auth.profile.token,
       },
     };
   } else {
@@ -19,12 +20,13 @@ const POST = (url, params, auth) => {
   return axios.post(`${appConfig.URL}api/${url}`, params, config);
 };
 
-const PATCH = (url, params, auth) => {
+const PATCH = (url, params, authRequired) => {
+  const state = store.getState();
   let config = {};
-  if (auth) {
+  if (authRequired) {
     config = {
       headers: {
-        Authorization: 'Token ' + getProfile().token,
+        Authorization: 'Token ' + state.auth.profile.token,
       },
     };
   } else {
@@ -36,12 +38,13 @@ const PATCH = (url, params, auth) => {
   return axios.patch(`${appConfig.URL}api/${url}`, params, config);
 };
 
-const PUT = (url, params, auth) => {
+const PUT = (url, params, authRequired) => {
+  const state = store.getState();
   let config = {};
-  if (auth) {
+  if (authRequired) {
     config = {
       headers: {
-        Authorization: 'Token ' + getProfile().token,
+        Authorization: 'Token ' + state.auth.profile.token,
       },
     };
   } else {
@@ -52,12 +55,13 @@ const PUT = (url, params, auth) => {
 
   return axios.put(`${appConfig.URL}api/${url}`, params, config);
 };
-const GET = (url, params, auth) => {
+const GET = (url, params, authRequired) => {
+  const state = store.getState();
   let config = {};
-  if (auth) {
+  if (authRequired) {
     config = {
       headers: {
-        Authorization: 'Token ' + getProfile().token,
+        Authorization: 'Token ' + state.auth.profile.token,
       },
     };
   } else {

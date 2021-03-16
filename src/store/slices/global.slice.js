@@ -7,7 +7,6 @@ const INITIAL_STATE = {
   snackBarState: false,
   snackBarVariant: 'warning',
   snackBarMessage: '',
-  loggedIn: false,
   alertDialogState: false,
   alertDialogMessage: '',
 };
@@ -23,9 +22,6 @@ const globalSlice = createSlice({
       state.snackBarState = payload.snackBarState;
       state.snackBarVariant = payload.snackBarVariant;
       state.snackBarMessage = payload.snackBarMessage;
-    },
-    setLoggedIn: (state, { payload }) => {
-      state.loggedIn = payload;
     },
     setAlertDialog: (state, { payload }) => {
       state.alertDialogState = payload.alertDialogState;

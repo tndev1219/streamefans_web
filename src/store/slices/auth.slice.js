@@ -11,10 +11,6 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: INITIAL_STATE,
     reducers: {
-        checkAuthorization: () => { },
-        checkAuthorizationSuccess: (state, action) => {
-            state.profile = action.payload;
-        },
         signupRequest: () => { },
         loginRequest: () => { },
         authSuccess: (state, action) => {

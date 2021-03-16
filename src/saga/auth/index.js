@@ -1,19 +1,5 @@
 import { all, takeEvery, call, fork, put } from 'redux-saga/effects';
-import { getProfile, setProfile, clearProfile } from '../../utilities';
 import { apis } from '../../api';
-
-export function* checkAuthorization() {
-    yield takeEvery("auth/checkAuthorization", function* () {
-        const profile = getProfile();
-
-        if (profile) {
-            yield put({
-                type: "auth/checkAuthorizationSuccess",
-                payload: profile,
-            });
-        }
-    });
-}
 
 export function* signupRequest() {
     yield takeEvery("auth/signupRequest", function* (action) {
@@ -97,7 +83,6 @@ export function* loginRequest() {
 
 export function* authSuccess() {
     yield takeEvery("auth/authSuccess", function* (action) {
-        setProfile(action.payload);
         if (action.meta) {
             yield call(action.meta.redirect, action.meta.path);
         }
@@ -149,7 +134,6 @@ export function* emailVerify() {
 export function* logout() {
     yield takeEvery("auth/logout", function* (action) {
         try {
-            clearProfile();
             yield call(action.payload.meta.redirect, action.payload.meta.path);
         } catch (err) { }
     });
@@ -322,7 +306,6 @@ export function* resetEmail() {
 
 export default function* rootSaga() {
     yield all([
-        fork(checkAuthorization),
         fork(signupRequest),
         fork(loginRequest),
         fork(authSuccess),
