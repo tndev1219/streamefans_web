@@ -7,7 +7,7 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 const BillingSupportPage = (props) => {
     const history = useHistory();
     const [fields, setFiedls] = useState({});
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState({});
 
     const handleChange = (e) => {
         fields[e.target.name] = e.target.value;
@@ -40,7 +40,7 @@ const BillingSupportPage = (props) => {
             errors.password = true;
         }
 
-        setErros(errors);
+        setErrors(errors);
         return formIsValid;
     };
 

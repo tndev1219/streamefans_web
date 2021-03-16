@@ -22,7 +22,7 @@ const BankingPage = (props) => {
     const history = useHistory();
     const [check, setChecked] = useState(false);
     const [fields, setFiedls] = useState({});
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState({});
     const [selectedDate, setSelectedDate] = useState(null);
     const [type, setType] = useState('');
 
@@ -70,7 +70,7 @@ const BankingPage = (props) => {
             errors.password = true;
         }
 
-        setErros(errors);
+        setErrors(errors);
         return formIsValid;
     };
 

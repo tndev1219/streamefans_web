@@ -28,7 +28,7 @@ import { useAuthAction } from '../../store/slices/auth.slice';
 const SignIn = (props) => {
     const history = useHistory();
     const [fields, setFiedls] = useState({});
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [isLoginPage, setIsLoginPage] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
@@ -114,17 +114,15 @@ const SignIn = (props) => {
             }
         }
 
-        setErros(errors);
+        setErrors(errors);
         return formIsValid;
     };
 
     const handleClick = () => {
         if (handleValidation()) {
             handleSubmit();
-            return true;
         } else {
             setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Please input the correct value...' });
-            return false;
         }
     };
 

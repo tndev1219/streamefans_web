@@ -13,7 +13,7 @@ import SnackBar from '../../../components/global/SnackBar';
 const PasswordPage = (props) => {
     const history = useHistory();
     const [fields, setFiedls] = useState({});
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState({});
 
     const profile = useASelector((state) => state.auth.profile, []);
     const loading = useASelector((state) => state.global.loading, []);
@@ -74,7 +74,7 @@ const PasswordPage = (props) => {
             }
         }
 
-        setErros(errors);
+        setErrors(errors);
         return formIsValid;
     };
 

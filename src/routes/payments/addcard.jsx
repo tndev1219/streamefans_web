@@ -16,7 +16,7 @@ const AddCardPage = (props) => {
     const history = useHistory();
     const [check, setChecked] = useState(false);
     const [fields, setFiedls] = useState({});
-    const [errors, setErros] = useState({});
+    const [errors, setErrors] = useState({});
 
     const profile = useASelector((state) => state.auth.profile, []);
 
@@ -54,7 +54,7 @@ const AddCardPage = (props) => {
             errors.password = true;
         }
 
-        setErros(errors);
+        setErrors(errors);
         return formIsValid;
     };
 
