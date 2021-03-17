@@ -17,7 +17,7 @@ const POST = (url, params, authRequired) => {
     };
   }
 
-  return axios.post(`${appConfig.URL}api/${url}`, params, config);
+  return axios.post(`${appConfig.URL}/api/${url}`, params, config);
 };
 
 const PATCH = (url, params, authRequired) => {
@@ -35,7 +35,7 @@ const PATCH = (url, params, authRequired) => {
     };
   }
 
-  return axios.patch(`${appConfig.URL}api/${url}`, params, config);
+  return axios.patch(`${appConfig.URL}/api/${url}`, params, config);
 };
 
 const PUT = (url, params, authRequired) => {
@@ -53,7 +53,7 @@ const PUT = (url, params, authRequired) => {
     };
   }
 
-  return axios.put(`${appConfig.URL}api/${url}`, params, config);
+  return axios.put(`${appConfig.URL}/api/${url}`, params, config);
 };
 
 const DELETE = (url, params, authRequired) => {
@@ -71,7 +71,7 @@ const DELETE = (url, params, authRequired) => {
     };
   }
 
-  return axios.delete(`${appConfig.URL}api/${url}`, params, config);
+  return axios.delete(`${appConfig.URL}/api/${url}`, params, config);
 };
 
 const GET = (url, params, authRequired) => {
@@ -89,7 +89,7 @@ const GET = (url, params, authRequired) => {
     };
   }
 
-  return axios.get(`${appConfig.URL}api/${url}?${dictToURI(params)}`, config);
+  return axios.get(`${appConfig.URL}/api/${url}?${dictToURI(params)}`, config);
 };
 
 const dictToURI = (dict) => {

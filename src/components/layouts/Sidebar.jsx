@@ -9,7 +9,9 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { List, ListItem, ListItemAvatar, ListItemText, ListItemIcon } from '@material-ui/core';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import Avatar from '@material-ui/core/Avatar';
-import AvatarImg from '../../assets/avatar/Barrera.jpg';
+import appConfig from '../../constants/AppConfig';
+
+import { useASelector } from '../../utilities/recipies.util';
 
 // data
 import settingsNavLinks from '../../assets/data/SettingsNavLinks';
@@ -21,6 +23,7 @@ import Badge from '../global/Badge';
 
 const SidebarMenu = (props) => {
     const history = useHistory();
+    const profile = useASelector((state) => state.auth.profile, []);
 
     return (
         <div className="py-10 text-left iron-sidebar-nav-wrap">
@@ -49,12 +52,12 @@ const SidebarMenu = (props) => {
                                         }}
                                         variant="dot"
                                     >
-                                        <Avatar alt="my-avatar" src={AvatarImg} variant="circular" style={{ width: 50, height: 50, marginTop: -5 }} />
+                                        <Avatar alt="my-avatar" src={`${appConfig.URL}${profile.avatar}`} variant="circular" style={{ width: 50, height: 50, marginTop: -5 }} />
                                     </Badge>
                                 </ListItemAvatar>
                                 <ListItemText
-                                    primary="Barrera"
-                                    secondary="@barrera"
+                                    primary={profile.display_name}
+                                    secondary={`@${profile.username}`}
                                 />
                             </ListItem>
                             {settingsNavLinks.map((NavLink, index) => (

@@ -1,11 +1,10 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import validator from 'validator';
 import { Container, Grid, Button, Box, Divider, IconButton, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
-import AvatarImg from '../../assets/avatar/Barrera.jpg';
 
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
@@ -15,6 +14,7 @@ import { useAuthAction } from '../../store/slices/auth.slice';
 import SettingsNav from '../../components/global/SettingsNav';
 import SnackBar from '../../components/global/SnackBar';
 import AlertDialog from '../../components/global/AlertDialog';
+import appConfig from '../../constants/AppConfig';
 
 const subscriptionTabLabels = [
     {
@@ -39,6 +39,8 @@ const securityTabLabels = [
 
 const ProfilePage = (props) => {
     const history = useHistory();
+    const headerImageInputRef = useRef();
+    const avatarImageInputRef = useRef();
     const loading = useASelector((state) => state.global.loading, []);
     const profile = useASelector((state) => state.auth.profile, []);
 
@@ -55,11 +57,16 @@ const ProfilePage = (props) => {
         display_name: false,
         website: false,
     });
-
+    const [newAvatarImage, setNewAvatarImage] = useState(null);
+    const [newHeaderImage, setNewHeaderImage] = useState(null);
+    const [newAvatarImageFile, setNewAvatarImageFile] = useState(null);
+    const [newHeaderImageFile, setNewHeaderImageFile] = useState(null);
 
     const setSnackBar = useGlobalAction('setSnackBar');
     const setLoading = useGlobalAction('setLoading');
     const updateProfile = useAuthAction('updateProfile');
+    const uploadImage = useAuthAction('uploadImage');
+    const removeImage = useAuthAction('removeImage');
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -103,15 +110,92 @@ const ProfilePage = (props) => {
         return formIsValid;
     };
 
-    const handleClick = () => {
+    const saveBtnClick = () => {
         if (handleValidation()) {
-            const data = fields;
-            data.id = profile.id;
 
             setLoading(true);
+            const data = fields;
+            data.id = profile.id;
             updateProfile({ data });
+
+
+            if (newAvatarImage || newHeaderImage) {
+                const data = new FormData();
+                if (newAvatarImage) { data.append('avatar', newAvatarImageFile); }
+                if (newHeaderImage) { data.append('header_image', newHeaderImageFile); }
+
+                uploadImage({ data, id: profile.id });
+            }
         } else {
             setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Please input the correct value...' });
+        }
+    };
+
+    const handleUploadChange = (e, type) => {
+        const file = e.target.files[0];
+        if (!file) { return; }
+
+        const reader = new FileReader();
+        reader.readAsBinaryString(file);
+
+        reader.onload = () => {
+            if (type === 'headerImage') {
+                if (newHeaderImage && newHeaderImage.filename === file.name) {
+                    setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
+                } else {
+                    setNewHeaderImage({
+                        url: `data:${file.type};base64,${btoa(reader.result)}`,
+                        type: 'image',
+                        filename: file.name,
+                    });
+                    setNewHeaderImageFile(file);
+                }
+            } else if (type === 'avatarImage') {
+                if (newAvatarImage && newAvatarImage.filename === file.name) {
+                    setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
+                } else {
+                    setNewAvatarImage({
+                        url: `data:${file.type};base64,${btoa(reader.result)}`,
+                        type: 'image',
+                        filename: file.name,
+                    });
+                    setNewAvatarImageFile(file);
+                }
+            }
+        };
+
+        reader.onerror = () => {
+            console.log("error on load image");
+        };
+    };
+
+    const deleteImage = (type) => {
+        if (type === 'headerImage') {
+            if (newHeaderImage) {
+                headerImageInputRef.current.value = null;
+                setNewHeaderImage(null);
+            } else {
+                setLoading(true);
+
+                const data = {
+                    type: 'header_image',
+                };
+
+                removeImage({ data });
+            }
+        } else if (type === 'avatarImage') {
+            if (newAvatarImage) {
+                avatarImageInputRef.current.value = null;
+                setNewAvatarImage(null);
+            } else {
+                setLoading(true);
+
+                const data = {
+                    type: 'avatar',
+                };
+
+                removeImage({ data });
+            }
         }
     };
 
@@ -129,7 +213,7 @@ const ProfilePage = (props) => {
                                 disabled={loading}
                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                 style={{ borderRadius: 100, width: 80, backgroundColor: '#00aff0', color: 'white', fontWeight: 'bold' }}
-                                onClick={handleClick}
+                                onClick={saveBtnClick}
                             >
                                 SAVE
                             </Button>
@@ -137,8 +221,9 @@ const ProfilePage = (props) => {
                         <Divider />
                         <Box
                             style={{
-                                backgroundImage: `url("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg")`,
+                                backgroundImage: newHeaderImage ? `url("${newHeaderImage.url}")` : `url("${appConfig.URL}${profile.header_image}")`,
                                 backgroundSize: 'cover',
+                                backgroundPosition: 'center',
                                 width: '100%',
                                 height: 220,
                                 display: 'flex',
@@ -146,17 +231,27 @@ const ProfilePage = (props) => {
                                 alignItems: 'center',
                             }}
                         >
-                            <IconButton>
+                            <input
+                                ref={headerImageInputRef}
+                                accept="image/*"
+                                hidden
+                                type="file"
+                                onChange={(e) => handleUploadChange(e, 'headerImage')}
+                            />
+                            <IconButton onClick={() => headerImageInputRef.current.click()} >
                                 <CameraAltOutlinedIcon style={{ color: 'white' }} />
                             </IconButton>
-                            <IconButton>
-                                <CloseRoundedIcon style={{ color: 'white' }} />
-                            </IconButton>
+                            {(!profile.header_image.includes('header_image/default_header_image.png') || newHeaderImage) &&
+                                <IconButton onClick={() => deleteImage('headerImage')} >
+                                    <CloseRoundedIcon style={{ color: 'white' }} />
+                                </IconButton>
+                            }
                         </Box>
                         <Box
                             style={{
-                                backgroundImage: `url(${AvatarImg})`,
+                                backgroundImage: newAvatarImage ? `url(${newAvatarImage.url})` : `url(${appConfig.URL}${profile.avatar})`,
                                 backgroundSize: 'cover',
+                                backgroundPosition: 'center',
                                 width: 100,
                                 height: 100,
                                 border: '2px solid white',
@@ -168,12 +263,21 @@ const ProfilePage = (props) => {
                                 alignItems: 'center',
                             }}
                         >
-                            <IconButton>
+                            <input
+                                ref={avatarImageInputRef}
+                                accept="image/*"
+                                hidden
+                                type="file"
+                                onChange={(e) => handleUploadChange(e, 'avatarImage')}
+                            />
+                            <IconButton onClick={() => avatarImageInputRef.current.click()} >
                                 <CameraAltOutlinedIcon style={{ color: 'white' }} />
                             </IconButton>
-                            <IconButton>
-                                <CloseRoundedIcon style={{ color: 'white' }} />
-                            </IconButton>
+                            {(!profile.avatar.includes('avatar/default_avatar.png') || newAvatarImage) &&
+                                <IconButton onClick={() => deleteImage('avatarImage')} >
+                                    <CloseRoundedIcon style={{ color: 'white' }} />
+                                </IconButton>
+                            }
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'center' }}>
                             <Box style={{ width: '95%' }}>

@@ -81,7 +81,7 @@ const PostsPage = (props) => {
                             <div
                                 onClick={() => removeImage(media.filename)}
                                 key={index}
-                                style={{ backgroundImage: `url(${media.url})`, backgroundSize: 'cover', width: 100, height: 100, borderRadius: 6, marginRight: 10 }}
+                                style={{ backgroundImage: `url(${media.url})`, backgroundSize: 'cover', backgroundPosition: 'center', width: 100, height: 100, borderRadius: 6, marginRight: 10 }}
                             >
                                 <IconButton><HighlightOffOutlinedIcon color="primary" style={{ marginRight: -150, marginTop: -10 }} /></IconButton>
                             </div>

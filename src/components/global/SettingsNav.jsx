@@ -4,6 +4,9 @@ import { useHistory, Link } from "react-router-dom";
 import { Grid, AppBar, IconButton, Box, Divider } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
+
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 
 const settingTabLabels = [
@@ -51,6 +54,8 @@ const SettingsNavPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
 
+    const profile = useASelector((state) => state.auth.profile, []);
+
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
     };
@@ -72,7 +77,7 @@ const SettingsNavPage = (props) => {
                 </Grid>
             </AppBar>
             <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
-            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}><Link to="/profile">@makiyoshikawa</Link></Box>
+            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}><Link to="/profile">@{profile.username}</Link></Box>
             <Divider></Divider>
             {settingTabLabels.map((item) => (
                 <Box key={item.id}>

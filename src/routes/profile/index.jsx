@@ -7,17 +7,20 @@ import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import OpenInNewOutlinedIcon from '@material-ui/icons/OpenInNewOutlined';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
+import appConfig from '../../constants/AppConfig';
+
+import { useASelector } from '../../utilities/recipies.util';
 
 // component
 import SnackBar from '../../components/global/SnackBar';
 import Badge from '../../components/global/Badge';
 
-import AvatarImg from '../../assets/avatar/Barrera.jpg';
-
 const ProfilePage = (props) => {
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const profile = useASelector((state) => state.auth.profile, []);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -34,8 +37,9 @@ const ProfilePage = (props) => {
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                         <Box
                             style={{
-                                backgroundImage: `url("https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg")`,
+                                backgroundImage: `url(${appConfig.URL}${profile.header_image})`,
                                 backgroundSize: 'cover',
+                                backgroundPosition: 'center',
                                 width: '100%',
                                 height: 250,
                                 borderRadius: '0px 0px 6px 6px',
@@ -48,7 +52,7 @@ const ProfilePage = (props) => {
                                         <ArrowBackRoundedIcon style={{ color: 'white' }} />
                                     </IconButton>
                                     <Box style={{ display: 'grid' }}>
-                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>makiyoshikawa</span>
+                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.username}</span>
                                         <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>0 No posts</span>
                                     </Box>
                                 </Box>
@@ -81,7 +85,7 @@ const ProfilePage = (props) => {
                                     variant="dot"
                                     style={{ marginTop: -35 }}
                                 >
-                                    <Avatar src={AvatarImg} style={{ width: 110, height: 110, border: '2px solid white' }} />
+                                    <Avatar src={`${appConfig.URL}${profile.avatar}`} style={{ width: 110, height: 110, border: '2px solid white' }} />
                                 </Badge>
                                 <Box>
                                     <Button
@@ -101,9 +105,9 @@ const ProfilePage = (props) => {
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'center' }}>
                             <Box style={{ width: '95%' }}>
-                                <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>makiyoshikawa</p>
-                                <p style={{ marginTop: -10, fontSize: 14, color: '#aaa' }}>@makiyoshikawa・Active</p>
-                                <p style={{ marginTop: 30, fontSize: 18 }}>I cannot change yesterday, but I can change today.</p>
+                                <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>{profile.username}</p>
+                                <p style={{ marginTop: -10, fontSize: 14, color: '#aaa' }}>@{profile.username}・Active</p>
+                                <p style={{ marginTop: 30, fontSize: 18 }}>{profile.bio}</p>
                             </Box>
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>

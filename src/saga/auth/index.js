@@ -398,6 +398,100 @@ export function* updateProfile() {
     });
 }
 
+export function* uploadImage() {
+    yield takeEvery("auth/uploadImage", function* (action) {
+        try {
+            const res = yield call(apis.PATCH, `auth/upload-image/${action.payload.id}/`, action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: null,
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: {
+                        alertDialogState: true,
+                        alertDialogMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
+export function* removeImage() {
+    yield takeEvery("auth/removeImage", function* (action) {
+        try {
+            const res = yield call(apis.POST, `auth/remove-image/`, action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/authSuccess",
+                    payload: res.data.result,
+                    meta: null,
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        } catch (err) {
+            if (err.response.status === 400) {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: {
+                        alertDialogState: true,
+                        alertDialogMessage:
+                            Object.values(err.response.data.message)[0][0] ?
+                                Object.values(err.response.data.message)[0][0]
+                                :
+                                Object.values(err.response.data.message)[0],
+                    },
+                });
+            } else {
+                yield put({
+                    type: "global/setAlertDialog",
+                    payload: { alertDialogState: true, alertDialogMessage: 'Error Occured! Please try again later.' },
+                });
+            }
+            yield put({
+                type: "global/setLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
 export function* deleteAccount() {
     yield takeEvery("auth/deleteAccount", function* (action) {
         try {
@@ -457,6 +551,8 @@ export default function* rootSaga() {
         fork(updateEmailRequest),
         fork(updateEmail),
         fork(updateProfile),
+        fork(uploadImage),
+        fork(removeImage),
         fork(deleteAccount),
     ]);
 }
