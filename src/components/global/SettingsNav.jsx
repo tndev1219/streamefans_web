@@ -43,11 +43,11 @@ const generalTabLabels = [
         label: 'Display',
         path: '/settings/display',
     },
-    {
-        id: 6,
-        label: "What's New",
-        path: '/settings/changelog',
-    },
+    // {
+    //     id: 6,
+    //     label: "What's New",
+    //     path: '/settings/changelog',
+    // },
 ];
 
 const SettingsNavPage = (props) => {

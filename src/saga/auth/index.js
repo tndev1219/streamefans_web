@@ -537,6 +537,20 @@ export function* deleteAccount() {
     });
 }
 
+export function* getUsers() {
+    yield takeEvery("auth/getUsers", function* (action) {
+        try {
+            const res = yield call(apis.GET, `auth/`, {}, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "auth/updateUserList",
+                    payload: res.data.result,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(signupRequest),
@@ -554,5 +568,6 @@ export default function* rootSaga() {
         fork(uploadImage),
         fork(removeImage),
         fork(deleteAccount),
+        fork(getUsers),
     ]);
 }

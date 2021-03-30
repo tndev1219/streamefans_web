@@ -5,6 +5,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 const INITIAL_STATE = {
     profile: null,
     emailUpdateStep: 0,
+    users: [],
 };
 
 const authSlice = createSlice({
@@ -33,6 +34,10 @@ const authSlice = createSlice({
         deleteAccount: () => { },
         logout: (state, action) => {
             state.profile = null;
+        },
+        getUsers: () => { },
+        updateUserList: (state, action) => {
+            state.users = action.payload;
         },
     },
 });

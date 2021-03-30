@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   snackBarMessage: '',
   alertDialogState: false,
   alertDialogMessage: '',
+  language: false,
 };
 
 const globalSlice = createSlice({
@@ -27,6 +28,9 @@ const globalSlice = createSlice({
     setAlertDialog: (state, { payload }) => {
       state.alertDialogState = payload.alertDialogState;
       state.alertDialogMessage = payload.alertDialogMessage;
+    },
+    changeLanguage: (state, { payload }) => {
+      state.language = payload.value;
     },
   },
 });

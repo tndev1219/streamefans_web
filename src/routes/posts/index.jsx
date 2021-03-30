@@ -1,6 +1,6 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, TextField, Divider } from '@material-ui/core';
+import { Container, Grid, AppBar, IconButton, Button, TextField, Divider, CircularProgress } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 // import PollOutlinedIcon from '@material-ui/icons/PollOutlined';
@@ -8,49 +8,69 @@ import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
 // component
 import SnackBar from '../../components/global/SnackBar';
 
+import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
+import { usePostAction } from '../../store/slices/post.slice';
 
 const PostsPage = (props) => {
     const fileInput = useRef();
     const history = useHistory();
     const [imageList, setImageList] = useState([]);
+    const [text, setText] = useState('');
+
+    const loading = useASelector((state) => state.global.loading, []);
 
     const setSnackBar = useGlobalAction('setSnackBar');
+    const setLoading = useGlobalAction('setLoading');
+    const createPost = usePostAction('createPost');
 
     const handleUploadChange = (e) => {
         const file = e.target.files[0];
         if (!file) {
             return;
         }
-        const reader = new FileReader();
-        reader.readAsBinaryString(file);
 
-        reader.onload = () => {
+        const newImageList = imageList.filter(image => image);
+
+        for (let i = 0; i < e.target.files.length; i++) {
+            const file = e.target.files[i];
+
             const alreadyUploadedFileList = imageList.filter((image) => image.filename === file.name);
 
             if (alreadyUploadedFileList.length !== 0) {
                 setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
             } else {
-                const newImageList = imageList.filter(image => image);
                 newImageList.push({
-                    url: `data:${file.type};base64,${btoa(reader.result)}`,
+                    url: URL.createObjectURL(file),
                     type: 'image',
                     filename: file.name,
+                    file: file,
                 });
-
-                setImageList(newImageList);
             }
-        };
+        }
 
-        reader.onerror = () => {
-            console.log("error on load image");
-        };
+        setImageList(newImageList);
     };
 
     const removeImage = (filename) => {
         const newImageList = imageList.filter(image => (image.filename !== filename));
 
         setImageList(newImageList);
+    };
+
+    const handleClick = () => {
+        const data = new FormData();
+        imageList.map(image => {
+            data.append('files', image.file);
+            return null;
+        });
+        data.append('post_description', text);
+
+        // setLoading(true);
+        setLoading(false);
+
+        // create post api call
+        createPost({ data });
     };
 
     return (
@@ -67,7 +87,14 @@ const PostsPage = (props) => {
                                     <span style={{ fontWeight: 500, fontSize: 19 }}>NEW POST</span>
                                 </Grid>
                                 <Grid item>
-                                    <Button style={{ borderRadius: 100, width: 80, fontWeight: 'bold', backgroundColor: '#00aff0', color: 'white' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        style={{ borderRadius: 100, width: 80, fontWeight: 'bold', color: 'white' }}
+                                        onClick={handleClick}
+                                        disabled={(text.length === 0 && imageList.length === 0) || loading}
+                                        endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
+                                    >
                                         POST
                                     </Button>
                                 </Grid>
@@ -81,9 +108,20 @@ const PostsPage = (props) => {
                             <div
                                 onClick={() => removeImage(media.filename)}
                                 key={index}
-                                style={{ backgroundImage: `url(${media.url})`, backgroundSize: 'cover', backgroundPosition: 'center', width: 100, height: 100, borderRadius: 6, marginRight: 10 }}
+                                style={{
+                                    backgroundImage: `url(${media.url})`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    width: 100,
+                                    height: 100,
+                                    borderRadius: 6,
+                                    marginRight: 10,
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
                             >
-                                <IconButton><HighlightOffOutlinedIcon color="primary" style={{ marginRight: -150, marginTop: -10 }} /></IconButton>
+                                <IconButton> <HighlightOffOutlinedIcon color="primary" /> </IconButton>
                             </div>
                         ))}
                     </Grid>
@@ -95,6 +133,7 @@ const PostsPage = (props) => {
                             variant="outlined"
                             fullWidth={true}
                             placeholder={imageList.length === 0 ? "Compose new post..." : "Add a description..."}
+                            onChange={(e) => setText(e.target.value)}
                         />
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20">
@@ -103,6 +142,7 @@ const PostsPage = (props) => {
                             accept="image/*"
                             hidden
                             type="file"
+                            multiple
                             onChange={handleUploadChange}
                         />
                         <IconButton onClick={() => fileInput.current.click()}>

@@ -1,6 +1,12 @@
 import React, { Fragment, useState } from 'react';
 // import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, Switch } from '@material-ui/core';
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    // Switch,
+} from '@material-ui/core';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 
 // component
@@ -47,7 +53,7 @@ const DisplayPage = (props) => {
                         </Box>
                         <Divider></Divider>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5 }}>
+                        {/* <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5 }}>
                             <Box
                                 style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: 5, paddingLeft: 10, paddingRight: 10, cursor: 'pointer' }}
                             >
@@ -60,7 +66,7 @@ const DisplayPage = (props) => {
                                 />
                             </Box>
                         </Box>
-                        <Divider></Divider>
+                        <Divider></Divider> */}
 
                     </Grid>
                 </Grid>

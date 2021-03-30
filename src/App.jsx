@@ -38,7 +38,7 @@ import {
   AsyncSettingsNotificationsToastPageComponent,
 } from './utilities/AsyncRoutes';
 import Header from "./components/layouts/Header";
-import Footer from "./components/layouts/Footer";
+// import Footer from "./components/layouts/Footer";
 import './lib/Css.js';
 import './App.css';
 
@@ -105,7 +105,7 @@ const App = () => {
           <Redirect to="/login"></Redirect>
         </Switch>
       }
-      {getUrl(location.pathname) && <Footer />}
+      {/* {getUrl(location.pathname) && <Footer />} */}
     </Fragment>
   );
 };

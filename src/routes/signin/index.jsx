@@ -1,6 +1,18 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Button, Grid, Divider, TextField, CircularProgress, InputAdornment, IconButton } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import {
+    Container,
+    Button,
+    Grid,
+    Divider,
+    TextField,
+    CircularProgress,
+    InputAdornment,
+    IconButton,
+    Hidden,
+    withWidth,
+} from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -10,6 +22,7 @@ import Slider from "react-slick";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Footer from "../../components/layouts/Footer";
 import SnackBar from '../../components/global/SnackBar';
 import AlertDialog from '../../components/global/AlertDialog';
 import PhonesImg from '../../assets/images/phones.png';
@@ -36,6 +49,7 @@ const SignIn = (props) => {
     const [restoreAccessEmailValid, setRestoreAccessEmailValid] = useState(true);
 
     const loading = useASelector((state) => state.global.loading, []);
+    const language = useASelector((state) => state.global.language, []);
 
     const setSnackBar = useGlobalAction('setSnackBar');
     const setLoading = useGlobalAction('setLoading');
@@ -169,33 +183,41 @@ const SignIn = (props) => {
 
     return (
         <Fragment>
-            <Container maxWidth="lg" style={{ display: 'flex', minHeight: '100vh' }}>
+            <Container maxWidth="lg" style={{ display: 'flex', justifyContent: 'center', minHeight: 'calc(100vh - 60px)', marginBottom: 60, marginTop: props.width === 'xs' ? 30 : 0 }}>
                 <Grid container direction="row" justify="space-around" alignItems="center">
-                    <Grid item style={{ height: 700 }}>
-                        <img src={PhonesImg} alt='phones'></img>
-                        <Slider {...settings} style={{ position: 'relative', top: -645, left: 112, width: 312 }}>
-                            <div>
-                                <img src={Slide1Img} alt='slide-1' />
-                            </div>
-                            <div>
-                                <img src={Slide2Img} alt='slide-2' />
-                            </div>
-                            <div>
-                                <img src={Slide3Img} alt='slide-3' />
-                            </div>
-                            <div>
-                                <img src={Slide4Img} alt='slide-4' />
-                            </div>
-                            <div>
-                                <img src={Slide5Img} alt='slide-5' />
-                            </div>
-                        </Slider>
-                    </Grid>
-                    <Grid item style={{ maxWidth: '30%' }}>
+                    <Hidden smDown>
+                        <Grid item xs={12} sm={12} md={7} lg={7} xl={7} style={{ height: 700, paddingLeft: 50, marginRight: -150 }}>
+                            <img src={PhonesImg} alt='phones'></img>
+                            <Slider {...settings} style={{ position: 'relative', top: -645, left: 112, width: 312 }}>
+                                <div>
+                                    <img src={Slide1Img} alt='slide-1' />
+                                </div>
+                                <div>
+                                    <img src={Slide2Img} alt='slide-2' />
+                                </div>
+                                <div>
+                                    <img src={Slide3Img} alt='slide-3' />
+                                </div>
+                                <div>
+                                    <img src={Slide4Img} alt='slide-4' />
+                                </div>
+                                <div>
+                                    <img src={Slide5Img} alt='slide-5' />
+                                </div>
+                            </Slider>
+                        </Grid>
+                    </Hidden>
+                    <Grid item xs={10} sm={7} md={4} lg={4} xl={4}>
                         <Grid container direction="column" justify="center" alignItems="center" spacing={2} >
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <img src={LogoImg} alt="logo" style={{ width: '100%' }} />
-                                <p className="mt-20" style={{ textAlign: 'center', fontSize: 13 }}>Sign up to make money and interact with your fans!</p>
+                                <p className="mt-20" style={{ textAlign: 'center', fontSize: 13 }}>
+                                    {language ?
+                                        '登録してお金を稼ぎ、ファンと交流しましょう！'
+                                        :
+                                        'Sign up to make money and interact with your fans!'
+                                    }
+                                </p>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%', marginTop: -20 }}>
                                 <Button
@@ -205,7 +227,11 @@ const SignIn = (props) => {
                                     style={{ borderRadius: 50, fontSize: 15, fontWeight: 'bold', backgroundColor: '#1da1f2', color: 'white' }}
                                     className="p-10 pl-20 pr-20"
                                 >
-                                    Sign In With Twitter
+                                    {language ?
+                                        'twitterでサインイン'
+                                        :
+                                        'Sign In With Twitter'
+                                    }
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
@@ -216,25 +242,23 @@ const SignIn = (props) => {
                                     style={{ borderRadius: 50, fontSize: 15, fontWeight: 'bold', backgroundColor: '#4285f4', color: 'white' }}
                                     className="p-10 pl-20 pr-20"
                                 >
-                                    Sign In With Google
+                                    {language ?
+                                        'googleでログインする'
+                                        :
+                                        'Sign In With Google'
+                                    }
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%', marginTop: 25 }}>
                                 <Grid container direction="row" justify="space-between" alignItems="center" style={{ width: '100%' }}>
-                                    <Grid item style={{ width: '44%', marginTop: -20 }}>
-                                        <Divider />
-                                    </Grid>
-                                    <Grid item style={{ fontWeight: 'bold', color: '#8a96a3', fontSize: 13 }}>
-                                        <p>OR</p>
-                                    </Grid>
-                                    <Grid item style={{ width: '44%', marginTop: -20 }}>
+                                    <Grid item style={{ width: '100%', marginTop: -20 }}>
                                         <Divider />
                                     </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
                                 <TextField
-                                    label="E-mail"
+                                    label={language ? '電子メール' : 'E-mail'}
                                     variant="outlined"
                                     name="email"
                                     type="email"
@@ -248,7 +272,7 @@ const SignIn = (props) => {
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
                                 <TextField
-                                    label="Password"
+                                    label={language ? 'パスワード' : 'Password'}
                                     variant="outlined"
                                     name="password"
                                     type={showPassword ? "text" : "password"}
@@ -274,7 +298,7 @@ const SignIn = (props) => {
                             {!isLoginPage &&
                                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
                                     <TextField
-                                        label="Name"
+                                        label={language ? '名' : 'Name'}
                                         variant="outlined"
                                         name="display_name"
                                         required={true}
@@ -294,7 +318,11 @@ const SignIn = (props) => {
                                                 onClick={() => setShowModal(true)}
                                                 style={{ fontSize: 12, marginTop: -10, paddingLeft: 15, color: '#00aff0', cursor: 'pointer' }}
                                             >
-                                                Forgot password?
+                                                {language ?
+                                                    'パスワードをお忘れですか？'
+                                                    :
+                                                    'Forgot password?'
+                                                }
                                             </p>
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
@@ -305,18 +333,32 @@ const SignIn = (props) => {
                                                 style={{ width: '100%', borderRadius: 50, fontWeight: 'bold', marginTop: -5, padding: 10 }}
                                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                             >
-                                                LogIn
+                                                {language ?
+                                                    'ログイン'
+                                                    :
+                                                    'LogIn'
+                                                }
                                             </Button>
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            <p style={{ fontSize: 14, marginTop: 10 }}>Don`t have an account yet?</p>
+                                            <p style={{ fontSize: 14, marginTop: 10 }}>
+                                                {language ?
+                                                    'アカウントがない方はこちらへ'
+                                                    :
+                                                    'Don`t have an account yet?'
+                                                }
+                                            </p>
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                             <p
                                                 onClick={() => setIsLoginPage(false)}
                                                 style={{ fontWeight: 'bold', fontSize: 14, marginTop: -15, color: '#00aff0', cursor: 'pointer' }}
                                             >
-                                                Sign up for StreaMeFans.com
+                                                {language ?
+                                                    'StreaMeFans.com にサインアップ'
+                                                    :
+                                                    'Sign up for StreaMeFans.com'
+                                                }
                                             </p>
                                         </Grid>
                                     </>
@@ -330,22 +372,45 @@ const SignIn = (props) => {
                                                 style={{ width: '100%', borderRadius: 50, fontWeight: 'bold', marginTop: -5, padding: 10 }}
                                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                             >
-                                                Sign Up
+                                                {language ?
+                                                    'サインアップ'
+                                                    :
+                                                    'Sign Up'
+                                                }
                                             </Button>
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ textAlign: 'center' }}>
-                                            <p style={{ fontSize: 14, marginTop: 10 }}>By signing up you agree to our</p>
-                                            <p style={{ fontSize: 14, marginTop: -10 }}><span style={{ color: '#00aff0' }}>Terms of Service</span> and <span style={{ color: '#00aff0' }}>Privacy Policy</span>.</p>
+                                            {language ?
+                                                <div>
+                                                    <p style={{ fontSize: 14, marginTop: 10 }}>サインアップすることにより、当社の</p>
+                                                    <p style={{ fontSize: 14, marginTop: -10 }}><span style={{ color: '#00aff0' }}>利用規約</span>と<span style={{ color: '#00aff0' }}>プライバシーポリシー</span>に同意</p>
+                                                </div>
+                                                :
+                                                <div>
+                                                    <p style={{ fontSize: 14, marginTop: 10 }}>By signing up you agree to our</p>
+                                                    <p style={{ fontSize: 14, marginTop: -10 }}><span style={{ color: '#00aff0' }}>Terms of Service</span> and <span style={{ color: '#00aff0' }}>Privacy Policy</span>.</p>
+                                                </div>
+                                            }
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            <p style={{ fontSize: 14, marginTop: 10 }}>Already have an account?</p>
+                                            <p style={{ fontSize: 14, marginTop: 10 }}>
+                                                {language ?
+                                                    'アカウントがある方はこちらへ'
+                                                    :
+                                                    'Already have an account?'
+                                                }
+                                            </p>
                                         </Grid>
                                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                             <p
                                                 onClick={() => setIsLoginPage(true)}
                                                 style={{ fontWeight: 'bold', fontSize: 14, marginTop: -15, color: '#00aff0', cursor: 'pointer' }}
                                             >
-                                                Login
+                                                {language ?
+                                                    'ログイン'
+                                                    :
+                                                    'LogIn'
+                                                }
                                             </p>
                                         </Grid>
                                     </>
@@ -353,6 +418,7 @@ const SignIn = (props) => {
                         </Grid>
                     </Grid>
                 </Grid>
+                <Footer />
                 <SnackBar />
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)}>
@@ -399,4 +465,8 @@ const SignIn = (props) => {
     );
 };
 
-export default React.memo(SignIn);
+SignIn.propTypes = {
+    width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+export default React.memo(withWidth()(SignIn));

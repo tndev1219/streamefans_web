@@ -4,7 +4,7 @@ import { Container, Grid, IconButton, Box, Avatar, Button, Menu, MenuItem } from
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
-import OpenInNewOutlinedIcon from '@material-ui/icons/OpenInNewOutlined';
+// import OpenInNewOutlinedIcon from '@material-ui/icons/OpenInNewOutlined';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import appConfig from '../../constants/AppConfig';
@@ -92,14 +92,14 @@ const ProfilePage = (props) => {
                                         variant="outlined"
                                         color="primary"
                                         startIcon={<SettingsOutlinedIcon />}
-                                        style={{ borderRadius: 100, fontWeight: 'bold', height: 50, marginRight: 10 }}
+                                        style={{ borderRadius: 100, fontWeight: 'bold', height: 50 }}
                                         onClick={() => history.push('/settings')}
                                     >
                                         Edit Profile
                                     </Button>
-                                    <IconButton variant="outlined" color="primary" style={{ border: '1px solid #00aff0' }}>
+                                    {/* <IconButton variant="outlined" color="primary" style={{ border: '1px solid #00aff0' }}>
                                         <OpenInNewOutlinedIcon />
-                                    </IconButton>
+                                    </IconButton> */}
                                 </Box>
                             </Box>
                         </Box>
