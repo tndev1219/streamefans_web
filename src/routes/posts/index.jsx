@@ -1,16 +1,28 @@
 import React, { Fragment, useRef, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, TextField, Divider, CircularProgress } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+    Button,
+    TextField,
+    Divider,
+    CircularProgress,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import CropOriginalIcon from '@material-ui/icons/CropOriginal';
 // import PollOutlinedIcon from '@material-ui/icons/PollOutlined';
 import HighlightOffOutlinedIcon from '@material-ui/icons/HighlightOffOutlined';
-// component
-import SnackBar from '../../components/global/SnackBar';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
 import { usePostAction } from '../../store/slices/post.slice';
+
+// component
 
 const PostsPage = (props) => {
     const fileInput = useRef();
@@ -154,7 +166,6 @@ const PostsPage = (props) => {
                         <Divider />
                     </Grid>
                 </Grid>
-                <SnackBar />
             </Container>
         </Fragment >
     );

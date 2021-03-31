@@ -1,16 +1,29 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Box, TextField, FormControlLabel, Checkbox, Divider } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+    Button,
+    Box,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    Divider,
+} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import { countries } from '../../assets/data/Countries';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
-import AlertDialog from '../../components/global/AlertDialog';
+import { countries } from '../../assets/data/Countries';
 
 const AddCardPage = (props) => {
     const history = useHistory();
@@ -308,7 +321,6 @@ const AddCardPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

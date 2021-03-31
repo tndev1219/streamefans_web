@@ -1,15 +1,27 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, TextField, Button } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    TextField,
+    Button,
+    IconButton,
+    Hidden,
+} from '@material-ui/core';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';
-import AlertDialog from '../../components/global/AlertDialog';
 
 const preferencesTabLabels = [
     {
@@ -22,25 +34,25 @@ const preferencesTabLabels = [
         label: "Email notifications",
         path: '/settings/notifications/email',
     },
-    {
-        id: 2,
-        label: "Site notifications",
-        path: '/settings/notifications/site',
-    },
-    {
-        id: 3,
-        label: "Toast notifications",
-        path: '/settings/notifications/toast',
-    },
+    // {
+    //     id: 2,
+    //     label: "Site notifications",
+    //     path: '/settings/notifications/site',
+    // },
+    // {
+    //     id: 3,
+    //     label: "Toast notifications",
+    //     path: '/settings/notifications/toast',
+    // },
 ];
 
-const otherTabLabels = [
-    {
-        id: 4,
-        label: 'Telegram bot',
-        path: '/settings/notifications/telegram',
-    },
-];
+// const otherTabLabels = [
+//     {
+//         id: 4,
+//         label: 'Telegram bot',
+//         path: '/settings/notifications/telegram',
+//     },
+// ];
 
 const NotificationsPage = (props) => {
     const history = useHistory();
@@ -67,12 +79,19 @@ const NotificationsPage = (props) => {
     return (
         <Fragment>
             <Container maxWidth="lg">
-                <Grid container direction="row">
-                    <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee', minHeight: '100vh' }}>
-                        <SettingsNav index={4} />
-                    </Grid>
-                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
-                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
+                <Grid container direction="row" justify="center">
+                    <Hidden smDown>
+                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', minHeight: '100vh' }}>
+                            <SettingsNav index={4} />
+                        </Grid>
+                    </Hidden>
+                    <Grid item xs={12} sm={10} md={8} lg={8} xl={8} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee' }}>
+                        <Box style={{ display: 'flex', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
+                            <Hidden mdUp>
+                                <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
+                                    <ArrowBackRoundedIcon />
+                                </IconButton>
+                            </Hidden>
                             <span style={{ fontWeight: 500, fontSize: 19 }}>NOTIFICATIONS</span>
                         </Box>
 
@@ -98,7 +117,7 @@ const NotificationsPage = (props) => {
                                         <Divider></Divider>
                                     </Box>
                                 ))}
-                                <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
+                                {/* <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
 
                                 <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Other</Box>
                                 <Divider></Divider>
@@ -117,7 +136,7 @@ const NotificationsPage = (props) => {
                                         </Box>
                                         <Divider></Divider>
                                     </Box>
-                                ))}
+                                ))} */}
                             </>
                             :
                             <>
@@ -157,7 +176,6 @@ const NotificationsPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

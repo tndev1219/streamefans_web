@@ -1,7 +1,18 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Box, TextField } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+    Button,
+    Box,
+    TextField,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
+
 // component
 
 const BillingSupportPage = (props) => {
@@ -72,7 +83,7 @@ const BillingSupportPage = (props) => {
                 <Grid container direction="row" justify="space-around" spacing={5} className="mt-0">
                     <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
                         <p style={{ fontSize: 15 }}>If you have any questions, please fill out the form below to contact us.</p>
-                        <Box style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <TextField
                                 label="Enter your name"
                                 variant="outlined"

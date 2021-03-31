@@ -1,14 +1,24 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, Button, TextField, CircularProgress } from '@material-ui/core';
 
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    TextField,
+    CircularProgress,
+} from '@material-ui/core';
+
+// custom hooks
 import { useASelector } from '../../../utilities/recipies.util';
 import { useAuthAction } from '../../../store/slices/auth.slice';
 import { useGlobalAction } from '../../../store/slices/global.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
-import AlertDialog from '../../../components/global/AlertDialog';
 
 const EmailPage = (props) => {
     // Email Validation Regex
@@ -224,7 +234,6 @@ const EmailPage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

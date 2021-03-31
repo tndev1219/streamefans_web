@@ -1,15 +1,24 @@
 import React, { Fragment, useState } from 'react';
-import { Container, Grid, Box, Divider, Button, CircularProgress } from '@material-ui/core';
-import MuiPhoneNumber from 'material-ui-phone-number';
 import validator from 'validator';
+import MuiPhoneNumber from 'material-ui-phone-number';
 
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    CircularProgress,
+} from '@material-ui/core';
+
+// custom hooks
 import { useASelector } from '../../../utilities/recipies.util';
 import { useGlobalAction } from '../../../store/slices/global.slice';
 import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
-import AlertDialog from '../../../components/global/AlertDialog';
 
 const PhonePage = (props) => {
     const loading = useASelector((state) => state.global.loading, []);
@@ -96,7 +105,6 @@ const PhonePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

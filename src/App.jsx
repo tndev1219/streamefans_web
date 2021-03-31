@@ -1,5 +1,14 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
+
+// material ui
+import { withWidth } from '@material-ui/core';
+
+// custom hooks
+import { useASelector } from './utilities/recipies.util';
+
+// components
 import {
   AsyncSplashPageComponent,
   AsyncHomePageComponent,
@@ -17,6 +26,7 @@ import {
   AsyncAddCardPageComponent,
   AsyncBankingPageComponent,
   AsyncBillingSupportPageComponent,
+  AsyncSettingsPageComponent,
   AsyncSettingsProfilePageComponent,
   AsyncSettingsAccountPageComponent,
   AsyncSettingsSecurityPageComponent,
@@ -38,13 +48,13 @@ import {
   AsyncSettingsNotificationsToastPageComponent,
 } from './utilities/AsyncRoutes';
 import Header from "./components/layouts/Header";
-// import Footer from "./components/layouts/Footer";
+import AlertDialog from './components/global/AlertDialog';
+import SnackBar from './components/global/SnackBar';
 import './lib/Css.js';
 import './App.css';
 
-import { useASelector } from './utilities/recipies.util';
-
-const App = () => {
+const App = (props) => {
+  console.log(props.width);
   const profile = useASelector((state) => state.auth.profile, []);
 
   const location = useLocation();
@@ -60,7 +70,11 @@ const App = () => {
       {!getUrl(location.pathname) && location.pathname !== '/' && <Header />}
       {profile ?
         <Switch>
-          <Redirect exact from="/settings" to="/settings/profile"></Redirect>
+          {props.width === 'xs' || props.width === 'sm' ?
+            <Route exact path="/settings" component={AsyncSettingsPageComponent} />
+            :
+            <Redirect exact from="/settings" to="/settings/profile"></Redirect>
+          }
           <Route exact path="/" component={AsyncSplashPageComponent} />
           <Route exact path="/home" component={AsyncHomePageComponent} />
           <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
@@ -105,9 +119,14 @@ const App = () => {
           <Redirect to="/login"></Redirect>
         </Switch>
       }
-      {/* {getUrl(location.pathname) && <Footer />} */}
+      <SnackBar />
+      <AlertDialog />
     </Fragment>
   );
 };
 
-export default App;
+App.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+export default withWidth()(App);

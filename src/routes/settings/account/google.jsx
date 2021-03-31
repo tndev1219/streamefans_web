@@ -1,9 +1,17 @@
 import React, { Fragment } from 'react';
-import { Container, Grid, Box, Divider, Button } from '@material-ui/core';
-import GoogleImg from '../../../assets/images/google.jpg';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+} from '@material-ui/core';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
+import GoogleImg from '../../../assets/images/google.jpg';
 
 const GooglePage = (props) => {
     return (

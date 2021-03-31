@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useAuthAction } from '../../store/slices/auth.slice';
-import SnackBar from '../../components/global/SnackBar';
 
 const EmailConfirmation = (props) => {
     const history = useHistory();
@@ -17,7 +16,7 @@ const EmailConfirmation = (props) => {
     }, []);
 
     return (
-        <SnackBar />
+        <></>
     );
 };
 

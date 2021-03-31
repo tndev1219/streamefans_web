@@ -4,13 +4,21 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { List, ListItem, ListItemAvatar, ListItemText, ListItemIcon } from '@material-ui/core';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import Avatar from '@material-ui/core/Avatar';
-import appConfig from '../../constants/AppConfig';
 
+// material ui
+import {
+    SwipeableDrawer,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    ListItemIcon,
+    Avatar,
+} from '@material-ui/core';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 
 // data
@@ -20,6 +28,7 @@ import helpNavLinks from '../../assets/data/HelpNavLinks';
 
 // component
 import Badge from '../global/Badge';
+import appConfig from 'constants/AppConfig';
 
 const SidebarMenu = (props) => {
     const history = useHistory();

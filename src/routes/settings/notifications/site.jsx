@@ -1,5 +1,13 @@
 import React, { Fragment } from 'react';
-import { Container, Grid, Box, Divider, Switch } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Switch,
+} from '@material-ui/core';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';

@@ -1,6 +1,16 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, Tabs, Tab, IconButton, Hidden } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    Tabs,
+    Tab,
+    IconButton,
+    Hidden,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 import LibraryAddCheckOutlinedIcon from '@material-ui/icons/LibraryAddCheckOutlined';
@@ -9,6 +19,7 @@ import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded'
 import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 // import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
+
 // component
 
 const tabList = [

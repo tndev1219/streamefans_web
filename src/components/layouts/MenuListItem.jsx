@@ -2,10 +2,12 @@
  * Menu List Item
  */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+// material ui
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 
 class MenuListItem extends Component {

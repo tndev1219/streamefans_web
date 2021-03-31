@@ -1,19 +1,30 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, IconButton, Box, Avatar, Button, Menu, MenuItem } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    IconButton,
+    Box,
+    Avatar,
+    Button,
+    Menu,
+    MenuItem,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 // import OpenInNewOutlinedIcon from '@material-ui/icons/OpenInNewOutlined';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
-import appConfig from '../../constants/AppConfig';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 
 // component
-import SnackBar from '../../components/global/SnackBar';
 import Badge from '../../components/global/Badge';
+import appConfig from '../../constants/AppConfig';
 
 const ProfilePage = (props) => {
     const history = useHistory();
@@ -93,7 +104,7 @@ const ProfilePage = (props) => {
                                         color="primary"
                                         startIcon={<SettingsOutlinedIcon />}
                                         style={{ borderRadius: 100, fontWeight: 'bold', height: 50 }}
-                                        onClick={() => history.push('/settings')}
+                                        onClick={() => history.push('/settings/profile')}
                                     >
                                         Edit Profile
                                     </Button>
@@ -133,7 +144,6 @@ const ProfilePage = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
-                <SnackBar />
             </Container>
         </Fragment >
     );

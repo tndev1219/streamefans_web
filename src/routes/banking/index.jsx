@@ -1,6 +1,23 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Box, Tooltip, TextField, FormControlLabel, Checkbox, FormControl, InputLabel, Select, MenuItem, Divider } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+    Button,
+    Box,
+    Tooltip,
+    TextField,
+    FormControlLabel,
+    Checkbox,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem, Divider,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import ContactSupportOutlinedIcon from '@material-ui/icons/ContactSupportOutlined';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
@@ -11,12 +28,12 @@ import {
     KeyboardDatePicker,
 } from "@material-ui/pickers";
 
+// custom actions
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
-import AlertDialog from '../../components/global/AlertDialog';
 
 const BankingPage = (props) => {
     const history = useHistory();
@@ -112,7 +129,7 @@ const BankingPage = (props) => {
                     </Grid>
                 </AppBar>
                 <Grid container direction="row" justify="space-between" className="mt-20">
-                    {profile.email_verified ?
+                    {!profile.email_verified ?
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                             <p style={{ fontSize: 15, color: '#8a96a3', fontWeight: 'bold', marginBottom: 15 }}>PERSONAL INFORMATION</p>
                             <p style={{ fontSize: 15 }}>Fill in your legal name, address and attach your government issued picture ID..</p>
@@ -358,7 +375,6 @@ const BankingPage = (props) => {
                     }
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

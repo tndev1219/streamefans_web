@@ -1,13 +1,24 @@
 import React, { Fragment, useState } from 'react';
-import { Container, Grid, Box, Divider, Button, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
 
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    TextField,
+    InputAdornment,
+    CircularProgress,
+} from '@material-ui/core';
+
+// custom hooks
 import { useASelector } from '../../../utilities/recipies.util';
 import { useGlobalAction } from '../../../store/slices/global.slice';
 import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
-import AlertDialog from '../../../components/global/AlertDialog';
 
 const UsernamePage = (props) => {
     const loading = useASelector((state) => state.global.loading, []);
@@ -85,7 +96,6 @@ const UsernamePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

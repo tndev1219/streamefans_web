@@ -1,10 +1,19 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, Link } from "react-router-dom";
-import { Grid, AppBar, IconButton, Box, Divider } from '@material-ui/core';
+
+// material ui
+import {
+    Grid,
+    AppBar,
+    IconButton,
+    Box,
+    Divider,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 
 // component

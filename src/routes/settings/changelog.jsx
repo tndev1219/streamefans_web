@@ -1,5 +1,11 @@
 import React, { Fragment } from 'react';
-import { Container, Grid, Box } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+} from '@material-ui/core';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';

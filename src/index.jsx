@@ -8,7 +8,7 @@ import ContentLoader from './components/global/Loader';
 import reportWebVitals from './reportWebVitals';
 import { createStoreWithMiddleware } from './store/createStore';
 import { rootReducer } from './store/RootReducer';
-import primaryTheme from './themes/primaryTheme';
+import primaryTheme from 'themes/primaryTheme';
 
 export const { persistor, store } = createStoreWithMiddleware(rootReducer);
 

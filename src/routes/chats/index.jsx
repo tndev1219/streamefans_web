@@ -1,8 +1,16 @@
 import React, { Fragment } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
+
 import {
     MessageBox,
     ChatList,
@@ -10,10 +18,9 @@ import {
     // Button,
     Avatar,
 } from 'react-chat-elements';
+import 'react-chat-elements/dist/main.css';
 
 // component
-
-import 'react-chat-elements/dist/main.css';
 
 const ChatsPage = (props) => {
     const history = useHistory();

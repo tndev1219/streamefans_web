@@ -1,21 +1,41 @@
 import React, { Fragment } from 'react';
-import { Link } from "react-router-dom";
-import { Container, Grid, Box, Divider, Button, TextField } from '@material-ui/core';
+import { Link, useHistory } from "react-router-dom";
+
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    TextField,
+    IconButton,
+    Hidden,
+} from '@material-ui/core';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';
 
 const SubscriptionPage = (props) => {
+    const history = useHistory();
 
     return (
         <Fragment>
             <Container maxWidth="lg">
-                <Grid container direction="row">
-                    <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee', minHeight: '100vh' }}>
-                        <SettingsNav index={10} />
-                    </Grid>
-                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
-                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
+                <Grid container direction="row" justify="center">
+                    <Hidden smDown>
+                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', minHeight: '100vh' }}>
+                            <SettingsNav index={10} />
+                        </Grid>
+                    </Hidden>
+                    <Grid item xs={12} sm={10} md={8} lg={8} xl={8} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee' }}>
+                        <Box style={{ display: 'flex', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
+                            <Hidden mdUp>
+                                <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
+                                    <ArrowBackRoundedIcon />
+                                </IconButton>
+                            </Hidden>
                             <span style={{ fontWeight: 500, fontSize: 19 }}>SUBSCRIPTION</span>
                         </Box>
                         <Divider />
@@ -31,7 +51,7 @@ const SubscriptionPage = (props) => {
                                     disabled
                                     className="mt-20"
                                 />
-                                <p style={{ fontSize: 12, color: 'rgba(138,150,163,.75', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>You must Add a Bank <Link to="/banking">Account or Payment Information</Link> before you can set your price or accept tips.</p>
+                                <p style={{ fontSize: 12, color: 'rgba(138,150,163,.75', marginLeft: 20, marginTop: 5, marginBottom: 0 }}>You must <Link to="/banking">Add a Bank Account or Payment Information</Link> before you can set your price or accept tips.</p>
                                 <span style={{ fontSize: 12, color: 'rgba(138,150,163,.75', marginLeft: 20 }}>Minimum $0 USD or free</span>
                             </Box>
                         </Box>
@@ -78,6 +98,7 @@ const SubscriptionPage = (props) => {
                                 <p style={{ fontSize: 12, color: 'rgba(138,150,163,.75)' }}>Offer several months of subscription as a discounted bundle.</p>
                             </Box>
                         </Box>
+                        <Divider />
                     </Grid>
                 </Grid>
             </Container>

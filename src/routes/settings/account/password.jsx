@@ -1,14 +1,24 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, Button, TextField, CircularProgress } from '@material-ui/core';
 
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    TextField,
+    CircularProgress,
+} from '@material-ui/core';
+
+// custom hooks
 import { useASelector } from '../../../utilities/recipies.util';
 import { useGlobalAction } from '../../../store/slices/global.slice';
 import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
-import SnackBar from '../../../components/global/SnackBar';
 
 const PasswordPage = (props) => {
     const history = useHistory();
@@ -181,7 +191,6 @@ const PasswordPage = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
-                <SnackBar />
             </Container>
         </Fragment >
     );

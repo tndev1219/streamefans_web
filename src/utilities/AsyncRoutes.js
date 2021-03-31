@@ -52,6 +52,9 @@ const AsyncBankingPageComponent = React.lazy(() => import('../routes/banking'));
 // Billing Support
 const AsyncBillingSupportPageComponent = React.lazy(() => import('../routes/banking/support'));
 
+// Settings
+const AsyncSettingsPageComponent = React.lazy(() => import('../routes/settings'));
+
 // Settings Profile
 const AsyncSettingsProfilePageComponent = React.lazy(() => import('../routes/settings/profile'));
 
@@ -126,6 +129,7 @@ export {
   AsyncAddCardPageComponent,
   AsyncBankingPageComponent,
   AsyncBillingSupportPageComponent,
+  AsyncSettingsPageComponent,
   AsyncSettingsProfilePageComponent,
   AsyncSettingsAccountPageComponent,
   AsyncSettingsSecurityPageComponent,

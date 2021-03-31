@@ -1,9 +1,21 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, AppBar, IconButton, Button, Switch, Divider, Box } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    AppBar,
+    IconButton,
+    Button,
+    Switch,
+    Divider,
+    Box,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import PaymentOutlinedIcon from '@material-ui/icons/PaymentOutlined';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+
 // component
 
 const tabItems = [

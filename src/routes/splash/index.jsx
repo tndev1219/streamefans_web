@@ -1,6 +1,9 @@
 import React, { Fragment } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container } from '@material-ui/core';
+
+// material ui
+import Container from '@material-ui/core/Container';
+
 import LogoImg from '../../assets/images/Logo.png';
 
 // import { useGlobalAction } from '../../store/slices/global.slice';

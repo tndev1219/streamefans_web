@@ -1,19 +1,34 @@
 import React, { Fragment, useState, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 import validator from 'validator';
-import { Container, Grid, Button, Box, Divider, IconButton, TextField, InputAdornment, CircularProgress } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Button,
+    Box,
+    Divider,
+    IconButton,
+    TextField,
+    InputAdornment,
+    CircularProgress,
+    Hidden,
+} from '@material-ui/core';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
+import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 import { useGlobalAction } from '../../store/slices/global.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';
-import SnackBar from '../../components/global/SnackBar';
-import AlertDialog from '../../components/global/AlertDialog';
+
+// constants
 import appConfig from '../../constants/AppConfig';
 
 const subscriptionTabLabels = [
@@ -202,13 +217,22 @@ const ProfilePage = (props) => {
     return (
         <Fragment>
             <Container maxWidth="lg">
-                <Grid container direction="row">
-                    <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee', minHeight: '100vh' }}>
-                        <SettingsNav index={0} />
-                    </Grid>
-                    <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
+                <Grid container direction="row" justify="center">
+                    <Hidden smDown>
+                        <Grid item xs={4} sm={4} md={4} lg={4} xl={4} style={{ borderLeft: '1px solid #eee', minHeight: '100vh' }}>
+                            <SettingsNav index={0} />
+                        </Grid>
+                    </Hidden>
+                    <Grid item xs={12} sm={10} md={8} lg={8} xl={8} style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>EDIT PROFILE</span>
+                            <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Hidden mdUp>
+                                    <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
+                                        <ArrowBackRoundedIcon />
+                                    </IconButton>
+                                </Hidden>
+                                <span style={{ fontWeight: 500, fontSize: 19 }}>EDIT PROFILE</span>
+                            </Box>
                             <Button
                                 disabled={loading}
                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
@@ -380,8 +404,6 @@ const ProfilePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <SnackBar />
-            <AlertDialog />
         </Fragment >
     );
 };

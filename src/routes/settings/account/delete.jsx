@@ -1,14 +1,23 @@
 import React, { Fragment } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Box, Divider, Button, CircularProgress } from '@material-ui/core';
 
+// material ui
+import {
+    Container,
+    Grid,
+    Box,
+    Divider,
+    Button,
+    CircularProgress,
+} from '@material-ui/core';
+
+// custom hooks
 import { useASelector } from '../../../utilities/recipies.util';
 import { useGlobalAction } from '../../../store/slices/global.slice';
 import { useAuthAction } from '../../../store/slices/auth.slice';
 
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
-import AlertDialog from '../../../components/global/AlertDialog';
 
 const DeletePage = (props) => {
     const history = useHistory();
@@ -66,7 +75,6 @@ const DeletePage = (props) => {
                     </Grid>
                 </Grid>
             </Container>
-            <AlertDialog />
         </Fragment >
     );
 };

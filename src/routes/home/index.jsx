@@ -1,6 +1,18 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, Avatar, AppBar, Tabs, Tab, IconButton, Button, Divider } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    Avatar,
+    AppBar,
+    Tabs,
+    Tab,
+    IconButton,
+    Button,
+    Divider,
+} from '@material-ui/core';
 // import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
 import LabelOffOutlinedIcon from '@material-ui/icons/LabelOffOutlined';
@@ -14,10 +26,8 @@ import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded';
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
-import Slider from "react-slick";
-import appConfig from '../../constants/AppConfig';
-import { getPostDate } from '../../utilities';
 
+// custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 import { usePostAction } from '../../store/slices/post.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
@@ -25,6 +35,9 @@ import { useAuthAction } from '../../store/slices/auth.slice';
 // component
 import Badge from '../../components/global/Badge';
 import Suggestion from '../../components/global/Suggestion';
+import Slider from "react-slick";
+import appConfig from '../../constants/AppConfig';
+import { getPostDate } from '../../utilities';
 
 const HomePage = (props) => {
 
@@ -82,8 +95,7 @@ const HomePage = (props) => {
     const profile = useASelector((state) => state.auth.profile, []);
     const users = useASelector((state) => state.auth.users, []);
     const posts = useASelector((state) => state.post.posts, []);
-    console.log(users);
-    console.log(posts);
+    
     const getUsers = useAuthAction('getUsers');
     const getPosts = usePostAction('getPosts');
 

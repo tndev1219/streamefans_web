@@ -1,6 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
+import Slider from "react-slick";
+
+// material ui
 import {
     Container,
     Button,
@@ -12,19 +15,23 @@ import {
     IconButton,
     Hidden,
     withWidth,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
 } from '@material-ui/core';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Slider from "react-slick";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
+import { useAuthAction } from '../../store/slices/auth.slice';
+
+// components
 import Footer from "../../components/layouts/Footer";
-import SnackBar from '../../components/global/SnackBar';
-import AlertDialog from '../../components/global/AlertDialog';
 import PhonesImg from '../../assets/images/phones.png';
 import LogoImg from '../../assets/images/Logo.png';
 import GoogleImg from '../../assets/images/google.jpg';
@@ -33,10 +40,6 @@ import Slide2Img from '../../assets/login_carousel/slide-2.jpg';
 import Slide3Img from '../../assets/login_carousel/slide-3.jpg';
 import Slide4Img from '../../assets/login_carousel/slide-4.jpg';
 import Slide5Img from '../../assets/login_carousel/slide-5.jpg';
-
-import { useASelector } from '../../utilities/recipies.util';
-import { useGlobalAction } from '../../store/slices/global.slice';
-import { useAuthAction } from '../../store/slices/auth.slice';
 
 const SignIn = (props) => {
     const history = useHistory();
@@ -419,7 +422,6 @@ const SignIn = (props) => {
                     </Grid>
                 </Grid>
                 <Footer />
-                <SnackBar />
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)}>
                 <DialogTitle>RESTORE ACCESS</DialogTitle>
@@ -460,7 +462,6 @@ const SignIn = (props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <AlertDialog />
         </Fragment>
     );
 };

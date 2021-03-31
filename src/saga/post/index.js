@@ -5,7 +5,6 @@ export function* createPost() {
     yield takeEvery("post/createPost", function* (action) {
         try {
             const res = yield call(apis.POST, 'post/', action.payload.data, true);
-            console.log(res);
             if (res.status === 200) {
                 // yield put({
                 //     type: "auth/authSuccess",

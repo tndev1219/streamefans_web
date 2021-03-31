@@ -1,6 +1,20 @@
 import React, { Fragment, useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { Container, Grid, IconButton, AppBar, Box, Menu, MenuItem, RadioGroup, FormControlLabel, Radio, Divider } from '@material-ui/core';
+
+// material ui
+import {
+    Container,
+    Grid,
+    IconButton,
+    AppBar,
+    Box,
+    Menu,
+    MenuItem,
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+    Divider,
+} from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import LibraryAddCheckOutlinedIcon from '@material-ui/icons/LibraryAddCheckOutlined';
 import PhotoOutlinedIcon from '@material-ui/icons/PhotoOutlined';
@@ -11,7 +25,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 
 // component
-import SnackBar from '../../components/global/SnackBar';
 
 const tabItems = [
     {
@@ -164,7 +177,6 @@ const BookmarksPage = (props) => {
                         </Box>
                     </Grid>
                 </Grid>
-                <SnackBar />
             </Container>
         </Fragment >
     );
