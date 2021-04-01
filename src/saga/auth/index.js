@@ -537,10 +537,10 @@ export function* deleteAccount() {
     });
 }
 
-export function* getUsers() {
-    yield takeEvery("auth/getUsers", function* (action) {
+export function* getSuggestionUsers() {
+    yield takeEvery("auth/getSuggestionUsers", function* (action) {
         try {
-            const res = yield call(apis.GET, `auth/`, {}, true);
+            const res = yield call(apis.GET, `auth/suggestion/`, {}, true);
             if (res.status === 200) {
                 yield put({
                     type: "auth/updateUserList",
@@ -568,6 +568,6 @@ export default function* rootSaga() {
         fork(uploadImage),
         fork(removeImage),
         fork(deleteAccount),
-        fork(getUsers),
+        fork(getSuggestionUsers),
     ]);
 }

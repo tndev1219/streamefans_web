@@ -74,8 +74,6 @@ const ProfilePage = (props) => {
     });
     const [newAvatarImage, setNewAvatarImage] = useState(null);
     const [newHeaderImage, setNewHeaderImage] = useState(null);
-    const [newAvatarImageFile, setNewAvatarImageFile] = useState(null);
-    const [newHeaderImageFile, setNewHeaderImageFile] = useState(null);
 
     const setSnackBar = useGlobalAction('setSnackBar');
     const setLoading = useGlobalAction('setLoading');
@@ -133,11 +131,10 @@ const ProfilePage = (props) => {
             data.id = profile.id;
             updateProfile({ data });
 
-
             if (newAvatarImage || newHeaderImage) {
                 const data = new FormData();
-                if (newAvatarImage) { data.append('avatar', newAvatarImageFile); }
-                if (newHeaderImage) { data.append('header_image', newHeaderImageFile); }
+                if (newAvatarImage) { data.append('avatar', newAvatarImage.file); }
+                if (newHeaderImage) { data.append('header_image', newHeaderImage.file); }
 
                 uploadImage({ data, id: profile.id });
             }
@@ -150,38 +147,29 @@ const ProfilePage = (props) => {
         const file = e.target.files[0];
         if (!file) { return; }
 
-        const reader = new FileReader();
-        reader.readAsBinaryString(file);
-
-        reader.onload = () => {
-            if (type === 'headerImage') {
-                if (newHeaderImage && newHeaderImage.filename === file.name) {
-                    setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
-                } else {
-                    setNewHeaderImage({
-                        url: `data:${file.type};base64,${btoa(reader.result)}`,
-                        type: 'image',
-                        filename: file.name,
-                    });
-                    setNewHeaderImageFile(file);
-                }
-            } else if (type === 'avatarImage') {
-                if (newAvatarImage && newAvatarImage.filename === file.name) {
-                    setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
-                } else {
-                    setNewAvatarImage({
-                        url: `data:${file.type};base64,${btoa(reader.result)}`,
-                        type: 'image',
-                        filename: file.name,
-                    });
-                    setNewAvatarImageFile(file);
-                }
+        if (type === 'headerImage') {
+            if (newHeaderImage && newHeaderImage.filename === file.name) {
+                setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
+            } else {
+                setNewHeaderImage({
+                    url: URL.createObjectURL(file),
+                    type: 'image',
+                    filename: file.name,
+                    file,
+                });
             }
-        };
-
-        reader.onerror = () => {
-            console.log("error on load image");
-        };
+        } else if (type === 'avatarImage') {
+            if (newAvatarImage && newAvatarImage.filename === file.name) {
+                setSnackBar({ snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Media has already added. Please choose another.' });
+            } else {
+                setNewAvatarImage({
+                    url: URL.createObjectURL(file),
+                    type: 'image',
+                    filename: file.name,
+                    file,
+                });
+            }
+        }
     };
 
     const deleteImage = (type) => {

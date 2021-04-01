@@ -38,9 +38,7 @@ const PostsPage = (props) => {
 
     const handleUploadChange = (e) => {
         const file = e.target.files[0];
-        if (!file) {
-            return;
-        }
+        if (!file) { return; }
 
         const newImageList = imageList.filter(image => image);
 
@@ -56,7 +54,7 @@ const PostsPage = (props) => {
                     url: URL.createObjectURL(file),
                     type: 'image',
                     filename: file.name,
-                    file: file,
+                    file,
                 });
             }
         }

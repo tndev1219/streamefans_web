@@ -35,7 +35,7 @@ const authSlice = createSlice({
         logout: (state, action) => {
             state.profile = null;
         },
-        getUsers: () => { },
+        getSuggestionUsers: () => { },
         updateUserList: (state, action) => {
             state.users = action.payload;
         },
