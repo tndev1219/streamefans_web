@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 // material ui
@@ -11,6 +11,7 @@ import {
     Button,
     Menu,
     MenuItem,
+    CircularProgress,
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -21,9 +22,12 @@ import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
+import { usePostAction } from '../../store/slices/post.slice';
 
 // component
 import Badge from '../../components/global/Badge';
+import Post from '../../components/global/Post';
 import appConfig from '../../constants/AppConfig';
 
 const MyProfilePage = (props) => {
@@ -32,6 +36,17 @@ const MyProfilePage = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const profile = useASelector((state) => state.auth.profile, []);
+    const userDataLoading = useASelector((state) => state.global.userDataLoading, []);
+    const selectedUserData = useASelector((state) => state.post.selectedUserData, []);
+
+    const setUserDataLoading = useGlobalAction('setUserDataLoading');
+    const getUserData = usePostAction('getUserData');
+
+    useEffect(() => {
+        setUserDataLoading(true);
+        const data = { username: profile.username };
+        getUserData({ data });
+    }, []);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -64,7 +79,7 @@ const MyProfilePage = (props) => {
                                     </IconButton>
                                     <Box style={{ display: 'grid' }}>
                                         <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.username}</span>
-                                        <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>0 No posts</span>
+                                        <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} posts</span>
                                     </Box>
                                 </Box>
                                 <Box className="mt-10 mr-10" style={{ width: '20%', display: 'flex', justifyContent: 'flex-end', alignItems: 'end' }}>
@@ -121,27 +136,56 @@ const MyProfilePage = (props) => {
                                 <p style={{ marginTop: 30, fontSize: 18 }}>{profile.bio}</p>
                             </Box>
                         </Box>
-                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
-                            <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>
-                            <Box>
-                                <IconButton disabled>
-                                    <SearchRoundedIcon />
-                                </IconButton>
-                                <IconButton disabled>
-                                    <FilterListRoundedIcon />
-                                </IconButton>
-                            </Box>
-                        </Box>
-                        <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                            <Button
-                                variant="outlined"
-                                color="primary"
-                                onClick={() => history.push('/posts')}
-                                style={{ borderRadius: 100, fontWeight: 'bold', border: 0 }}
-                            >
-                                CREATE NEW POST
-                            </Button>
-                        </Box>
+                        {
+                            !userDataLoading && selectedUserData ?
+                                selectedUserData.length === 0 ?
+                                    <>
+                                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
+                                            <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>
+                                            <Box>
+                                                <IconButton disabled>
+                                                    <SearchRoundedIcon />
+                                                </IconButton>
+                                                <IconButton disabled>
+                                                    <FilterListRoundedIcon />
+                                                </IconButton>
+                                            </Box>
+                                        </Box>
+                                        <Box style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                            <Button
+                                                variant="outlined"
+                                                color="primary"
+                                                onClick={() => history.push('/posts')}
+                                                style={{ borderRadius: 100, fontWeight: 'bold', border: 0 }}
+                                            >
+                                                CREATE NEW POST
+                                        </Button>
+                                        </Box>
+                                    </>
+                                    :
+                                    <>
+                                        <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
+                                            <span style={{ fontWeight: 500, fontSize: 18 }}>{selectedUserData.posts.length} POSTS</span>
+                                            <Box>
+                                                <IconButton disabled>
+                                                    <SearchRoundedIcon />
+                                                </IconButton>
+                                                <IconButton disabled>
+                                                    <FilterListRoundedIcon />
+                                                </IconButton>
+                                            </Box>
+                                        </Box>
+                                        {
+                                            selectedUserData.posts.map((post, index) => (
+                                                <Post key={index} post={post} />
+                                            ))
+                                        }
+                                    </>
+                                :
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <CircularProgress color="primary" style={{ marginTop: 50 }} />
+                                </Grid>
+                        }
                     </Grid>
                 </Grid>
             </Container>

@@ -86,7 +86,9 @@ const SettingsNavPage = (props) => {
                 </Grid>
             </AppBar>
             <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
-            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}><Link to="/profile">@{profile.username}</Link></Box>
+            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>
+                <Link to="/profile">@{profile.username}</Link>
+            </Box>
             <Divider></Divider>
             {settingTabLabels.map((item) => (
                 <Box key={item.id}>

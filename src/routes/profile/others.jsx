@@ -42,6 +42,7 @@ const OthersProfilePage = (props) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
 
+    const profile = useASelector((state) => state.auth.profile, []);
     const userDataLoading = useASelector((state) => state.global.userDataLoading, []);
     const selectedUserData = useASelector((state) => state.post.selectedUserData, []);
 
@@ -52,9 +53,13 @@ const OthersProfilePage = (props) => {
     const unfollow = usePostAction('unfollow');
 
     useEffect(() => {
-        setUserDataLoading(true);
-        const data = { username: params.username };
-        getUserData({ data });
+        if (profile.username === params.username) {
+            history.push('/profile');
+        } else {
+            setUserDataLoading(true);
+            const data = { username: params.username };
+            getUserData({ data });
+        }
     }, []);
 
     const openMenu = (event) => {

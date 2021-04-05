@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Slider from "react-slick";
 import ReactPlayer from 'react-player/lazy';
@@ -26,6 +26,7 @@ import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
 
 // custom hooks
+import { useASelector } from '../../utilities/recipies.util';
 
 // component
 import Badge from '../../components/global/Badge';
@@ -57,7 +58,10 @@ const PostComponent = (props) => {
         return null;
     });
 
-    // const history = useHistory();
+    const history = useHistory();
+
+    const profile = useASelector((state) => state.auth.profile, []);
+
     const [like, setLike] = useState(false);
     const [bookmarked, setBookMarked] = useState(false);
     const [showImageOverlay, setShowImageOverlay] = useState(false);
@@ -68,7 +72,17 @@ const PostComponent = (props) => {
             <Grid container direction="column" justify="center" className="mt-20">
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginBottom: 20 }}>
                     <Grid container direction="row" alignItems="center" justify="space-between">
-                        <Grid item style={{ display: 'flex' }}>
+                        <Grid
+                            item
+                            style={{ display: 'flex', cursor: 'pointer' }}
+                            onClick={() => {
+                                if (profile.username === post.user.username) {
+                                    history.push('/profile');
+                                } else {
+                                    history.push(`/profile/${post.user.username}`);
+                                }
+                            }}
+                        >
                             <Badge
                                 overlap="circle"
                                 anchorOrigin={{

@@ -51,7 +51,15 @@ const SidebarMenu = (props) => {
                     <div className="vertical-menu py-40">
                         <List component="nav" className="iron-sidebar-menu">
                             <ListItem divider></ListItem>
-                            <ListItem alignItems="flex-start" button divider onClick={() => { props.setOpen(false); history.push('/profile'); }}>
+                            <ListItem
+                                alignItems="flex-start"
+                                button
+                                divider
+                                onClick={() => {
+                                    props.setOpen(false);
+                                    history.push('/profile');
+                                }}
+                            >
                                 <ListItemAvatar>
                                     <Badge
                                         overlap="circle"

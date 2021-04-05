@@ -4,7 +4,9 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
     posts: [],
-    selectedUserData: null,
+    selectedUserData: {
+        posts: [],
+    },
 };
 
 const postSlice = createSlice({
