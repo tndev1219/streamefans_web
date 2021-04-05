@@ -70,13 +70,13 @@ const HomePage = (props) => {
     const posts = useASelector((state) => state.post.posts, []);
 
     const getSuggestionUsers = useAuthAction('getSuggestionUsers');
-    const getPosts = usePostAction('getPosts');
+    const getAllPosts = usePostAction('getAllPosts');
 
     let suggestionSlider = useRef();
 
     useEffect(() => {
         getSuggestionUsers();
-        getPosts();
+        getAllPosts();
     }, []);
 
     const nextSuggestion = () => {

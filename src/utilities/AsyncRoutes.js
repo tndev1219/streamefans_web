@@ -31,8 +31,11 @@ const AsyncLogoutPageComponent = React.lazy(() => import('../routes/logout'));
 // Chat
 const AsyncChatsPageComponent = React.lazy(() => import('../routes/chats'));
 
-// Profile
+// My Profile
 const AsyncMyProfilePageComponent = React.lazy(() => import('../routes/profile'));
+
+// Any User's Profile
+const AsyncOtherProfilePageComponent = React.lazy(() => import('../routes/profile/others'));
 
 // Bookmarks
 const AsyncBookmarksPageComponent = React.lazy(() => import('../routes/bookmarks'));
@@ -123,6 +126,7 @@ export {
   AsyncLogoutPageComponent,
   AsyncChatsPageComponent,
   AsyncMyProfilePageComponent,
+  AsyncOtherProfilePageComponent,
   AsyncBookmarksPageComponent,
   AsyncListsPageComponent,
   AsyncPaymentsPageComponent,

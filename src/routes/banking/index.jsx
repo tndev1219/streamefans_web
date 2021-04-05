@@ -258,7 +258,7 @@ const BankingPage = (props) => {
                                         style={{ borderRadius: 100, fontWeight: 'bold' }}
                                     >
                                         SELECT FILE
-                                </Button>
+                                    </Button>
                                     <p style={{ fontSize: 12, color: 'rgba(138,150,163,.75)', marginBottom: 0, marginLeft: 15, marginTop: 5 }}>Please upload a photo of your picture ID Document (i.e. Passport)</p>
                                 </Grid>
                                 <Grid item xs={4} sm={4} md={4} lg={4} xl={4}>

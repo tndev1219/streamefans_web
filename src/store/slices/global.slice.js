@@ -4,6 +4,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
   loading: false,
+  userDataLoading: false,
   snackBarState: false,
   snackBarVariant: 'warning',
   snackBarMessage: '',
@@ -19,6 +20,9 @@ const globalSlice = createSlice({
     reset: state => INITIAL_STATE,
     setLoading: (state, { payload }) => {
       state.loading = payload;
+    },
+    setUserDataLoading: (state, { payload }) => {
+      state.userDataLoading = payload;
     },
     setSnackBar: (state, { payload }) => {
       state.snackBarState = payload.snackBarState;

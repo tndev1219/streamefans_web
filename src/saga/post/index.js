@@ -43,8 +43,8 @@ export function* createPost() {
     });
 }
 
-export function* getPosts() {
-    yield takeEvery("post/getPosts", function* (action) {
+export function* getAllPosts() {
+    yield takeEvery("post/getAllPosts", function* (action) {
         try {
             const res = yield call(apis.GET, 'post/', {}, true);
             if (res.status === 200) {
@@ -57,9 +57,63 @@ export function* getPosts() {
     });
 }
 
+export function* getUserData() {
+    yield takeEvery("post/getUserData", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/get-user-data/', action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "post/updateUserData",
+                    payload: res.data.result,
+                });
+            }
+            yield put({
+                type: "global/setUserDataLoading",
+                payload: false,
+            });
+        } catch (err) {
+            yield put({
+                type: "global/setUserDataLoading",
+                payload: false,
+            });
+        }
+    });
+}
+
+export function* follow() {
+    yield takeEvery("post/follow", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/follow/', action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "post/updateUserData",
+                    payload: res.data.result,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
+export function* unfollow() {
+    yield takeEvery("post/unfollow", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/unfollow/', action.payload.data, true);
+            if (res.status === 200) {
+                yield put({
+                    type: "post/updateUserData",
+                    payload: res.data.result,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(createPost),
-        fork(getPosts),
+        fork(getAllPosts),
+        fork(getUserData),
+        fork(follow),
+        fork(unfollow),
     ]);
 }

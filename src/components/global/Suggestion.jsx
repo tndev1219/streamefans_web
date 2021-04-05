@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from "react-router-dom";
 import appConfig from '../../constants/AppConfig';
 
 const Suggestion = (props) => {
+    const history = useHistory();
+
     return (
         <div
             style={{
@@ -14,7 +17,9 @@ const Suggestion = (props) => {
                 height: 120,
                 borderRadius: 10,
                 border: '2px solid #fff',
+                cursor: 'pointer',
             }}
+            onClick={() => history.push(`/profile/${props.userInfo.username}`)}
         >
             <div style={{ position: 'relative', top: 60, bottom: 0, height: 60, width: '100%', backgroundColor: '#000', opacity: 0.5, borderRadius: '0px 0px 10px 10px', display: 'block' }}>
                 <p style={{ position: 'relative', top: 10, left: 120, color: 'white' }}>

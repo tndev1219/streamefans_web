@@ -4,6 +4,7 @@ import { makeActionHook } from '../../utilities/recipies.util';
 
 const INITIAL_STATE = {
     posts: [],
+    selectedUserData: null,
 };
 
 const postSlice = createSlice({
@@ -11,10 +12,16 @@ const postSlice = createSlice({
     initialState: INITIAL_STATE,
     reducers: {
         createPost: () => { },
-        getPosts: () => { },
+        getAllPosts: () => { },
         updatePostList: (state, action) => {
             state.posts = action.payload;
         },
+        getUserData: () => { },
+        updateUserData: (state, action) => {
+            state.selectedUserData = action.payload;
+        },
+        follow: () => { },
+        unfollow: () => { },
     },
 });
 
