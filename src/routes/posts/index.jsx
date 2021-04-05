@@ -52,7 +52,7 @@ const PostsPage = (props) => {
             } else {
                 newImageList.push({
                     url: URL.createObjectURL(file),
-                    type: 'image',
+                    type: file.type.split('/')[0],
                     filename: file.name,
                     file,
                 });
@@ -76,10 +76,8 @@ const PostsPage = (props) => {
         });
         data.append('post_description', text);
 
-        // setLoading(true);
-        setLoading(false);
+        setLoading(true);
 
-        // create post api call
         createPost({ data });
     };
 
@@ -149,7 +147,7 @@ const PostsPage = (props) => {
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20">
                         <input
                             ref={fileInput}
-                            accept="image/*"
+                            accept="image/*, video/*, .mkv"
                             hidden
                             type="file"
                             multiple

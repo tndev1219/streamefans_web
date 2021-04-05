@@ -19,7 +19,7 @@ import {
   AsyncNotificationsPageComponent,
   AsyncPostsPageComponent,
   AsyncChatsPageComponent,
-  AsyncProfilePageComponent,
+  AsyncMyProfilePageComponent,
   AsyncBookmarksPageComponent,
   AsyncListsPageComponent,
   AsyncPaymentsPageComponent,
@@ -80,7 +80,7 @@ const App = (props) => {
           <Route exact path="/notifications" component={AsyncNotificationsPageComponent} />
           <Route exact path="/posts" component={AsyncPostsPageComponent} />
           <Route exact path="/chats" component={AsyncChatsPageComponent} />
-          <Route exact path="/profile" component={AsyncProfilePageComponent} />
+          <Route exact path="/profile" component={AsyncMyProfilePageComponent} />
           <Route exact path="/bookmarks" component={AsyncBookmarksPageComponent} />
           <Route exact path="/lists" component={AsyncListsPageComponent} />
           <Route exact path="/payments" component={AsyncPaymentsPageComponent} />

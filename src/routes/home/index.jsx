@@ -5,13 +5,11 @@ import { useHistory } from "react-router-dom";
 import {
     Container,
     Grid,
-    Avatar,
     AppBar,
     Tabs,
     Tab,
     IconButton,
     Button,
-    Divider,
 } from '@material-ui/core';
 // import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import LabelOutlinedIcon from '@material-ui/icons/LabelOutlined';
@@ -19,13 +17,6 @@ import LabelOffOutlinedIcon from '@material-ui/icons/LabelOffOutlined';
 import SyncRoundedIcon from '@material-ui/icons/SyncRounded';
 import ChevronLeftRoundedIcon from '@material-ui/icons/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded';
-import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded';
-import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
-import AssistantOutlinedIcon from '@material-ui/icons/AssistantOutlined';
-import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
-import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded';
-import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
-import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
 
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
@@ -33,11 +24,9 @@ import { usePostAction } from '../../store/slices/post.slice';
 import { useAuthAction } from '../../store/slices/auth.slice';
 
 // component
-import Badge from '../../components/global/Badge';
 import Suggestion from '../../components/global/Suggestion';
+import Post from '../../components/global/Post';
 import Slider from "react-slick";
-import appConfig from '../../constants/AppConfig';
-import { getPostDate } from '../../utilities';
 
 const HomePage = (props) => {
 
@@ -71,31 +60,15 @@ const HomePage = (props) => {
         beforeChange: (current, next) => setSliderIndex(next),
     };
 
-    const postSettings = {
-        dots: false,
-        infinite: false,
-        lazyLoad: true,
-        speed: 500,
-        arrows: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        slidesPerRow: 1,
-        rows: 1,
-        centerMode: true,
-        className: 'post-image-slider',
-    };
-
     const history = useHistory();
     const [tabIndex, setTabIndex] = useState(0);
     const [freeSugg, setFreeSugg] = useState(true);
     const [sliderIndex, setSliderIndex] = useState(0);
-    const [like, setLike] = useState(false);
-    const [bookmarked, setBookMarked] = useState(false);
 
     const profile = useASelector((state) => state.auth.profile, []);
     const users = useASelector((state) => state.auth.users, []);
     const posts = useASelector((state) => state.post.posts, []);
-    
+
     const getSuggestionUsers = useAuthAction('getSuggestionUsers');
     const getPosts = usePostAction('getPosts');
 
@@ -190,78 +163,7 @@ const HomePage = (props) => {
 
                         {
                             posts.map((post, index) => (
-                                <div key={index}>
-                                    <Grid container direction="column" justify="center" className="mt-20">
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginBottom: 20 }}>
-                                            <Grid container direction="row" alignItems="center" justify="space-between">
-                                                <Grid item style={{ display: 'flex' }}>
-                                                    <Badge
-                                                        overlap="circle"
-                                                        anchorOrigin={{
-                                                            vertical: 'bottom',
-                                                            horizontal: 'right',
-                                                        }}
-                                                        variant="dot"
-                                                    >
-                                                        <Avatar alt="my-avatar" src={`${appConfig.URL}${post.user.avatar}`} variant="circular" style={{ width: 50, height: 50 }} />
-                                                    </Badge>
-                                                    <div style={{ marginLeft: 20, height: 10 }}>
-                                                        <p style={{ marginTop: 10, fontWeight: 'bold', fontSize: 16 }}>{post.user.display_name}</p>
-                                                        <p style={{ marginTop: -13, fontSize: 13, color: '#8a96a3' }}>{`@${post.user.username}`}</p>
-                                                    </div>
-                                                </Grid>
-                                                <Grid item>
-                                                    <span style={{ color: '#8a96a3', fontSize: 15 }}>{getPostDate(post.created_at)}</span>
-                                                    <IconButton>
-                                                        <MoreHorizRoundedIcon style={{ color: '#8a96a3' }} />
-                                                    </IconButton>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            {post.post_description.length !== 0 && <p>{post.post_description}</p>}
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
-                                            {post.post_files.length !== 0 &&
-                                                <Slider {...postSettings} style={{ width: '100%' }}>
-                                                    {post.post_files.map((postFile, index) => (
-                                                        <div key={index}>
-                                                            <img src={`${appConfig.URL}${postFile.post_file}`} alt='post img' />
-                                                        </div>
-                                                    ))}
-                                                </Slider>
-                                            }
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
-                                            <Grid container direction="row" justify="space-between" alignItems="center">
-                                                <Grid item>
-                                                    <IconButton onClick={() => setLike(!like)}>
-                                                        {like ? <FavoriteRoundedIcon style={{ color: '#8a96a3' }} /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
-                                                    </IconButton>
-                                                    <IconButton>
-                                                        <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />
-                                                    </IconButton>
-                                                    <Button
-                                                        startIcon={<AttachMoneyRoundedIcon />}
-                                                        style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
-                                                    >
-                                                        SEND TIP
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item>
-                                                    <IconButton onClick={() => setBookMarked(!bookmarked)}>
-                                                        {bookmarked ? <BookmarkRoundedIcon style={{ color: '#8a96a3' }} /> : <BookmarkBorderRoundedIcon style={{ color: '#8a96a3' }} />}
-                                                    </IconButton>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                                            <p style={{ marginLeft: 10, fontSize: 13 }}>{post.post_likes.length} likes ・ {post.post_comments.length} comments ・ ${post.post_tips_amount} tips</p>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Divider />
-                                </div>
+                                <Post key={index} post={post} />
                             ))
                         }
                     </Grid>

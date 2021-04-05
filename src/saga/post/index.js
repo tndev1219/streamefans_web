@@ -5,17 +5,11 @@ export function* createPost() {
     yield takeEvery("post/createPost", function* (action) {
         try {
             const res = yield call(apis.POST, 'post/', action.payload.data, true);
-            if (res.status === 200) {
-                // yield put({
-                //     type: "auth/authSuccess",
-                //     payload: res.data.result,
-                //     meta: action.payload.meta,
-                // });
-            } else {
-                // yield put({
-                //     type: "global/setSnackBar",
-                //     payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
-                // });
+            if (res.status !== 200) {
+                yield put({
+                    type: "global/setSnackBar",
+                    payload: { snackBarState: true, snackBarVariant: 'warning', snackBarMessage: 'Error Occured! Please try again later.' },
+                });
             }
             yield put({
                 type: "global/setLoading",

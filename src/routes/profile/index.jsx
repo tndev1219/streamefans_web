@@ -26,7 +26,7 @@ import { useASelector } from '../../utilities/recipies.util';
 import Badge from '../../components/global/Badge';
 import appConfig from '../../constants/AppConfig';
 
-const ProfilePage = (props) => {
+const MyProfilePage = (props) => {
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -149,4 +149,4 @@ const ProfilePage = (props) => {
     );
 };
 
-export default React.memo(ProfilePage);
+export default React.memo(MyProfilePage);
