@@ -28,9 +28,6 @@ import AddRoundedIcon from '@material-ui/icons/AddRounded';
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 
-// custom hooks
-import { useASelector } from '../../utilities/recipies.util';
-
 // component
 
 const tabItems = [
