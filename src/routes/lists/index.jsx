@@ -28,6 +28,9 @@ import AddRoundedIcon from '@material-ui/icons/AddRounded';
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 
 const tabItems = [
@@ -80,7 +83,7 @@ const ListsPage = (props) => {
     const [charactorFilterValue, setCharactorFilterValue] = useState('a');
     const [showModal, setShowModal] = useState(false);
 
-    const languageModal = useASelector((state) => state.global.languageModal, []);
+    const language = useASelector((state) => state.global.language, []);
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -194,7 +197,7 @@ const ListsPage = (props) => {
                 </Grid>
             </Container>
             <Dialog open={showModal} onClose={() => setShowModal(false)} maxWidth="sm" fullWidth>
-                <DialogTitle>CREATE NEW LIST</DialogTitle>
+                <DialogTitle>{language ? '新しいリストの作成' : 'CREATE NEW LIST'}</DialogTitle>
                 <DialogContent>
                     <TextField
                         autoFocus
@@ -220,7 +223,7 @@ const ListsPage = (props) => {
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
-                        Save
+                        {language ? '保管' : 'Save'}
                     </Button>
                 </DialogActions>
             </Dialog>
