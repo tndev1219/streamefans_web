@@ -27,6 +27,7 @@ import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
 
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
+import { usePostAction } from '../../store/slices/post.slice';
 
 // component
 import Badge from '../../components/global/Badge';
@@ -62,10 +63,14 @@ const PostComponent = (props) => {
 
     const profile = useASelector((state) => state.auth.profile, []);
 
-    const [like, setLike] = useState(false);
+    const alreadyLiked = post.post_likes.filter(postLike => postLike.user === profile.id);
+
     const [bookmarked, setBookMarked] = useState(false);
     const [showImageOverlay, setShowImageOverlay] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
+
+    const like = usePostAction('like');
+    const unlike = usePostAction('unlike');
 
     return (
         <Box>
@@ -161,8 +166,19 @@ const PostComponent = (props) => {
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ width: '100%' }}>
                     <Grid container direction="row" justify="space-between" alignItems="center">
                         <Grid item>
-                            <IconButton onClick={() => setLike(!like)}>
-                                {like ? <FavoriteRoundedIcon color="primary" /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
+                            <IconButton
+                                onClick={() => {
+                                    const data = {
+                                        post_id: post.id,
+                                    };
+                                    if (alreadyLiked.length !== 0) {
+                                        unlike({ data });
+                                    } else {
+                                        like({ data });
+                                    }
+                                }}
+                            >
+                                {alreadyLiked.length !== 0 ? <FavoriteRoundedIcon color="primary" /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                             </IconButton>
                             <IconButton>
                                 <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />

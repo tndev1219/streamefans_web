@@ -79,7 +79,10 @@ const MyProfilePage = (props) => {
                                     </IconButton>
                                     <Box style={{ display: 'grid' }}>
                                         <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.username}</span>
-                                        <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} posts</span>
+                                        {
+                                            selectedUserData.posts &&
+                                            <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} posts</span>
+                                        }
                                     </Box>
                                 </Box>
                                 <Box className="mt-10 mr-10" style={{ width: '20%', display: 'flex', justifyContent: 'flex-end', alignItems: 'end' }}>
@@ -137,8 +140,8 @@ const MyProfilePage = (props) => {
                             </Box>
                         </Box>
                         {
-                            !userDataLoading && selectedUserData ?
-                                selectedUserData.length === 0 ?
+                            !userDataLoading ?
+                                selectedUserData.posts.length === 0 ?
                                     <>
                                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
                                             <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>

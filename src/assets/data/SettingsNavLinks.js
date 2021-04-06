@@ -3,7 +3,7 @@
  */
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import FormatListNumberedOutlinedIcon from '@material-ui/icons/FormatListNumberedOutlined';
+// import FormatListNumberedOutlinedIcon from '@material-ui/icons/FormatListNumberedOutlined';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 
 /* eslint-disable */
@@ -18,11 +18,11 @@ export default [
         "path": "/bookmarks",
         "icon": <BookmarkBorderOutlinedIcon />
     },
-    {
-        "menu_title": "Lists",
-        "path": "/lists",
-        "icon": <FormatListNumberedOutlinedIcon />
-    },
+    // {
+    //     "menu_title": "Lists",
+    //     "path": "/lists",
+    //     "icon": <FormatListNumberedOutlinedIcon />
+    // },
     {
         "menu_title": "Settings",
         "path": "/settings",

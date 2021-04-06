@@ -1,5 +1,28 @@
-import { all, takeEvery, call, fork, put } from 'redux-saga/effects';
+import { all, takeEvery, call, fork, put, select } from 'redux-saga/effects';
 import { apis } from '../../api';
+
+const getPosts = (state) => state.post.posts;
+
+const getSelectedUserData = (state) => state.post.selectedUserData;
+
+const createNewObjectFromReadOnly = (posts, res, postId) => {
+    const newPosts = posts.map(post => {
+        if (post.id === postId) {
+            const newObject = Object.create({});
+            Object.keys(post).map(key => {
+                if (key !== 'post_likes') {
+                    newObject[key] = post[key];
+                }
+                return null;
+            });
+            newObject.post_likes = [...post.post_likes, res];
+            return newObject;
+        } else {
+            return post;
+        }
+    });
+    return newPosts;
+};
 
 export function* createPost() {
     yield takeEvery("post/createPost", function* (action) {
@@ -108,6 +131,104 @@ export function* unfollow() {
     });
 }
 
+export function* like() {
+    yield takeEvery("post/like", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/like/', action.payload.data, true);
+            if (res.status === 200) {
+                const posts = yield select(getPosts);
+                const newPosts = createNewObjectFromReadOnly(posts, res.data.result, action.payload.data.post_id);
+
+                yield put({
+                    type: "post/updatePostList",
+                    payload: newPosts,
+                });
+
+                const selectedUserData = yield select(getSelectedUserData);
+                const newSelectedUserData = Object.create({});
+                Object.keys(selectedUserData).map(key => {
+                    if (key !== 'posts') {
+                        newSelectedUserData[key] = selectedUserData[key];
+                    } else {
+                        const newPosts = createNewObjectFromReadOnly(selectedUserData[key], res.data.result, action.payload.data.post_id);
+                        newSelectedUserData[key] = newPosts;
+                    }
+                    return null;
+                });
+
+                yield put({
+                    type: "post/updateUserData",
+                    payload: newSelectedUserData,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
+export function* unlike() {
+    yield takeEvery("post/unlike", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/unlike/', action.payload.data, true);
+            if (res.status === 200) {
+                const posts = yield select(getPosts);
+
+                const newPosts = posts.map(post => {
+                    if (post.id === action.payload.data.post_id) {
+                        const newObject = Object.create({});
+                        Object.keys(post).map(key => {
+                            if (key !== 'post_likes') {
+                                newObject[key] = post[key];
+                            }
+                            return null;
+                        });
+                        newObject.post_likes = post.post_likes.filter(postLike => postLike.id !== res.data.result.id);
+                        return newObject;
+                    } else {
+                        return post;
+                    }
+                });
+
+                yield put({
+                    type: "post/updatePostList",
+                    payload: newPosts,
+                });
+
+                const selectedUserData = yield select(getSelectedUserData);
+                const newSelectedUserData = Object.create({});
+                Object.keys(selectedUserData).map(key => {
+                    if (key !== 'posts') {
+                        newSelectedUserData[key] = selectedUserData[key];
+                    } else {
+                        const newPosts = selectedUserData[key].map(post => {
+                            if (post.id === action.payload.data.post_id) {
+                                const newObject = Object.create({});
+                                Object.keys(post).map(key => {
+                                    if (key !== 'post_likes') {
+                                        newObject[key] = post[key];
+                                    }
+                                    return null;
+                                });
+                                newObject.post_likes = post.post_likes.filter(postLike => postLike.id !== res.data.result.id);
+                                return newObject;
+                            } else {
+                                return post;
+                            }
+                        });
+
+                        newSelectedUserData[key] = newPosts;
+                    }
+                    return null;
+                });
+
+                yield put({
+                    type: "post/updateUserData",
+                    payload: newSelectedUserData,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(createPost),
@@ -115,5 +236,7 @@ export default function* rootSaga() {
         fork(getUserData),
         fork(follow),
         fork(unfollow),
+        fork(like),
+        fork(unlike),
     ]);
 }

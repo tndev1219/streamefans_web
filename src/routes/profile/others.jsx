@@ -86,7 +86,7 @@ const OthersProfilePage = (props) => {
             <Container maxWidth="lg">
                 <Grid container direction="row" justify="space-between">
                     {
-                        !userDataLoading && selectedUserData ?
+                        !userDataLoading && selectedUserData.header_image ?
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                                 <Box
                                     style={{
