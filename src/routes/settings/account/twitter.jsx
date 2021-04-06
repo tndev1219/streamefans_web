@@ -10,10 +10,15 @@ import {
 } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 
+// custom hooks
+import { useASelector } from '../../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
 
 const TwitterPage = (props) => {
+    const language = useASelector((state) => state.global.language, []);
+
     return (
         <Fragment>
             <Container maxWidth="lg">
@@ -23,7 +28,7 @@ const TwitterPage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>TWITTER ACCOUNT</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'Twitterアカウント' : 'TWITTER ACCOUNT'}</span>
                         </Box>
                         <Divider />
 
@@ -50,7 +55,7 @@ const TwitterPage = (props) => {
                                 style={{ borderRadius: 100, fontWeight: 'bold' }}
                                 className="mr-20"
                             >
-                                DISCONNECT
+                                {language ? '取り外す' : 'DISCONNECT'}
                             </Button>
                         </Box>
                     </Grid>

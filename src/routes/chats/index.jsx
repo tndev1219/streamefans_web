@@ -11,19 +11,23 @@ import {
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 
-import {
-    MessageBox,
-    ChatList,
-    Input,
-    // Button,
-    Avatar,
-} from 'react-chat-elements';
+// import {
+//     MessageBox,
+//     ChatList,
+//     Input,
+//     // Button,
+//     Avatar,
+// } from 'react-chat-elements';
 import 'react-chat-elements/dist/main.css';
+
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
 
 // component
 
 const ChatsPage = (props) => {
     const history = useHistory();
+    const language = useASelector((state) => state.global.language, []);
 
     return (
         <Fragment>
@@ -36,7 +40,7 @@ const ChatsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 500, fontSize: 19 }}>MESSAGES</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? "メッセージ" : "MESSAGES"}</span>
                                 </Grid>
                                 <Grid item>
                                     <IconButton>
@@ -47,12 +51,12 @@ const ChatsPage = (props) => {
                         </Grid>
                     </Grid>
                 </AppBar>
-                {/* <Grid container direction="column" justify="space-between">
+                <Grid container direction="column" justify="space-between">
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#8a96a3' }}>
-                        No messages yet!
+                        {language ? "まだメッセージがありません。" : "No messages yet!"}
                     </Grid>
-                </Grid> */}
-                <Grid container direction="row" justify="space-between" style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee' }} >
+                </Grid>
+                {/* <Grid container direction="row" justify="space-between" style={{ borderLeft: '1px solid #eee', borderRight: '1px solid #eee' }} >
                     <Grid item xs={4} sm={4} md={4} lg={4} xl={4} className="mt-20" >
                         <ChatList
                             className='chat-list'
@@ -94,7 +98,7 @@ const ChatsPage = (props) => {
                             display: 'flex',
                         }}
                     >
-                        {/* <MessageBox
+                        <MessageBox
                             position={'left'}
                             type={'photo'}
                             text={'react.svg'}
@@ -117,7 +121,7 @@ const ChatsPage = (props) => {
                             position={'left'}
                             type={'text'}
                             text={'Tempor duis do voluptate enim duis velit veniam aute ullamco dolore duis irure.'}
-                        /> */}
+                        />
                         <Avatar
                             src={'http://www.nretnil.com/avatar/LawrenceEzekielAmos.png'}
                             alt={'logo'}
@@ -147,7 +151,7 @@ const ChatsPage = (props) => {
                         // }
                         />
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Container>
         </Fragment >
     );

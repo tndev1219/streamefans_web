@@ -13,11 +13,16 @@ import {
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
+// custom hooks
+import { useASelector } from '../../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
 
 const PushPage = (props) => {
     const history = useHistory();
+
+    const language = useASelector((state) => state.global.language, []);
 
     return (
         <Fragment>
@@ -35,7 +40,7 @@ const PushPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>PUSH NOTIFICATIONS</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'Push通知' : 'PUSH NOTIFICATIONS'}</span>
                         </Box>
                         <Divider />
 
@@ -43,7 +48,7 @@ const PushPage = (props) => {
                             <Box
                                 style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingLeft: 10, paddingRight: 10 }}
                             >
-                                <span>Push notifications</span>
+                                <span>{language ? 'Push通知' : 'Push notifications'}</span>
                                 <Switch
                                     // checked={check}
                                     // onChange={handleChange}
@@ -55,7 +60,14 @@ const PushPage = (props) => {
                         <Box
                             style={{ width: '100%', display: 'flex', alignItems: 'center', paddingLeft: 15, paddingRight: 10, marginBottom: 20, marginTop: -10 }}
                         >
-                            <span style={{ fontSize: 12, color: 'rgba(138,150,163,.75)' }}>Get push notifications to find out what’s going on when you’re not on OnlyFans. You can turn them off anytime.</span>
+                            <span style={{ fontSize: 12, color: 'rgba(138,150,163,.75)' }}>
+                                {
+                                    language ?
+                                        'ファン限定ではない場合は、プッシュ通知を受信して何が起きているかを知ることができます。 電源はいつでも切ることができます。'
+                                        :
+                                        'Get push notifications to find out what’s going on when you’re not on OnlyFans. You can turn them off anytime.'
+                                }
+                            </span>
                         </Box>
                         <Divider></Divider>
                     </Grid>

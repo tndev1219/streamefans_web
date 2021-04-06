@@ -21,6 +21,8 @@ import SettingsNav from '../../../components/global/SettingsNav';
 
 const DeletePage = (props) => {
     const history = useHistory();
+
+    const language = useASelector((state) => state.global.language, []);
     const loading = useASelector((state) => state.global.loading, []);
     const profile = useASelector((state) => state.auth.profile, []);
 
@@ -49,13 +51,13 @@ const DeletePage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>DELETE ACCOUNT</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'アカウントを削除' : 'DELETE ACCOUNT'}</span>
                         </Box>
                         <Divider />
 
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
-                                <p className="mb-10" style={{ color: 'red', marginTop: 20, marginBottom: 0 }}>This will permanently delete your account!</p>
+                                <p className="mb-10" style={{ color: 'red', marginTop: 20, marginBottom: 0 }}>{language ? 'アカウントが完全に削除されます。' : 'This will permanently delete your account!'}</p>
                             </Box>
                         </Box>
                         <Divider />
@@ -69,7 +71,7 @@ const DeletePage = (props) => {
                                 style={{ borderRadius: 100, fontWeight: 'bold', marginRight: '2.5%' }}
                                 onClick={handleClick}
                             >
-                                DELETE ACCOUNT
+                                {language ? 'アカウントを削除' : 'DELETE ACCOUNT'}
                             </Button>
                         </Box>
                     </Grid>

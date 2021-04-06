@@ -25,6 +25,9 @@ import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import FilterListRoundedIcon from '@material-ui/icons/FilterListRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 
 const tabItems = [
@@ -76,6 +79,8 @@ const ListsPage = (props) => {
     const [timeFilterValue, setTimeFilterValue] = useState('Name');
     const [charactorFilterValue, setCharactorFilterValue] = useState('a');
     const [showModal, setShowModal] = useState(false);
+
+    const languageModal = useASelector((state) => state.global.languageModal, []);
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -207,7 +212,7 @@ const ListsPage = (props) => {
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
-                        Cancel
+                        {language ? 'キャンセル' : 'Cancel'}
                     </Button>
                     <Button
                         onClick={() => setShowModal(false)}

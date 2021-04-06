@@ -65,6 +65,7 @@ const HomePage = (props) => {
     const [freeSugg, setFreeSugg] = useState(true);
     const [sliderIndex, setSliderIndex] = useState(0);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
     const users = useASelector((state) => state.auth.users, []);
     const posts = useASelector((state) => state.post.posts, []);
@@ -99,7 +100,7 @@ const HomePage = (props) => {
                                 textColor="primary"
                                 onChange={(e, index) => setTabIndex(index)}
                             >
-                                <Tab label="HOME" style={{ fontWeight: 500 }} />
+                                <Tab label={language ? "ホーム" : "HOME"} style={{ fontWeight: 500 }} />
                                 {/* {profile.email_verified && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />}
                                 {profile.email_verified && <Tab label="PURCHASED" style={{ fontWeight: 500 }} />} */}
                             </Tabs>
@@ -117,7 +118,9 @@ const HomePage = (props) => {
                             <Grid item xs={12} sm={12} md={12} lg={12} xl={12} discription="suggestion header">
                                 <Grid container direction="row" justify="space-between" alignItems="center">
                                     <Grid item>
-                                        <span style={{ color: '#8a96a3', fontWeight: 500, fontSize: 18 }}>SUGGESTIONS</span>
+                                        <span style={{ color: '#8a96a3', fontWeight: 500, fontSize: 18 }}>
+                                            {language ? "おすすめクリエイター" : "SUGGESTIONS"}
+                                        </span>
                                     </Grid>
                                     <Grid item>
                                         <IconButton onClick={() => setFreeSugg(!freeSugg)}>

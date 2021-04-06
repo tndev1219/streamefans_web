@@ -13,22 +13,27 @@ import {
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../components/global/SettingsNav';
 
-const profileTabLabels = [
-    {
-        id: 0,
-        label: 'Show activity status',
-    },
-    {
-        id: 1,
-        label: "Show subscription offers",
-    },
-];
-
 const SecurityPage = (props) => {
     const history = useHistory();
+
+    const language = useASelector((state) => state.global.language, []);
+
+    const profileTabLabels = [
+        {
+            id: 0,
+            label: language ? 'アクティビティ状況を表示' : 'Show activity status',
+        },
+        {
+            id: 1,
+            label: language ? 'サブスクリプションオファーを表示' : 'Show subscription offers',
+        },
+    ];
 
     return (
         <Fragment>
@@ -46,11 +51,11 @@ const SecurityPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>PRIVACY AND SAFETY</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'プライバシーと安全性' : 'PRIVACY AND SAFETY'}</span>
                         </Box>
                         <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Profile</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'プロファイル設定' : 'Profile'}</Box>
                         <Divider />
                         {profileTabLabels.map((item) => (
                             <Box key={item.id}>

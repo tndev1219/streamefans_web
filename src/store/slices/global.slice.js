@@ -11,6 +11,7 @@ const INITIAL_STATE = {
   alertDialogState: false,
   alertDialogMessage: '',
   language: false,
+  languageModal: false,
 };
 
 const globalSlice = createSlice({
@@ -32,6 +33,9 @@ const globalSlice = createSlice({
     setAlertDialog: (state, { payload }) => {
       state.alertDialogState = payload.alertDialogState;
       state.alertDialogMessage = payload.alertDialogMessage;
+    },
+    setLanguageModal: (state, { payload }) => {
+      state.languageModal = payload;
     },
     changeLanguage: (state, { payload }) => {
       state.language = payload.value;

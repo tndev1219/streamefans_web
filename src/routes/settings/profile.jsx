@@ -31,33 +31,37 @@ import SettingsNav from '../../components/global/SettingsNav';
 // constants
 import appConfig from '../../constants/AppConfig';
 
-const subscriptionTabLabels = [
-    {
-        id: 0,
-        label: 'Subscription price and bundles',
-        path: '/settings/subscription',
-    },
-    {
-        id: 1,
-        label: "Fans and following",
-        path: '/settings/fans',
-    },
-];
 
-const securityTabLabels = [
-    {
-        id: 2,
-        label: 'Privacy and safety',
-        path: '/settings/security',
-    },
-];
 
 const ProfilePage = (props) => {
     const history = useHistory();
     const headerImageInputRef = useRef();
     const avatarImageInputRef = useRef();
+
+    const language = useASelector((state) => state.global.language, []);
     const loading = useASelector((state) => state.global.loading, []);
     const profile = useASelector((state) => state.auth.profile, []);
+
+    const subscriptionTabLabels = [
+        {
+            id: 0,
+            label: language ? 'サブスクリプション価格とバンドル' : 'Subscription price and bundles',
+            path: '/settings/subscription',
+        },
+        {
+            id: 1,
+            label: language ? 'ファンとフォローする' : 'Fans and following',
+            path: '/settings/fans',
+        },
+    ];
+
+    const securityTabLabels = [
+        {
+            id: 2,
+            label: language ? 'プライバシーと安全性' : 'Privacy and safety',
+            path: '/settings/security',
+        },
+    ];
 
     const [hoveredTab, setHoveredTab] = useState(null);
     const [fields, setFiedls] = useState({
@@ -219,7 +223,7 @@ const ProfilePage = (props) => {
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
                                 </Hidden>
-                                <span style={{ fontWeight: 500, fontSize: 19 }}>EDIT PROFILE</span>
+                                <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? "プロファイルの編集" : "EDIT PROFILE"}</span>
                             </Box>
                             <Button
                                 disabled={loading}
@@ -227,7 +231,7 @@ const ProfilePage = (props) => {
                                 style={{ borderRadius: 100, width: 80, backgroundColor: '#00aff0', color: 'white', fontWeight: 'bold' }}
                                 onClick={saveBtnClick}
                             >
-                                SAVE
+                                {language ? '保管' : 'SAVE'}
                             </Button>
                         </Box>
                         <Divider />
@@ -294,7 +298,7 @@ const ProfilePage = (props) => {
                         <Box style={{ display: 'flex', justifyContent: 'center' }}>
                             <Box style={{ width: '95%' }}>
                                 <TextField
-                                    label="Username"
+                                    label={language ? "ユーザ名" : "Username"}
                                     variant="outlined"
                                     name="username"
                                     defaultValue={profile.username}
@@ -308,7 +312,7 @@ const ProfilePage = (props) => {
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    label="Display name"
+                                    label={language ? "表示名" : "Display name"}
                                     variant="outlined"
                                     name="display_name"
                                     defaultValue={profile.display_name}
@@ -319,7 +323,7 @@ const ProfilePage = (props) => {
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    label="Bio"
+                                    label={language ? "バイオ" : "Bio"}
                                     variant="outlined"
                                     name="bio"
                                     defaultValue={profile.bio}
@@ -330,7 +334,7 @@ const ProfilePage = (props) => {
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    label="Location"
+                                    label={language ? "ロケーション" : "Location"}
                                     variant="outlined"
                                     name="location"
                                     defaultValue={profile.location}
@@ -339,7 +343,7 @@ const ProfilePage = (props) => {
                                     onChange={handleChange}
                                 />
                                 <TextField
-                                    label="Website URL"
+                                    label={language ? "ウェブサイトのURL" : "Website URL"}
                                     variant="outlined"
                                     name="website"
                                     defaultValue={profile.website}
@@ -352,7 +356,7 @@ const ProfilePage = (props) => {
                             </Box>
                         </Box>
                         <Box style={{ height: 10, backgroundColor: '#eee', marginTop: 20, borderTop: '1px solid #ddd' }}></Box>
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Subscription</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? "サブスクリプション" : "Subscription"}</Box>
                         <Divider />
                         {subscriptionTabLabels.map((item) => (
                             <Box key={item.id}>
@@ -371,7 +375,7 @@ const ProfilePage = (props) => {
                             </Box>
                         ))}
                         <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Related settings</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? "関連設定" : "Related settings"}</Box>
                         <Divider></Divider>
                         {securityTabLabels.map((item) => (
                             <Box key={item.id}>

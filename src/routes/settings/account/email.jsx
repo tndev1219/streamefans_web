@@ -30,6 +30,7 @@ const EmailPage = (props) => {
     const [updateEmailCode, setUpdateEmailCode] = useState('');
     const [updateEmailCodeValid, setUpdateEmailCodeValid] = useState(false);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
     const loading = useASelector((state) => state.global.loading, []);
     const emailUpdateStep = useASelector((state) => state.auth.emailUpdateStep, []);
@@ -98,7 +99,7 @@ const EmailPage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>CHANGE EMAIL</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? "E-メールの変更" : "CHANGE EMAIL"}</span>
                         </Box>
                         <Divider />
 
@@ -129,7 +130,7 @@ const EmailPage = (props) => {
                                         fullWidth={profile.email_verified}
                                         onClick={() => setEmailUpdateStep(1)}
                                     >
-                                        UPDATE EMAIL ADDRESS
+                                        {language ? "E-メールアドレスの更新" : "UPDATE EMAIL ADDRESS"}
                                     </Button>
                                     {!profile.email_verified &&
                                         <Button
@@ -138,7 +139,7 @@ const EmailPage = (props) => {
                                             style={{ borderRadius: 100, fontWeight: 'bold', width: 200, color: 'white', marginRight: '2.5%' }}
                                             onClick={verifyBtnClick}
                                         >
-                                            SEND CONFIRMATION
+                                            {language ? "送信確認" : "SEND CONFIRMATION"}
                                         </Button>
                                     }
                                 </Box>
@@ -147,13 +148,13 @@ const EmailPage = (props) => {
                         {emailUpdateStep === 1 &&
                             <>
                                 <Grid container direction="column" justify="center" alignItems="flex-start" className="mt-20" style={{ marginLeft: '2.5%' }}>
-                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>Step 1/2</p>
-                                    <p>Please enter your new E-mail address.</p>
+                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>{language ? "ステップ 1/2" : "Step 1/2"}</p>
+                                    <p>{language ? "新しい E-メールアドレスを入力してください。" : "Please enter your new E-mail address."}</p>
                                 </Grid>
                                 <Grid container direction="column" justify="center" alignItems="center">
                                     <Box className="mb-15" style={{ width: '95%' }}>
                                         <TextField
-                                            label="E-mail"
+                                            label={language ? '電子メール' : 'E-mail'}
                                             variant="outlined"
                                             name="email"
                                             fullWidth
@@ -169,10 +170,10 @@ const EmailPage = (props) => {
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, marginRight: '2.5%' }}
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 120, marginRight: '2.5%' }}
                                         onClick={() => setEmailUpdateStep(0)}
                                     >
-                                        Cancel
+                                        {language ? 'キャンセル' : 'Cancel'}
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -182,7 +183,7 @@ const EmailPage = (props) => {
                                         onClick={updateBtnClick}
                                         endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                     >
-                                        Next
+                                        {language ? '次へ' : 'Next'}
                                     </Button>
                                 </Box>
                             </>
@@ -190,9 +191,9 @@ const EmailPage = (props) => {
                         {emailUpdateStep === 2 &&
                             <>
                                 <Grid container direction="column" justify="center" alignItems="flex-start" className="mt-20" style={{ marginLeft: '2.5%' }}>
-                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>Step 2/2</p>
-                                    <p>We have sent a temporary verification code to your new E-mail address.</p>
-                                    <p>Please input the code into the below form.</p>
+                                    <p style={{ fontWeight: 'bold', color: '#aaa', fontSize: 16 }}>{language ? "ステップ 2/2" : "Step 2/2"}</p>
+                                    <p>{language ? "新しい E-メールアドレスに一時的に確認コードを送信しました。" : "We have sent a temporary verification code to your new E-mail address."}</p>
+                                    <p>{language ? "下記のフォームにコードを入力してください。" : "Please input the code into the below form."}</p>
                                 </Grid>
                                 <Grid container direction="column" justify="center" alignItems="center">
                                     <Box className="mb-15" style={{ width: '95%' }}>
@@ -213,10 +214,10 @@ const EmailPage = (props) => {
                                     <Button
                                         variant="outlined"
                                         color="primary"
-                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 100, marginRight: '2.5%' }}
+                                        style={{ borderRadius: 100, fontWeight: 'bold', width: 120, marginRight: '2.5%' }}
                                         onClick={() => setEmailUpdateStep(0)}
                                     >
-                                        Cancel
+                                        {language ? 'キャンセル' : 'Cancel'}
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -226,7 +227,7 @@ const EmailPage = (props) => {
                                         onClick={saveBtnClick}
                                         endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                     >
-                                        Save
+                                        {language ? '保管' : 'Save'}
                                     </Button>
                                 </Box>
                             </>

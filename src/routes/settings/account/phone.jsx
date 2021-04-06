@@ -21,6 +21,7 @@ import { useAuthAction } from '../../../store/slices/auth.slice';
 import SettingsNav from '../../../components/global/SettingsNav';
 
 const PhonePage = (props) => {
+    const language = useASelector((state) => state.global.language, []);
     const loading = useASelector((state) => state.global.loading, []);
     const profile = useASelector((state) => state.auth.profile, []);
 
@@ -59,14 +60,14 @@ const PhonePage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>PHONE NUMBER</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? '電話番号' : 'PHONE NUMBER'}</span>
                         </Box>
                         <Divider />
 
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
                                 <MuiPhoneNumber
-                                    label="Phone number"
+                                    label={language ? '電話番号' : "Phone number"}
                                     variant="outlined"
                                     defaultCountry={'jp'}
                                     name="phonenumber"
@@ -89,7 +90,7 @@ const PhonePage = (props) => {
                                 style={{ borderRadius: 100, fontWeight: 'bold', marginRight: '2.5%' }}
                                 onClick={cancelBtnClick}
                             >
-                                CANCEL
+                                {language ? 'キャンセル' : 'CANCEL'}
                             </Button>
                             <Button
                                 variant="contained"
@@ -99,7 +100,7 @@ const PhonePage = (props) => {
                                 onClick={saveBtnClick}
                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                             >
-                                SAVE
+                                {language ? '保管' : 'SAVE'}
                             </Button>
                         </Box>
                     </Grid>

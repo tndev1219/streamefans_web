@@ -13,12 +13,17 @@ import {
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 
 const BillingSupportPage = (props) => {
     const history = useHistory();
     const [fields, setFiedls] = useState({});
     const [errors, setErrors] = useState({});
+
+    const language = useASelector((state) => state.global.language, []);
 
     const handleChange = (e) => {
         fields[e.target.name] = e.target.value;
@@ -135,7 +140,7 @@ const BillingSupportPage = (props) => {
                                 onClick={handleClick}
                                 style={{ borderRadius: 100, fontWeight: 'bold', marginTop: 20, width: 100, color: 'white', marginRight: 10 }}
                             >
-                                SEND
+                                {language ? '送信' : 'SEND'}
                             </Button>
                         </Box>
                     </Grid>

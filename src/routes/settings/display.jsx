@@ -12,7 +12,11 @@ import {
     Hidden,
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
-import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
+// import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
+
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
 
 // component
 import SettingsNav from '../../components/global/SettingsNav';
@@ -20,6 +24,10 @@ import SettingsNav from '../../components/global/SettingsNav';
 const DisplayPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
+
+    const language = useASelector((state) => state.global.language, []);
+
+    const setLanguageModal = useGlobalAction('setLanguageModal');
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -45,22 +53,22 @@ const DisplayPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>DISPLAY</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? '表示' : 'DISPLAY'}</span>
                         </Box>
                         <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Customize your view</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'ビューのカスタマイズ' : 'Customize your view'}</Box>
                         <Divider />
 
                         <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5 }}>
                             <Box
                                 onMouseEnter={() => handleMouseEnter(0)}
                                 onMouseLeave={() => handleMouseLeave(0)}
-                                // onClick={() => history.push('/settings/display/language')}
+                                onClick={() => setLanguageModal(true)}
                                 style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderRadius: 5, paddingLeft: 10, paddingRight: 10, backgroundColor: hoveredTab === 0 ? 'rgba(0,145,234,.06)' : 'white', cursor: 'pointer' }}
                             >
-                                <span>Language</span>
-                                <KeyboardArrowRightRoundedIcon color={hoveredTab === 0 ? "primary" : "inherit"} />
+                                <span>{language ? '言語' : 'Language'}</span>
+                                {/* <KeyboardArrowRightRoundedIcon color={hoveredTab === 0 ? "primary" : "inherit"} /> */}
                             </Box>
                         </Box>
                         <Divider></Divider>

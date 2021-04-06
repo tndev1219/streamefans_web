@@ -30,6 +30,7 @@ const PostsPage = (props) => {
     const [imageList, setImageList] = useState([]);
     const [text, setText] = useState('');
 
+    const language = useASelector((state) => state.global.language, []);
     const loading = useASelector((state) => state.global.loading, []);
 
     const setSnackBar = useGlobalAction('setSnackBar');
@@ -92,7 +93,7 @@ const PostsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 500, fontSize: 19 }}>NEW POST</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? '新しい投稿' : 'NEW POST'}</span>
                                 </Grid>
                                 <Grid item>
                                     <Button
@@ -103,7 +104,7 @@ const PostsPage = (props) => {
                                         disabled={(text.length === 0 && imageList.length === 0) || loading}
                                         endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                     >
-                                        POST
+                                        {language ? '投稿' : 'POST'}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -136,11 +137,21 @@ const PostsPage = (props) => {
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12} className="mt-20">
                         <TextField
                             id="outlined-multiline-static"
-                            label="New Post"
+                            label={language ? "新しい投稿" : "New Post"}
                             multiline
                             variant="outlined"
                             fullWidth={true}
-                            placeholder={imageList.length === 0 ? "Compose new post..." : "Add a description..."}
+                            placeholder={
+                                imageList.length === 0 ?
+                                    language ?
+                                        "新しい投稿を作成..."
+                                        :
+                                        "Compose new post..."
+                                    :
+                                    language ?
+                                        "説明を追加..."
+                                        :
+                                        "Add a description..."}
                             onChange={(e) => setText(e.target.value)}
                         />
                     </Grid>

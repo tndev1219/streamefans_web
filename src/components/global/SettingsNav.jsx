@@ -18,52 +18,53 @@ import { useASelector } from '../../utilities/recipies.util';
 
 // component
 
-const settingTabLabels = [
-    {
-        id: 0,
-        label: 'Profile',
-        path: '/settings/profile',
-    },
-    {
-        id: 1,
-        label: 'Account',
-        path: '/settings/account',
-    },
-    {
-        id: 2,
-        label: 'Privacy and safety',
-        path: '/settings/security',
-    },
-    {
-        id: 3,
-        label: 'Fans and following',
-        path: '/settings/fans',
-    },
-    {
-        id: 4,
-        label: 'Notifications',
-        path: '/settings/notifications',
-    },
-];
-
-const generalTabLabels = [
-    {
-        id: 5,
-        label: 'Display',
-        path: '/settings/display',
-    },
-    // {
-    //     id: 6,
-    //     label: "What's New",
-    //     path: '/settings/changelog',
-    // },
-];
-
 const SettingsNavPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
+
+    const settingTabLabels = [
+        {
+            id: 0,
+            label: language ? 'プロファイル設定' : 'Profile',
+            path: '/settings/profile',
+        },
+        {
+            id: 1,
+            label: language ? 'アカウント設定' : 'Account',
+            path: '/settings/account',
+        },
+        {
+            id: 2,
+            label: language ? 'プライバシーと安全性' : 'Privacy and safety',
+            path: '/settings/security',
+        },
+        {
+            id: 3,
+            label: language ? 'ファンとフォロー' : 'Fans and following',
+            path: '/settings/fans',
+        },
+        {
+            id: 4,
+            label: language ? '通知の設定' : 'Notifications',
+            path: '/settings/notifications',
+        },
+    ];
+
+    const generalTabLabels = [
+        {
+            id: 5,
+            label: language ? '表示' : 'Display',
+            path: '/settings/display',
+        },
+        // {
+        //     id: 6,
+        //     label: "What's New",
+        //     path: '/settings/changelog',
+        // },
+    ];
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -81,7 +82,7 @@ const SettingsNavPage = (props) => {
                         <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                             <ArrowBackRoundedIcon />
                         </IconButton>
-                        <span style={{ fontWeight: 500, fontSize: 19 }}>SETTINGS</span>
+                        <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? "設定" : "SETTINGS"}</span>
                     </Grid>
                 </Grid>
             </AppBar>
@@ -107,7 +108,7 @@ const SettingsNavPage = (props) => {
                 </Box>
             ))}
             <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
-            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>General</Box>
+            <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? "将軍" : "General"}</Box>
             <Divider></Divider>
             {generalTabLabels.map((item) => (
                 <Box key={item.id}>

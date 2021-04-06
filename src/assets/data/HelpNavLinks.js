@@ -18,7 +18,8 @@ export default [
     //     "icon": <Brightness4OutlinedIcon />
     // },
     {
-        "menu_title": "English",
+        "menu_title_e": "English",
+        "menu_title_j": "Japanese",
         "path": null,
         "icon": <LanguageOutlinedIcon />
     },

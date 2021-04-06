@@ -9,11 +9,16 @@ import {
     Button,
 } from '@material-ui/core';
 
+// custom hooks
+import { useASelector } from '../../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../../components/global/SettingsNav';
 import GoogleImg from '../../../assets/images/google.jpg';
 
 const GooglePage = (props) => {
+    const language = useASelector((state) => state.global.language, []);
+
     return (
         <Fragment>
             <Container maxWidth="lg">
@@ -23,7 +28,7 @@ const GooglePage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>GOOGLE ACCOUNT</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'グーグルアカウント' : 'GOOGLE ACCOUNT'}</span>
                         </Box>
                         <Divider />
 
@@ -36,7 +41,11 @@ const GooglePage = (props) => {
                                     style={{ borderRadius: 50, fontSize: 15, fontWeight: 'bold', backgroundColor: '#4285f4', color: 'white' }}
                                     className="p-10 pl-20 pr-20"
                                 >
-                                    Sign In With Google
+                                    {language ?
+                                        'googleでログインする'
+                                        :
+                                        'Sign In With Google'
+                                    }
                                 </Button>
                             </Box>
                         </Box>

@@ -450,7 +450,7 @@ const SignIn = (props) => {
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
-                        Cancel
+                        {language ? 'キャンセル' : 'Cancel'}
                     </Button>
                     <Button
                         onClick={sendRestoreAccessEmail}
@@ -458,7 +458,7 @@ const SignIn = (props) => {
                         color="primary"
                         style={{ borderRadius: 50, fontWeight: 'bold' }}
                     >
-                        Send
+                        {language ? '送信' : 'Send'}
                     </Button>
                 </DialogActions>
             </Dialog>

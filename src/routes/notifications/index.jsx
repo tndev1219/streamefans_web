@@ -20,38 +20,43 @@ import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 // import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 
-// component
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
 
-const tabList = [
-    {
-        label: 'ALL',
-        icon: <LibraryAddCheckOutlinedIcon />,
-    },
-    {
-        label: 'INTERACTIONS',
-        icon: <AssistantOutlinedIcon />,
-    },
-    {
-        label: 'LIKED',
-        icon: <FavoriteBorderRoundedIcon />,
-    },
-    {
-        label: 'SUBSCRIBED',
-        icon: <LockOpenRoundedIcon />,
-    },
-    {
-        label: 'TIPPED',
-        icon: <AttachMoneyRoundedIcon />,
-    },
-    // {
-    //     label: 'PROMOTIONS',
-    //     icon: <ReportProblemOutlinedIcon />,
-    // },
-];
+// component
 
 const NotificationsPage = (props) => {
     const history = useHistory();
     const [tabIndex, setTabIndex] = useState(0);
+
+    const language = useASelector((state) => state.global.language, []);
+
+    const tabList = [
+        {
+            label: language ? 'すべて' : 'ALL',
+            icon: <LibraryAddCheckOutlinedIcon />,
+        },
+        {
+            label: language ? 'コメント' : 'INTERACTIONS',
+            icon: <AssistantOutlinedIcon />,
+        },
+        {
+            label: language ? 'いいねされた' : 'LIKED',
+            icon: <FavoriteBorderRoundedIcon />,
+        },
+        {
+            label: language ? '購読済み' : 'SUBSCRIBED',
+            icon: <LockOpenRoundedIcon />,
+        },
+        {
+            label: language ? '獲得されたチップ' : 'TIPPED',
+            icon: <AttachMoneyRoundedIcon />,
+        },
+        // {
+        //     label: 'PROMOTIONS',
+        //     icon: <ReportProblemOutlinedIcon />,
+        // },
+    ];
 
     return (
         <Fragment>
@@ -64,7 +69,7 @@ const NotificationsPage = (props) => {
                                     <IconButton onClick={() => history.goBack()} style={{ color: 'black' }}>
                                         <ArrowBackRoundedIcon />
                                     </IconButton>
-                                    <span style={{ fontWeight: 500, fontSize: 19 }}>NOTIFICATIONS</span>
+                                    <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? '通知' : 'NOTIFICATIONS'}</span>
                                 </Grid>
                                 <Grid item>
                                     <IconButton onClick={() => history.push('/settings')} style={{ color: 'black' }}>
@@ -107,7 +112,7 @@ const NotificationsPage = (props) => {
                         <p style={{ fontWeight: 500, color: '#8a96a3', fontSize: 19 }}>{tabList[tabIndex].label}</p>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <p style={{ textAlign: 'center', color: '#8a96a3', fontSize: 14 }}>No notificaitons currently!</p>
+                        <p style={{ textAlign: 'center', color: '#8a96a3', fontSize: 14 }}>{language ? '現在、通知はありません。' : 'No notificaitons currently!'}</p>
                     </Grid>
                 </Grid>
             </Container>

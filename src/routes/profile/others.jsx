@@ -42,6 +42,7 @@ const OthersProfilePage = (props) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
     const userDataLoading = useASelector((state) => state.global.userDataLoading, []);
     const selectedUserData = useASelector((state) => state.post.selectedUserData, []);
@@ -106,7 +107,7 @@ const OthersProfilePage = (props) => {
                                             </IconButton>
                                             <Box style={{ display: 'grid' }}>
                                                 <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{selectedUserData.username}</span>
-                                                <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} posts</span>
+                                                <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} {language ? "投稿" : "posts"}</span>
                                             </Box>
                                         </Box>
                                         <Box className="mt-10 mr-10" style={{ width: '20%', display: 'flex', justifyContent: 'flex-end', alignItems: 'end' }}>
@@ -174,7 +175,7 @@ const OthersProfilePage = (props) => {
                                 </Box>
                                 <Grid container direction="column" alignItems="flex-start" style={{ border: '1px solid #ddd', borderRadius: 6, padding: 15 }}>
                                     <Grid item>
-                                        <p style={{ fontWeight: 500, fontSize: 19 }}>Free Subscription</p>
+                                        <p style={{ fontWeight: 500, fontSize: 19 }}>{language ? "無料サブスクリプション" : "Free Subscription"}</p>
                                     </Grid>
                                     <Grid item style={{ width: '100%' }}>
                                         {selectedUserData.followed ?
@@ -185,7 +186,7 @@ const OthersProfilePage = (props) => {
                                                 onClick={subscribe}
                                                 style={{ borderRadius: 100, fontWeight: 'bold', height: 35 }}
                                             >
-                                                FOLLOWING
+                                                {language ? "以下" : "FOLLOWING"}
                                             </Button>
                                             :
                                             <Button
@@ -195,16 +196,16 @@ const OthersProfilePage = (props) => {
                                                 onClick={subscribe}
                                                 style={{ borderRadius: 100, fontWeight: 'bold', color: 'white', height: 35 }}
                                             >
-                                                FOLLOW FOR FREE
+                                                {language ? "無料購読" : "FOLLOW FOR FREE"}
                                             </Button>
                                         }
                                     </Grid>
                                 </Grid>
                                 <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
                                     {selectedUserData.posts.length === 0 ?
-                                        <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>
+                                        <span style={{ fontWeight: 500, fontSize: 18 }}>{language ? "まだ投稿なし" : "NO POSTS YET"}</span>
                                         :
-                                        <span style={{ fontWeight: 500, fontSize: 18 }}>{selectedUserData.posts.length} POSTS</span>
+                                        <span style={{ fontWeight: 500, fontSize: 18 }}>{selectedUserData.posts.length} {language ? "投稿" : "POSTS"}</span>
                                     }
                                     <Box>
                                         <IconButton disabled>

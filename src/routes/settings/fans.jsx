@@ -13,20 +13,25 @@ import {
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../components/global/SettingsNav';
-
-const fansTabLabels = [
-    {
-        id: 0,
-        label: 'Following price',
-        path: '/settings/subscription',
-    },
-];
 
 const FansPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
+
+    const language = useASelector((state) => state.global.language, []);
+
+    const fansTabLabels = [
+        {
+            id: 0,
+            label: language ? '以下の価格' : 'Following price',
+            path: '/settings/subscription',
+        },
+    ];
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -52,11 +57,11 @@ const FansPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>FANS AND FOLLOWING</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'ファンとフォロー' : 'FANS AND FOLLOWING'}</span>
                         </Box>
                         <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Reward for subscriber referrals</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'おすすめの報酬' : 'Reward for subscriber referrals'}</Box>
                         <Divider />
                         {fansTabLabels.map((item) => (
                             <Box key={item.id}>

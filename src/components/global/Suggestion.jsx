@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import appConfig from '../../constants/AppConfig';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 const Suggestion = (props) => {
     const history = useHistory();
+
+    const language = useASelector((state) => state.global.language, []);
 
     return (
         <div
@@ -31,7 +36,7 @@ const Suggestion = (props) => {
             </div>
             <img src={`${appConfig.URL}${props.userInfo.avatar}`} alt='avatar' style={{ position: 'relative', width: 90, height: 90, borderRadius: 100, border: '2px solid #fff', top: -45, left: 15 }} />
             <div style={{ position: 'relative', top: -145, left: 10, height: 25, width: 40, backgroundColor: '#000', opacity: 0.5, borderRadius: 7, justifyContent: 'center', alignItems: 'center', display: 'flex' }}>
-                <span style={{ color: 'white', fontSize: 12, fontWeight: 500 }}>Free</span>
+                <span style={{ color: 'white', fontSize: 12, fontWeight: 500 }}>{language ? "無料" : "Free"}</span>
             </div>
         </div>
     );

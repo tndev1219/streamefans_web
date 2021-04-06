@@ -21,6 +21,7 @@ import { useAuthAction } from '../../../store/slices/auth.slice';
 import SettingsNav from '../../../components/global/SettingsNav';
 
 const UsernamePage = (props) => {
+    const language = useASelector((state) => state.global.language, []);
     const loading = useASelector((state) => state.global.loading, []);
     const profile = useASelector((state) => state.auth.profile, []);
 
@@ -57,14 +58,14 @@ const UsernamePage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>CHANGE USERNAME</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? "ユーザー名の変更" : "CHANGE USERNAME"}</span>
                         </Box>
                         <Divider />
 
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
                                 <TextField
-                                    label="Username"
+                                    label={language ? "ユーザ名" : "Username"}
                                     variant="outlined"
                                     name="username"
                                     value={username}
@@ -90,7 +91,7 @@ const UsernamePage = (props) => {
                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                                 onClick={handleClick}
                             >
-                                SAVE
+                                {language ? '保管' : 'SAVE'}
                             </Button>
                         </Box>
                     </Grid>

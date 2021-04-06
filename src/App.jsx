@@ -51,11 +51,11 @@ import {
 import Header from "./components/layouts/Header";
 import AlertDialog from './components/global/AlertDialog';
 import SnackBar from './components/global/SnackBar';
+import LauguageModal from './components/global/LanguageModal';
 import './lib/Css.js';
 import './App.css';
 
 const App = (props) => {
-  console.log(props.width);
   const profile = useASelector((state) => state.auth.profile, []);
 
   const location = useLocation();
@@ -123,6 +123,7 @@ const App = (props) => {
       }
       <SnackBar />
       <AlertDialog />
+      <LauguageModal />
     </Fragment>
   );
 };

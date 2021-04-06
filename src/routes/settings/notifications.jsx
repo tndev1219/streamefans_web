@@ -23,42 +23,43 @@ import { useAuthAction } from '../../store/slices/auth.slice';
 // component
 import SettingsNav from '../../components/global/SettingsNav';
 
-const preferencesTabLabels = [
-    {
-        id: 0,
-        label: 'Push notifications',
-        path: '/settings/notifications/webpush',
-    },
-    {
-        id: 1,
-        label: "Email notifications",
-        path: '/settings/notifications/email',
-    },
-    // {
-    //     id: 2,
-    //     label: "Site notifications",
-    //     path: '/settings/notifications/site',
-    // },
-    // {
-    //     id: 3,
-    //     label: "Toast notifications",
-    //     path: '/settings/notifications/toast',
-    // },
-];
-
-// const otherTabLabels = [
-//     {
-//         id: 4,
-//         label: 'Telegram bot',
-//         path: '/settings/notifications/telegram',
-//     },
-// ];
-
 const NotificationsPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
+
+    const preferencesTabLabels = [
+        {
+            id: 0,
+            label: language ? 'Push通知' : 'Push notifications',
+            path: '/settings/notifications/webpush',
+        },
+        {
+            id: 1,
+            label: language ? 'メール通知' : 'Email notifications',
+            path: '/settings/notifications/email',
+        },
+        // {
+        //     id: 2,
+        //     label: "Site notifications",
+        //     path: '/settings/notifications/site',
+        // },
+        // {
+        //     id: 3,
+        //     label: "Toast notifications",
+        //     path: '/settings/notifications/toast',
+        // },
+    ];
+    
+    // const otherTabLabels = [
+    //     {
+    //         id: 4,
+    //         label: 'Telegram bot',
+    //         path: '/settings/notifications/telegram',
+    //     },
+    // ];
 
     const setAlertDialog = useGlobalAction('setAlertDialog');
     const sendVerifyEmail = useAuthAction('sendVerifyEmail');
@@ -92,14 +93,14 @@ const NotificationsPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>NOTIFICATIONS</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? '通知の設定' : 'NOTIFICATIONS'}</span>
                         </Box>
 
                         {profile.email_verified ?
                             <>
                                 <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 
-                                <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Preferences</Box>
+                                <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? '環境設定' : 'Preferences'}</Box>
                                 <Divider />
                                 {preferencesTabLabels.map((item) => (
                                     <Box key={item.id}>

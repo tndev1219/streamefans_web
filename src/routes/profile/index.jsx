@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
 // material ui
@@ -9,8 +9,8 @@ import {
     Box,
     Avatar,
     Button,
-    Menu,
-    MenuItem,
+    // Menu,
+    // MenuItem,
     CircularProgress,
 } from '@material-ui/core';
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
@@ -33,8 +33,9 @@ import appConfig from '../../constants/AppConfig';
 const MyProfilePage = (props) => {
     const history = useHistory();
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    // const [anchorEl, setAnchorEl] = useState(null);
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
     const userDataLoading = useASelector((state) => state.global.userDataLoading, []);
     const selectedUserData = useASelector((state) => state.post.selectedUserData, []);
@@ -49,12 +50,12 @@ const MyProfilePage = (props) => {
     }, []);
 
     const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
+        // setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
     return (
         <Fragment>
@@ -81,7 +82,7 @@ const MyProfilePage = (props) => {
                                         <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.username}</span>
                                         {
                                             selectedUserData.posts &&
-                                            <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} posts</span>
+                                            <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} {language ? "投稿" : "posts"}</span>
                                         }
                                     </Box>
                                 </Box>
@@ -89,7 +90,7 @@ const MyProfilePage = (props) => {
                                     <IconButton onClick={handleClick}>
                                         <MoreVertIcon style={{ color: 'white' }} />
                                     </IconButton>
-                                    <Menu
+                                    {/* <Menu
                                         anchorEl={anchorEl}
                                         getContentAnchorEl={null}
                                         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -99,7 +100,7 @@ const MyProfilePage = (props) => {
                                         variant="menu"
                                     >
                                         <MenuItem onClick={handleClose}>Copy link to profile</MenuItem>
-                                    </Menu>
+                                    </Menu> */}
                                 </Box>
                             </Box>
                         </Box>
@@ -124,7 +125,7 @@ const MyProfilePage = (props) => {
                                         style={{ borderRadius: 100, fontWeight: 'bold', height: 50 }}
                                         onClick={() => history.push('/settings/profile')}
                                     >
-                                        Edit Profile
+                                        {language ? "プロファイルの編集" : "Edit Profile"}
                                     </Button>
                                     {/* <IconButton variant="outlined" color="primary" style={{ border: '1px solid #00aff0' }}>
                                         <OpenInNewOutlinedIcon />
@@ -144,7 +145,7 @@ const MyProfilePage = (props) => {
                                 selectedUserData.posts.length === 0 ?
                                     <>
                                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
-                                            <span style={{ fontWeight: 500, fontSize: 18 }}>NO POSTS YET</span>
+                                            <span style={{ fontWeight: 500, fontSize: 18 }}>{language ? "まだ投稿なし" : "NO POSTS YET"}</span>
                                             <Box>
                                                 <IconButton disabled>
                                                     <SearchRoundedIcon />
@@ -161,14 +162,14 @@ const MyProfilePage = (props) => {
                                                 onClick={() => history.push('/posts')}
                                                 style={{ borderRadius: 100, fontWeight: 'bold', border: 0 }}
                                             >
-                                                CREATE NEW POST
-                                        </Button>
+                                                {language ? "新しい投稿の作成" : "CREATE NEW POST"}
+                                            </Button>
                                         </Box>
                                     </>
                                     :
                                     <>
                                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
-                                            <span style={{ fontWeight: 500, fontSize: 18 }}>{selectedUserData.posts.length} POSTS</span>
+                                            <span style={{ fontWeight: 500, fontSize: 18 }}>{selectedUserData.posts.length} {language ? "投稿" : "POSTS"}</span>
                                             <Box>
                                                 <IconButton disabled>
                                                     <SearchRoundedIcon />

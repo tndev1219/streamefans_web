@@ -13,64 +13,69 @@ import {
 import ArrowBackRoundedIcon from '@material-ui/icons/ArrowBackRounded';
 import KeyboardArrowRightRoundedIcon from '@material-ui/icons/KeyboardArrowRightRounded';
 
+// custom hooks
+import { useASelector } from '../../utilities/recipies.util';
+
 // component
 import SettingsNav from '../../components/global/SettingsNav';
-
-const accountInfoTabLabels = [
-    {
-        id: 0,
-        label: 'Username',
-        path: '/settings/account/username',
-    },
-    {
-        id: 1,
-        label: "Email",
-        path: '/settings/account/email',
-    },
-    {
-        id: 2,
-        label: "Phone number",
-        path: '/settings/account/phone',
-    },
-];
-
-const linkedAccountTabLabels = [
-    {
-        id: 3,
-        label: 'Twitter acount',
-        path: '/settings/account/twitter',
-    },
-    {
-        id: 4,
-        label: 'Google account',
-        path: '/settings/account/google',
-    },
-];
-
-const securityTabLabels = [
-    {
-        id: 5,
-        label: 'Password',
-        path: '/settings/account/password',
-    },
-    // {
-    //     id: 6,
-    //     label: 'Two step verification',
-    //     path: '/settings/account/2fa',
-    // },
-];
-
-const managementTabLabels = [
-    {
-        id: 7,
-        label: 'Delete account',
-        path: '/settings/account/delete',
-    },
-];
 
 const AccountPage = (props) => {
     const history = useHistory();
     const [hoveredTab, setHoveredTab] = useState(null);
+
+    const language = useASelector((state) => state.global.language, []);
+
+    const accountInfoTabLabels = [
+        {
+            id: 0,
+            label: language ? 'ユーザー名' : 'Username',
+            path: '/settings/account/username',
+        },
+        {
+            id: 1,
+            label: language ? '電子メール' : 'Email',
+            path: '/settings/account/email',
+        },
+        {
+            id: 2,
+            label: language ? '電話番号' : 'Phone number',
+            path: '/settings/account/phone',
+        },
+    ];
+
+    const linkedAccountTabLabels = [
+        {
+            id: 3,
+            label: language ? 'Twitterアカウント' : 'Twitter account',
+            path: '/settings/account/twitter',
+        },
+        {
+            id: 4,
+            label: language ? 'グーグルアカウント' : 'Google account',
+            path: '/settings/account/google',
+        },
+    ];
+
+    const securityTabLabels = [
+        {
+            id: 5,
+            label: language ? 'パスワード' : 'Password',
+            path: '/settings/account/password',
+        },
+        // {
+        //     id: 6,
+        //     label: 'Two step verification',
+        //     path: '/settings/account/2fa',
+        // },
+    ];
+
+    const managementTabLabels = [
+        {
+            id: 7,
+            label: language ? 'アカウントを削除する' : 'Delete account',
+            path: '/settings/account/delete',
+        },
+    ];
 
     const handleMouseEnter = (index) => {
         setHoveredTab(index);
@@ -96,11 +101,11 @@ const AccountPage = (props) => {
                                     <ArrowBackRoundedIcon />
                                 </IconButton>
                             </Hidden>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>ACCOUNT</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'アカウント' : 'ACCOUNT'}</span>
                         </Box>
                         <Box style={{ height: 10, backgroundColor: '#eee', borderTop: '1px solid #ddd' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Account info</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'アカウント情報' : 'Account info'}</Box>
                         <Divider />
                         {accountInfoTabLabels.map((item) => (
                             <Box key={item.id}>
@@ -120,7 +125,7 @@ const AccountPage = (props) => {
                         ))}
                         <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Linked accounts</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'リンクされたアカウント' : 'Linked accounts'}</Box>
                         <Divider></Divider>
                         {linkedAccountTabLabels.map((item) => (
                             <Box key={item.id}>
@@ -140,7 +145,7 @@ const AccountPage = (props) => {
                         ))}
                         <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Security</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'セキュリティ設定' : 'Security'}</Box>
                         <Divider></Divider>
                         {securityTabLabels.map((item) => (
                             <Box key={item.id}>
@@ -160,7 +165,7 @@ const AccountPage = (props) => {
                         ))}
                         <Box style={{ height: 10, backgroundColor: '#eee' }}></Box>
 
-                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>Account management</Box>
+                        <Box style={{ height: 40, display: 'flex', justifyContent: 'start', alignItems: 'center', padding: 5, paddingLeft: 10, fontWeight: 'bold' }}>{language ? 'アカウント管理' : 'Account management'}</Box>
                         <Divider></Divider>
                         {managementTabLabels.map((item) => (
                             <Box key={item.id}>

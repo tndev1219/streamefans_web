@@ -25,6 +25,7 @@ const PasswordPage = (props) => {
     const [fields, setFiedls] = useState({});
     const [errors, setErrors] = useState({});
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
     const loading = useASelector((state) => state.global.loading, []);
 
@@ -119,7 +120,7 @@ const PasswordPage = (props) => {
                     </Grid>
                     <Grid item xs={8} sm={8} md={8} lg={8} xl={8} style={{ borderRight: '1px solid #eee' }}>
                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 50, height: 48, paddingRight: 15, paddingLeft: 15 }}>
-                            <span style={{ fontWeight: 500, fontSize: 19 }}>CHANGE PASSWORD</span>
+                            <span style={{ fontWeight: 500, fontSize: 19 }}>{language ? 'パスワードの変更' : 'CHANGE PASSWORD'}</span>
                         </Box>
                         <Divider />
 
@@ -128,7 +129,7 @@ const PasswordPage = (props) => {
                                 <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                                     <Box style={{ width: '95%' }}>
                                         <TextField
-                                            label="Current password"
+                                            label={language ? '現在のパスワード' : "Current password"}
                                             variant="outlined"
                                             name="current_password"
                                             type="password"
@@ -149,7 +150,7 @@ const PasswordPage = (props) => {
                         <Box style={{ display: 'flex', justifyContent: 'center', marginBottom: 20, marginTop: 10 }}>
                             <Box style={{ width: '95%' }}>
                                 <TextField
-                                    label="New password"
+                                    label={language ? '新しいパスワード' : "New password"}
                                     variant="outlined"
                                     name="password"
                                     type="password"
@@ -161,7 +162,7 @@ const PasswordPage = (props) => {
                                     helperText={errors.passwordHelperText}
                                 />
                                 <TextField
-                                    label="Confirm new password"
+                                    label={language ? '新しいパスワードの確認' : "Confirm new password"}
                                     variant="outlined"
                                     name="repeat_password"
                                     type="password"
@@ -186,7 +187,7 @@ const PasswordPage = (props) => {
                                 onClick={handleClick}
                                 endIcon={loading ? <CircularProgress size={20} style={{ color: 'white' }} /> : <></>}
                             >
-                                SAVE
+                                {language ? '保管' : 'SAVE'}
                             </Button>
                         </Box>
                     </Grid>

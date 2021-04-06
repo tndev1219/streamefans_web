@@ -63,6 +63,7 @@ const PostComponent = (props) => {
 
     const history = useHistory();
 
+    const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
 
     const alreadyLiked = post.post_likes.filter(postLike => postLike.user === profile.id);
@@ -113,7 +114,7 @@ const PostComponent = (props) => {
                             </Box>
                         </Grid>
                         <Grid item>
-                            <span style={{ color: '#8a96a3', fontSize: 15 }}>{getPostDate(post.created_at)}</span>
+                            <span style={{ color: '#8a96a3', fontSize: 15 }}>{getPostDate(post.created_at, language)}</span>
                             <IconButton>
                                 <MoreHorizRoundedIcon style={{ color: '#8a96a3' }} />
                             </IconButton>
@@ -198,7 +199,7 @@ const PostComponent = (props) => {
                                 startIcon={<AttachMoneyRoundedIcon />}
                                 style={{ fontWeight: 'bold', borderRadius: 100, color: '#8a96a3' }}
                             >
-                                SEND TIP
+                                {language ? "チップを送る" : "SEND TIP"}
                             </Button>
                         </Grid>
                         <Grid item>
@@ -209,7 +210,7 @@ const PostComponent = (props) => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                    <p style={{ marginLeft: 10, fontSize: 13 }}>{post.post_likes.length} likes ・ {post.post_comments.length} comments ・ ${post.post_tips_amount} tips</p>
+                    <p style={{ marginLeft: 10, fontSize: 13 }}>{post.post_likes.length} {language ? "いいね" : "likes"} ・ {post.post_comments.length} {language ? "コメント" : "comments"} ・ ${post.post_tips_amount} {language ? "チップ" : "tips"}</p>
                 </Grid>
                 {showCommentForm &&
                     <>
@@ -220,9 +221,9 @@ const PostComponent = (props) => {
                                     <Box style={{ marginLeft: 10 }}>
                                         <p style={{ marginTop: 5, marginBottom: 5, fontWeight: 'bold', fontSize: 13 }}>
                                             <span>{postComment.user.display_name}</span>
-                                            <span style={{fontWeight: 100, marginLeft: 10}}>{postComment.comment_text}</span>
+                                            <span style={{ fontWeight: 100, marginLeft: 10 }}>{postComment.comment_text}</span>
                                         </p>
-                                        <p style={{ marginTop: 0, marginBottom: 5, fontSize: 13, color: '#8a96a3' }}>{getCommentDate(postComment.created_at)}</p>
+                                        <p style={{ marginTop: 0, marginBottom: 5, fontSize: 13, color: '#8a96a3' }}>{getCommentDate(postComment.created_at, language)}</p>
                                     </Box>
                                 </Grid>
                             ))

@@ -20,6 +20,7 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
+import { useGlobalAction } from '../../store/slices/global.slice';
 
 // data
 import settingsNavLinks from '../../assets/data/SettingsNavLinks';
@@ -33,6 +34,9 @@ import appConfig from 'constants/AppConfig';
 const SidebarMenu = (props) => {
     const history = useHistory();
     const profile = useASelector((state) => state.auth.profile, []);
+    const language = useASelector((state) => state.global.language, []);
+
+    const setLanguageModal = useGlobalAction('setLanguageModal');
 
     return (
         <div className="py-10 text-left iron-sidebar-nav-wrap">
@@ -82,7 +86,7 @@ const SidebarMenu = (props) => {
                                     <ListItemIcon>
                                         {NavLink.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={NavLink.menu_title}></ListItemText>
+                                    <ListItemText primary={language ? NavLink.menu_title_j : NavLink.menu_title_e} style={{marginLeft: -20}}></ListItemText>
                                 </ListItem>
                             ))}
                             <ListItem divider></ListItem>
@@ -91,16 +95,19 @@ const SidebarMenu = (props) => {
                                     <ListItemIcon>
                                         {NavLink.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={NavLink.menu_title}></ListItemText>
+                                    <ListItemText primary={language ? NavLink.menu_title_j : NavLink.menu_title_e} style={{marginLeft: -20}}></ListItemText>
                                 </ListItem>
                             ))}
                             <ListItem divider></ListItem>
                             {helpNavLinks.map((NavLink, index) => (
-                                <ListItem button key={index} onClick={() => props.setOpen(false)}>
+                                <ListItem button key={index} onClick={() => {
+                                    props.setOpen(false);
+                                    setLanguageModal(true);
+                                }}>
                                     <ListItemIcon>
                                         {NavLink.icon}
                                     </ListItemIcon>
-                                    <ListItemText primary={NavLink.menu_title}></ListItemText>
+                                    <ListItemText primary={language ? NavLink.menu_title_j : NavLink.menu_title_e} style={{marginLeft: -20}}></ListItemText>
                                 </ListItem>
                             ))}
                             <ListItem divider></ListItem>
@@ -108,7 +115,7 @@ const SidebarMenu = (props) => {
                                 <ListItemIcon>
                                     <ExitToAppOutlinedIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Log out"></ListItemText>
+                                <ListItemText primary={language ? "ログアウト" : "Log out"} style={{marginLeft: -20}}></ListItemText>
                             </ListItem>
                         </List>
                     </div>
