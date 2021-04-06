@@ -142,7 +142,7 @@ const MyProfilePage = (props) => {
                         </Box>
                         {
                             !userDataLoading ?
-                                selectedUserData.posts.length === 0 ?
+                                selectedUserData.posts && selectedUserData.posts.length === 0 ?
                                     <>
                                         <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20 }}>
                                             <span style={{ fontWeight: 500, fontSize: 18 }}>{language ? "まだ投稿なし" : "NO POSTS YET"}</span>
