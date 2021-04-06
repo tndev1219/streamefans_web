@@ -79,7 +79,7 @@ const MyProfilePage = (props) => {
                                         <ArrowBackRoundedIcon style={{ color: 'white' }} />
                                     </IconButton>
                                     <Box style={{ display: 'grid' }}>
-                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.username}</span>
+                                        <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{profile.display_name}</span>
                                         {
                                             selectedUserData.posts &&
                                             <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} {language ? "投稿" : "posts"}</span>
@@ -135,7 +135,7 @@ const MyProfilePage = (props) => {
                         </Box>
                         <Box style={{ display: 'flex', justifyContent: 'center' }}>
                             <Box style={{ width: '95%' }}>
-                                <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>{profile.username}</p>
+                                <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>{profile.display_name}</p>
                                 <p style={{ marginTop: -10, fontSize: 14, color: '#aaa' }}>@{profile.username}・Active</p>
                                 <p style={{ marginTop: 30, fontSize: 18 }}>{profile.bio}</p>
                             </Box>

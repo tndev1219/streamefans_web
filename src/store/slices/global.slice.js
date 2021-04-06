@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   snackBarMessage: '',
   alertDialogState: false,
   alertDialogMessage: '',
-  language: false,
+  language: true,
   languageModal: false,
 };
 

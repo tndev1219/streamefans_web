@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import PropTypes from 'prop-types';
 
@@ -10,8 +10,8 @@ import {
     Box,
     Avatar,
     Button,
-    Menu,
-    MenuItem,
+    // Menu,
+    // MenuItem,
     CircularProgress,
     withWidth,
 } from '@material-ui/core';
@@ -40,7 +40,7 @@ const OthersProfilePage = (props) => {
     const history = useHistory();
     const params = useParams();
 
-    const [anchorEl, setAnchorEl] = useState(null);
+    // const [anchorEl, setAnchorEl] = useState(null);
 
     const language = useASelector((state) => state.global.language, []);
     const profile = useASelector((state) => state.auth.profile, []);
@@ -64,12 +64,12 @@ const OthersProfilePage = (props) => {
     }, []);
 
     const openMenu = (event) => {
-        setAnchorEl(event.currentTarget);
+        // setAnchorEl(event.currentTarget);
     };
 
-    const closeMenu = () => {
-        setAnchorEl(null);
-    };
+    // const closeMenu = () => {
+    //     setAnchorEl(null);
+    // };
 
     const subscribe = () => {
         const data = {
@@ -106,7 +106,7 @@ const OthersProfilePage = (props) => {
                                                 <ArrowBackRoundedIcon style={{ color: 'white' }} />
                                             </IconButton>
                                             <Box style={{ display: 'grid' }}>
-                                                <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{selectedUserData.username}</span>
+                                                <span className="mb-5" style={{ color: 'white', fontSize: 19, marginBottom: 2, fontWeight: 500 }}>{selectedUserData.display_name}</span>
                                                 <span className="mt-5" style={{ color: 'white', fontSize: 14, marginTop: 2 }}>{selectedUserData.posts.length} {language ? "投稿" : "posts"}</span>
                                             </Box>
                                         </Box>
@@ -114,7 +114,7 @@ const OthersProfilePage = (props) => {
                                             <IconButton onClick={openMenu}>
                                                 <MoreVertIcon style={{ color: 'white' }} />
                                             </IconButton>
-                                            <Menu
+                                            {/* <Menu
                                                 anchorEl={anchorEl}
                                                 getContentAnchorEl={null}
                                                 anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
@@ -124,7 +124,7 @@ const OthersProfilePage = (props) => {
                                                 variant="menu"
                                             >
                                                 <MenuItem onClick={closeMenu}>Copy link to profile</MenuItem>
-                                            </Menu>
+                                            </Menu> */}
                                         </Box>
                                     </Box>
                                 </Box>
@@ -168,7 +168,7 @@ const OthersProfilePage = (props) => {
                                 </Box>
                                 <Box style={{ display: 'flex', justifyContent: 'center' }}>
                                     <Box style={{ width: '95%' }}>
-                                        <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>{selectedUserData.username}</p>
+                                        <p style={{ marginTop: 20, fontWeight: 500, fontSize: 19 }}>{selectedUserData.display_name}</p>
                                         <p style={{ marginTop: -10, fontSize: 14, color: '#aaa' }}>@{selectedUserData.username}・Active</p>
                                         <p style={{ marginTop: 30, fontSize: 18 }}>{selectedUserData.bio}</p>
                                     </Box>
