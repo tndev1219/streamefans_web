@@ -8,3 +8,11 @@ export const getPostDate = (dateString, locale=false) => {
         return moment(dateString).locale('en').fromNow();
     }
 };
+
+export const getCommentDate = (dateString, locale=false) => {
+    if (locale) {
+        return moment(dateString).locale('ja').fromNow();
+    } else {
+        return moment(dateString).locale('en').fromNow();
+    }
+};

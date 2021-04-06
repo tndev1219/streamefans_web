@@ -229,6 +229,70 @@ export function* unlike() {
     });
 }
 
+export function* addComment() {
+    yield takeEvery("post/addComment", function* (action) {
+        try {
+            const res = yield call(apis.POST, 'post/comment/', action.payload.data, true);
+            if (res.status === 200) {
+                const posts = yield select(getPosts);
+
+                const newPosts = posts.map(post => {
+                    if (post.id === action.payload.data.post_id) {
+                        const newObject = Object.create({});
+                        Object.keys(post).map(key => {
+                            if (key !== 'post_comments') {
+                                newObject[key] = post[key];
+                            }
+                            return null;
+                        });
+                        newObject.post_comments = res.data.result;
+                        return newObject;
+                    } else {
+                        return post;
+                    }
+                });
+
+                yield put({
+                    type: "post/updatePostList",
+                    payload: newPosts,
+                });
+
+                const selectedUserData = yield select(getSelectedUserData);
+                const newSelectedUserData = Object.create({});
+                Object.keys(selectedUserData).map(key => {
+                    if (key !== 'posts') {
+                        newSelectedUserData[key] = selectedUserData[key];
+                    } else {
+                        const newPosts = selectedUserData[key].map(post => {
+                            if (post.id === action.payload.data.post_id) {
+                                const newObject = Object.create({});
+                                Object.keys(post).map(key => {
+                                    if (key !== 'post_comments') {
+                                        newObject[key] = post[key];
+                                    }
+                                    return null;
+                                });
+                                newObject.post_comments = res.data.result;
+                                return newObject;
+                            } else {
+                                return post;
+                            }
+                        });
+        
+                        newSelectedUserData[key] = newPosts;
+                    }
+                    return null;
+                });
+
+                yield put({
+                    type: "post/updateUserData",
+                    payload: newSelectedUserData,
+                });
+            }
+        } catch (err) { }
+    });
+}
+
 export default function* rootSaga() {
     yield all([
         fork(createPost),
@@ -238,5 +302,6 @@ export default function* rootSaga() {
         fork(unfollow),
         fork(like),
         fork(unlike),
+        fork(addComment),
     ]);
 }

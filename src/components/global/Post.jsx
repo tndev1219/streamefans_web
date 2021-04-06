@@ -15,6 +15,7 @@ import {
     Button,
     Divider,
     withWidth,
+    TextField,
 } from '@material-ui/core';
 // import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded';
@@ -24,6 +25,7 @@ import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 import BookmarkBorderRoundedIcon from '@material-ui/icons/BookmarkBorderRounded';
 import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import MoreHorizRoundedIcon from '@material-ui/icons/MoreHorizRounded';
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
 // custom hooks
 import { useASelector } from '../../utilities/recipies.util';
@@ -32,7 +34,7 @@ import { usePostAction } from '../../store/slices/post.slice';
 // component
 import Badge from '../../components/global/Badge';
 import appConfig from '../../constants/AppConfig';
-import { getPostDate } from '../../utilities';
+import { getPostDate, getCommentDate } from '../../utilities';
 
 const PostComponent = (props) => {
     const postSettings = {
@@ -68,9 +70,16 @@ const PostComponent = (props) => {
     const [bookmarked, setBookMarked] = useState(false);
     const [showImageOverlay, setShowImageOverlay] = useState(false);
     const [imageIndex, setImageIndex] = useState(0);
+    const [showCommentForm, setShowCommentForm] = useState(false);
+    const [comment, setComment] = useState('');
 
     const like = usePostAction('like');
     const unlike = usePostAction('unlike');
+    const addComment = usePostAction('addComment');
+
+    const hangleChage = (e) => {
+        setComment(e.target.value);
+    };
 
     return (
         <Box>
@@ -180,8 +189,10 @@ const PostComponent = (props) => {
                             >
                                 {alreadyLiked.length !== 0 ? <FavoriteRoundedIcon color="primary" /> : <FavoriteBorderRoundedIcon style={{ color: '#8a96a3' }} />}
                             </IconButton>
-                            <IconButton>
-                                <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />
+                            <IconButton
+                                onClick={() => setShowCommentForm(!showCommentForm)}
+                            >
+                                {showCommentForm ? <AssistantOutlinedIcon color="primary" /> : <AssistantOutlinedIcon style={{ color: '#8a96a3' }} />}
                             </IconButton>
                             <Button
                                 startIcon={<AttachMoneyRoundedIcon />}
@@ -200,6 +211,51 @@ const PostComponent = (props) => {
                 <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <p style={{ marginLeft: 10, fontSize: 13 }}>{post.post_likes.length} likes ・ {post.post_comments.length} comments ・ ${post.post_tips_amount} tips</p>
                 </Grid>
+                {showCommentForm &&
+                    <>
+                        {
+                            post.post_comments.map((postComment, index) => (
+                                <Grid item xs={12} sm={12} md={12} lg={12} xl={12} key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+                                    <Avatar alt="my-avatar" src={`${appConfig.URL}${postComment.user.avatar}`} variant="circular" style={{ width: 40, height: 40 }} />
+                                    <Box style={{ marginLeft: 10 }}>
+                                        <p style={{ marginTop: 5, marginBottom: 5, fontWeight: 'bold', fontSize: 13 }}>
+                                            <span>{postComment.user.display_name}</span>
+                                            <span style={{fontWeight: 100, marginLeft: 10}}>{postComment.comment_text}</span>
+                                        </p>
+                                        <p style={{ marginTop: 0, marginBottom: 5, fontSize: 13, color: '#8a96a3' }}>{getCommentDate(postComment.created_at)}</p>
+                                    </Box>
+                                </Grid>
+                            ))
+                        }
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} style={{ marginBottom: 10 }}>
+                            <TextField
+                                variant='outlined'
+                                fullWidth
+                                size="small"
+                                placeholder="comment..."
+                                InputProps={{
+                                    startAdornment: <img src={`${appConfig.URL}${profile.avatar}`} alt="profile-img" style={{ width: 30, height: 30, borderRadius: 100, marginRight: 10, marginLeft: -5 }} />,
+                                    endAdornment:
+                                        <IconButton
+                                            disabled={comment.length === 0}
+                                            style={{ marginRight: -13 }}
+                                            onClick={() => {
+                                                const data = {
+                                                    post_id: post.id,
+                                                    comment_text: comment,
+                                                };
+                                                addComment({ data });
+                                            }}
+                                        >
+                                            {comment.length === 0 ? <SendRoundedIcon /> : <SendRoundedIcon color="primary" />}
+                                        </IconButton>,
+                                }}
+                                style={{ backgroundColor: '#eee' }}
+                                onChange={hangleChage}
+                            />
+                        </Grid>
+                    </>
+                }
             </Grid>
 
             <Divider />

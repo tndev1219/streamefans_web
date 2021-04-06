@@ -24,6 +24,7 @@ const postSlice = createSlice({
         unfollow: () => { },
         like: () => { },
         unlike: () => { },
+        addComment: () => { },
     },
 });
 
